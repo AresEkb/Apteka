@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Data;
-using System.Linq;
-using System.Data.Entity;
 using System.Data.Common;
-using System.Data.Entity.Core.Objects;
-using System.Data.Entity.Infrastructure;
-using System.ComponentModel;
+using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
+
 using DevExpress.ExpressApp.EF.Updating;
 using DevExpress.Persistent.BaseImpl.EF;
 using DevExpress.Persistent.BaseImpl.EF.PermissionPolicy;
-using System.Data.Entity.ModelConfiguration.Conventions;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Apteka.Module.BusinessObjects {
-	public class AptekaDbContext : DbContext {
+namespace Apteka.Module.BusinessObjects
+{
+    public class AptekaDbContext : DbContext {
 		public AptekaDbContext(String connectionString)
 			: base(connectionString) {
 		}

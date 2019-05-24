@@ -9,6 +9,11 @@ namespace Apteka.Module.BusinessObjects
     [DefaultClassOptions]
     public class InvoiceItem
     {
+        public InvoiceItem()
+        {
+            Series = new List<ProductSeries>();
+        }
+
         [Browsable(false)]
         public int Id { get; protected set; }
 
@@ -46,6 +51,6 @@ namespace Apteka.Module.BusinessObjects
         [MaxLength(30)]
         public string CustomsDeclarationNumber { get; set;}
 
-        public virtual List<ProductSeries> Series { get; set; }
+        public virtual IList<ProductSeries> Series { get; set; }
     }
 }

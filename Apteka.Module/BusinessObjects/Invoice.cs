@@ -10,6 +10,11 @@ namespace Apteka.Module.BusinessObjects
     [DefaultClassOptions]
     public class Invoice
     {
+        public Invoice()
+        {
+            Items = new List<InvoiceItem>();
+        }
+
         [Browsable(false)]
         public int Id { get; protected set; }
 
@@ -32,13 +37,13 @@ namespace Apteka.Module.BusinessObjects
 
         public decimal ManufacturerPrice { get; set; }
 
-        public decimal ValueAddedTax { get; set; }
+        public decimal ValueAddedTaxAmount { get; set; }
 
-        public decimal TotalPrice { get => ManufacturerPrice + ValueAddedTax; }
+        public decimal TotalPrice { get => ManufacturerPrice + ValueAddedTaxAmount; }
 
         [MaxLength(1000)]
         public string Note { get; set; }
 
-        public virtual List<InvoiceItem> Items { get; set; }
+        public virtual IList<InvoiceItem> Items { get; set; }
     }
 }

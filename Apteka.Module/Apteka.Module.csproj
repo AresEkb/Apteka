@@ -134,6 +134,9 @@
     <Compile Include="BusinessObjects\Organization.cs" />
     <Compile Include="BusinessObjects\ProductSeries.cs" />
     <Compile Include="DatabaseUpdate\Updater.cs" />
+    <Compile Include="Importers\InvoiceXmlImporter.cs" />
+    <Compile Include="Mappers\InvoiceXmlMapper.cs" />
+    <Compile Include="Mappers\ObjectSpaceObjectFactory.cs" />
     <Compile Include="Migrations\201905241005038_InitialCreate.cs" />
     <Compile Include="Migrations\201905241005038_InitialCreate.Designer.cs">
       <DependentUpon>201905241005038_InitialCreate.cs</DependentUpon>
@@ -145,6 +148,10 @@
     <Compile Include="Migrations\201905241233502_Misc1.cs" />
     <Compile Include="Migrations\201905241233502_Misc1.Designer.cs">
       <DependentUpon>201905241233502_Misc1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905241843038_Rename_ValueAddedTax.cs" />
+    <Compile Include="Migrations\201905241843038_Rename_ValueAddedTax.Designer.cs">
+      <DependentUpon>201905241843038_Rename_ValueAddedTax.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Module.cs">
@@ -164,6 +171,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905241233502_Misc1.resx">
       <DependentUpon>201905241233502_Misc1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905241843038_Rename_ValueAddedTax.resx">
+      <DependentUpon>201905241843038_Rename_ValueAddedTax.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="Module.resx">
@@ -194,6 +204,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Welcome.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Apteka.Model\Apteka.Model.csproj">
+      <Project>{ace95346-cc88-4e83-be41-1107cd823c54}</Project>
+      <Name>Apteka.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
