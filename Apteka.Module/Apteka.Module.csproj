@@ -128,7 +128,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessObjects\AptekaDbContext.cs" />
+    <Compile Include="BusinessObjects\Country.cs" />
     <Compile Include="BusinessObjects\Invoice.cs" />
+    <Compile Include="BusinessObjects\InvoiceItem.cs" />
+    <Compile Include="BusinessObjects\Organization.cs" />
+    <Compile Include="BusinessObjects\ProductSeries.cs" />
     <Compile Include="DatabaseUpdate\Updater.cs" />
     <Compile Include="Migrations\201905241005038_InitialCreate.cs" />
     <Compile Include="Migrations\201905241005038_InitialCreate.Designer.cs">
@@ -137,6 +141,10 @@
     <Compile Include="Migrations\201905241051157_Misc.cs" />
     <Compile Include="Migrations\201905241051157_Misc.Designer.cs">
       <DependentUpon>201905241051157_Misc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905241233502_Misc1.cs" />
+    <Compile Include="Migrations\201905241233502_Misc1.Designer.cs">
+      <DependentUpon>201905241233502_Misc1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Module.cs">
@@ -153,6 +161,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905241051157_Misc.resx">
       <DependentUpon>201905241051157_Misc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905241233502_Misc1.resx">
+      <DependentUpon>201905241233502_Misc1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="Module.resx">
