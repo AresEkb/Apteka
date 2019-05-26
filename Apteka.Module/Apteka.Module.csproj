@@ -101,12 +101,10 @@
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
@@ -128,15 +126,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessObjects\AptekaDbContext.cs" />
-    <Compile Include="BusinessObjects\Country.cs" />
-    <Compile Include="BusinessObjects\Invoice.cs" />
-    <Compile Include="BusinessObjects\InvoiceItem.cs" />
-    <Compile Include="BusinessObjects\Organization.cs" />
-    <Compile Include="BusinessObjects\ProductSeries.cs" />
+    <Compile Include="Conventions\CustomMaxLengthAttributeConvention.cs" />
+    <Compile Include="Conventions\DecimalPrecisionConvention.cs" />
+    <Compile Include="Conventions\NonUnicodeAttributeConvention.cs" />
     <Compile Include="DatabaseUpdate\Updater.cs" />
-    <Compile Include="Importers\InvoiceXmlImporter.cs" />
-    <Compile Include="Mappers\InvoiceXmlMapper.cs" />
-    <Compile Include="Mappers\ObjectSpaceObjectFactory.cs" />
+    <Compile Include="Ixporters\InvoiceXmlIxporter.cs" />
+    <Compile Include="Migrations\201905261529083_Fixed_Rate_Types.cs" />
+    <Compile Include="Migrations\201905261529083_Fixed_Rate_Types.Designer.cs">
+      <DependentUpon>201905261529083_Fixed_Rate_Types.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ModelExtensions\ModelClassCaptionUpdater.cs" />
+    <Compile Include="ModelExtensions\ModelMemberCaptionUpdater.cs" />
+    <Compile Include="ObjectSpaceEntityFactory.cs" />
     <Compile Include="Migrations\201905241005038_InitialCreate.cs" />
     <Compile Include="Migrations\201905241005038_InitialCreate.Designer.cs">
       <DependentUpon>201905241005038_InitialCreate.cs</DependentUpon>
@@ -152,6 +153,14 @@
     <Compile Include="Migrations\201905241843038_Rename_ValueAddedTax.cs" />
     <Compile Include="Migrations\201905241843038_Rename_ValueAddedTax.Designer.cs">
       <DependentUpon>201905241843038_Rename_ValueAddedTax.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905250724386_Add_Invoice_Guid.cs" />
+    <Compile Include="Migrations\201905250724386_Add_Invoice_Guid.Designer.cs">
+      <DependentUpon>201905250724386_Add_Invoice_Guid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905251502099_Add_Address.cs" />
+    <Compile Include="Migrations\201905251502099_Add_Address.Designer.cs">
+      <DependentUpon>201905251502099_Add_Address.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Module.cs">
@@ -175,11 +184,21 @@
     <EmbeddedResource Include="Migrations\201905241843038_Rename_ValueAddedTax.resx">
       <DependentUpon>201905241843038_Rename_ValueAddedTax.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905250724386_Add_Invoice_Guid.resx">
+      <DependentUpon>201905250724386_Add_Invoice_Guid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905251502099_Add_Address.resx">
+      <DependentUpon>201905251502099_Add_Address.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905261529083_Fixed_Rate_Types.resx">
+      <DependentUpon>201905261529083_Fixed_Rate_Types.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="Module.resx">
       <SubType>Designer</SubType>
       <DependentUpon>Module.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DatabaseUpdate\ReadMe.txt" />
@@ -196,6 +215,10 @@
   <ItemGroup>
     <None Include="FunctionalTests\sample.ets" />
     <None Include="Images\ReadMe.txt" />
+    <EmbeddedResource Include="Model.DesignedDiffs.Localization.ru.xafml">
+      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="ReadMe.txt" />
   </ItemGroup>
@@ -211,6 +234,7 @@
       <Name>Apteka.Model</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

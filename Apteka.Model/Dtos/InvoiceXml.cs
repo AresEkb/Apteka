@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace Apteka.Model.Dto
@@ -16,37 +17,37 @@ namespace Apteka.Model.Dto
     public class InvoiceXml
     {
         private const string DATE_FORMAT = "dd.MM.yyyy";
-        private const string DATE_TIME_FORMAT = "dd.MM.yyyy HH:mm:ss";
+        private const string DATE_TIME_FORMAT = "dd.MM.yyyy H:mm:ss";
         private static readonly string[] DATE_TIME_FORMATS = { "dd.MM.yyyy HH:mm:ss", "dd.MM.yyyy H:mm:ss" };
 
         [XmlAttribute("Идентификатор")]
         public Guid Identifikator { get; set; }
 
-        [XmlElement("ЗаголовокДокумента")]
+        [XmlElement("ЗаголовокДокумента", Order = 1)]
         public ZagolovokDokumenta ZagolovokDokumenta { get; set; }
 
-        [XmlArray("ТоварныеПозиции")]
+        [XmlArray("ТоварныеПозиции", Order = 2)]
         [XmlArrayItem("ТоварнаяПозиция")]
         public List<TovarnajaPozicija> TovarnyePozicii;
 
-        public static DateTime? ParseDateTime(string str)
+        internal static DateTime? ParseDateTime(string str)
         {
             return String.IsNullOrWhiteSpace(str) ? (DateTime?)null
                 : DateTime.ParseExact(str, DATE_TIME_FORMATS, CultureInfo.InvariantCulture, DateTimeStyles.None);
         }
 
-        public static string PrintDateTime(DateTime? dt)
+        internal static string PrintDateTime(DateTime? dt)
         {
             return dt?.ToString(DATE_TIME_FORMAT);
         }
 
-        public static DateTime? ParseDate(string str)
+        internal static DateTime? ParseDate(string str)
         {
             return String.IsNullOrWhiteSpace(str) ? (DateTime?)null
                 : DateTime.ParseExact(str, DATE_FORMAT, CultureInfo.InvariantCulture);
         }
 
-        public static string PrintDate(DateTime? dt)
+        internal static string PrintDate(DateTime? dt)
         {
             return dt?.ToString(DATE_FORMAT);
         }

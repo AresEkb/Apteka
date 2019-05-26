@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-using DevExpress.Persistent.Base;
-
-namespace Apteka.Module.BusinessObjects
+namespace Apteka.Model.Entities
 {
-    [DefaultClassOptions]
-    public class Invoice
+    [DataElement("ru", "накладная", "накладная", "накладные", "")]
+    public partial class Invoice
     {
         public Invoice()
         {
@@ -18,7 +16,10 @@ namespace Apteka.Module.BusinessObjects
         [Browsable(false)]
         public int Id { get; protected set; }
 
+        public Guid Guid { get; set; }
+
         [MaxLength(15)]
+        [DataElement("ru", "номер документа", "номерДок", "")]
         public string Code { get; set; }
 
         public DateTime? DocDateTime { get; set; }
@@ -44,6 +45,8 @@ namespace Apteka.Module.BusinessObjects
         [MaxLength(1000)]
         public string Note { get; set; }
 
-        public virtual IList<InvoiceItem> Items { get; set; }
+        public virtual List<InvoiceItem> Items { get; set; }
+
+        public int ItemCount { get => Items.Count; }
     }
 }

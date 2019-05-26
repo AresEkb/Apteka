@@ -1,6 +1,6 @@
 ﻿namespace Apteka.Model
 {
-    public class PlainObjectFactory : IObjectFactory
+    public class PlainEntityFactory : IEntityFactory
     {
         public T Create<T>() where T : new()
         {

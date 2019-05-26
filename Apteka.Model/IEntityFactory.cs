@@ -1,6 +1,6 @@
 ﻿namespace Apteka.Model
 {
-    public interface IObjectFactory
+    public interface IEntityFactory
     {
         T Create<T>() where T : new();
     }

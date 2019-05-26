@@ -4,11 +4,11 @@ using DevExpress.ExpressApp;
 
 namespace Apteka.Module.Mappers
 {
-    public class ObjectSpaceObjectFactory : IObjectFactory
+    public class ObjectSpaceEntityFactory : IEntityFactory
     {
         private readonly IObjectSpace os;
 
-        public ObjectSpaceObjectFactory(IObjectSpace os)
+        public ObjectSpaceEntityFactory(IObjectSpace os)
         {
             this.os = os;
         }

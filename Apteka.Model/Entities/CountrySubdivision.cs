@@ -1,17 +1,14 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-using DevExpress.Persistent.Base;
-
-namespace Apteka.Module.BusinessObjects
+namespace Apteka.Model.Entities
 {
-    [DefaultClassOptions]
-    public class Country
+    public class CountrySubdivision
     {
         [Browsable(false)]
         public int Id { get; protected set; }
 
-        [MaxLength(2)]
+        [MaxLength(2), NonUnicode]
         public string Code { get; set; }
 
         [MaxLength(200)]

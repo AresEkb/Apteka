@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <NavigationItems>
+    <Items>
+      <Item Id="Warehouse" Caption="Склад" />
+    </Items>
+  </NavigationItems>
+</Application>

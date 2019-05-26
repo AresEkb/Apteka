@@ -3,26 +3,38 @@ using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
+using Apteka.Model.Entities;
+using Apteka.Module.Conventions;
+
 using DevExpress.ExpressApp.EF.Updating;
 using DevExpress.Persistent.BaseImpl.EF;
 using DevExpress.Persistent.BaseImpl.EF.PermissionPolicy;
 
 namespace Apteka.Module.BusinessObjects
 {
-    public class AptekaDbContext : DbContext {
-		public AptekaDbContext(String connectionString)
-			: base(connectionString) {
+    public class AptekaDbContext : DbContext
+    {
+		public AptekaDbContext(String connectionString) : base(connectionString)
+        {
 		}
-		public AptekaDbContext(DbConnection connection)
-			: base(connection, false) {
+
+		public AptekaDbContext(DbConnection connection) : base(connection, false)
+        {
 		}
-		public AptekaDbContext()
-			: base("name=ConnectionString") {
+
+		public AptekaDbContext() : base("name=ConnectionString")
+        {
 		}
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+            modelBuilder.Conventions.Add<DecimalPrecisionConvention>();
+            modelBuilder.Conventions.Add<NonUnicodeAttributeConvention>();
+
+            modelBuilder.Conventions.Remove<MaxLengthAttributeConvention>();
+            modelBuilder.Conventions.Add<CustomMaxLengthAttributeConvention>();
 
             base.OnModelCreating(modelBuilder);
         }
@@ -37,5 +49,8 @@ namespace Apteka.Module.BusinessObjects
 		public DbSet<ModelDifferenceAspect> ModelDifferenceAspects { get; set; }
 
         public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<InvoiceItem> InvoiceItems { get; set; }
+        public DbSet<Model.Entities.Country> Countries { get; set; }
+        public DbSet<City> Cities { get; set; }
     }
 }

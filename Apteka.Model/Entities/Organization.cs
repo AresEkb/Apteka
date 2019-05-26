@@ -1,18 +1,15 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-using DevExpress.Persistent.Base;
-
-namespace Apteka.Module.BusinessObjects
+namespace Apteka.Model.Entities
 {
-    [DefaultClassOptions]
     public class Organization
     {
         [Browsable(false)]
         public int Id { get; protected set; }
 
         [MaxLength(200)]
-        public string Address { get; set; }
+        public string Name { get; set; }
 
         [MaxLength(20)]
         public string TaxpayerCode { get; set; }
@@ -20,10 +17,25 @@ namespace Apteka.Module.BusinessObjects
         [MaxLength(20)]
         public string TaxRegistrationReasonCode { get; set; }
 
+        public Address Address { get; set; }
+
         [MaxLength(20)]
         public string PhoneNumber { get; set; }
 
         [MaxLength(100)]
         public string Email { get; set; }
+    }
+
+    public class Address
+    {
+        [Browsable(false)]
+        public int Id { get; protected set; }
+
+        public Country Country { get; set; }
+
+        public City City { get; set; }
+
+        [MaxLength(200)]
+        public string Description { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Apteka.Module.BusinessObjects
+namespace Apteka.Model.Entities
 {
     public class ProductSeries
     {

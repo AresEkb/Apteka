@@ -1,8 +1,18 @@
-﻿<?xml version="1.0" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Application Title="Apteka">
+  <NavigationItems>
+    <Items>
+      <Item Id="Warehouse" IsNewNode="True">
+        <Items IsNewNode="True">
+          <Item Id="Invoices" ViewId="Invoice_ListView" IsNewNode="True" />
+        </Items>
+      </Item>
+    </Items>
+  </NavigationItems>
   <Options>
     <LayoutManagerOptions RequiredFieldMark="*" />
   </Options>
-  <Views>
-  </Views>
+  <SchemaModules>
+    <SchemaModule Name="SystemModule" Version="17.2.7.0" IsNewNode="True" />
+  </SchemaModules>
 </Application>

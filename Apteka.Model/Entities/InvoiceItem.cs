@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-using DevExpress.Persistent.Base;
-
-namespace Apteka.Module.BusinessObjects
+namespace Apteka.Model.Entities
 {
-    [DefaultClassOptions]
     public class InvoiceItem
     {
         public InvoiceItem()
@@ -33,24 +31,28 @@ namespace Apteka.Module.BusinessObjects
 
         public decimal StateRegistryPrice { get; set; }
 
+        [DecimalPrecision(5, 4)]
+        [DisplayFormat(DataFormatString = "{0:P0}", ApplyFormatInEditMode = true)]
         public decimal SupplierMarkupRate { get; set; }
 
-        public decimal SupplierPrice { get => ManufacturerPrice * SupplierMarkupRate; }
+        public decimal SupplierPrice { get => Math.Round(ManufacturerPrice * (1 + SupplierMarkupRate), 2); }
 
         public decimal TotalSupplierPrice { get => SupplierPrice * Quantity; }
 
+        [DecimalPrecision(5, 4)]
+        [DisplayFormat(DataFormatString = "{0:P0}", ApplyFormatInEditMode = true)]
         public decimal ValueAddedTaxRate { get; set; }
 
-        public decimal ValueAddedTaxAmount { get => TotalSupplierPrice * ValueAddedTaxRate; }
+        public decimal ValueAddedTaxAmount { get => Math.Round(TotalSupplierPrice * ValueAddedTaxRate, 2); }
 
         public decimal TotalPrice { get => TotalSupplierPrice + ValueAddedTaxAmount; }
 
-        [MaxLength(13)]
+        [MinLength(13), MaxLength(13), NonUnicode]
         public string Ean13 { get; set; }
 
         [MaxLength(30)]
         public string CustomsDeclarationNumber { get; set;}
 
-        public virtual IList<ProductSeries> Series { get; set; }
+        public virtual List<ProductSeries> Series { get; set; }
     }
 }
