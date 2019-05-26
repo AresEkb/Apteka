@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Reflection;
 
 using Apteka.Model;
 using Apteka.Model.Extensions;
@@ -12,7 +13,7 @@ namespace Apteka.Module.ModelExtensions
     // https://www.devexpress.com/Support/Center/Question/Details/T399534/rulecriteria-with-localized-templated-setting-localized-vales-with-the
     // https://www.devexpress.com/Support/Center/Question/Details/Q472121/localized-text-in-nodes-generator-updater
     // https://www.devexpress.com/Support/Center/Question/Details/S92247/how-to-localize-layout-group-captions-with-a-class-name
-    public class ModelClassCaptionUpdater : ModelNodesGeneratorUpdater<ModelBOModelClassNodesGenerator>
+    public class ModelClassUpdater : ModelNodesGeneratorUpdater<ModelBOModelClassNodesGenerator>
     {
         public override void UpdateNode(ModelNode node)
         {
@@ -26,8 +27,8 @@ namespace Apteka.Module.ModelExtensions
                     foreach (var cls in classes)
                     {
                         var attr = cls.TypeInfo.Type
-                            .GetCustomAttributes(typeof(DataElementAttribute), false)
-                            .OfType<DataElementAttribute>().FirstOrDefault();
+                            .GetCustomAttributes<DataElementAttribute>(false)
+                            .FirstOrDefault();
                         if (attr != null)
                         {
                             // Update class caption

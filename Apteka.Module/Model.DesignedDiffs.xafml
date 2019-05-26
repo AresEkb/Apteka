@@ -2,11 +2,12 @@
 <Application Title="Apteka">
   <NavigationItems>
     <Items>
-      <Item Id="Warehouse" IsNewNode="True">
+      <Item Id="Warehouse" Index="0" IsNewNode="True">
         <Items IsNewNode="True">
           <Item Id="Invoices" ViewId="Invoice_ListView" IsNewNode="True" />
         </Items>
       </Item>
+      <Item Id="Reports" Index="1" />
     </Items>
   </NavigationItems>
   <Options>

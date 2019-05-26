@@ -2,7 +2,7 @@
 
 namespace Apteka.Model
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property, AllowMultiple = true)]
     public class DataElementAttribute : Attribute
     {
         public DataElementAttribute(string lang, string name, string briefName, string pluralName, string definition)

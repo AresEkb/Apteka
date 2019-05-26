@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
+using Apteka.Model;
 using Apteka.Module.ModelExtensions;
 
 using DevExpress.ExpressApp;
+using DevExpress.ExpressApp.DC;
+using DevExpress.ExpressApp.Editors;
+using DevExpress.ExpressApp.Model;
 using DevExpress.ExpressApp.Model.Core;
+using DevExpress.ExpressApp.Model.NodeGenerators;
 using DevExpress.ExpressApp.Updating;
 
 namespace Apteka.Module
 {
-    //public class ResourceLocalizer : DevExpress.ExpressApp.Localization.
-    //{
-    //    protected override IXafResourceManagerParameters GetXafResourceManagerParameters()
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-    //}
-
     // For more typical usage scenarios, be sure to check out https://documentation.devexpress.com/eXpressAppFramework/clsDevExpressExpressAppModuleBasetopic.aspx.
     public sealed partial class AptekaModule : ModuleBase
     {
@@ -69,21 +68,30 @@ namespace Apteka.Module
         //            continue;
         //        }
         //        //var typeAttr = typeInfo.Type.CustomAttributes.OfType<DataElementAttribute>().FirstOrDefault();
-        //        var typeAttr = typeInfo.Type.GetCustomAttributes(typeof(DataElementAttribute), false)
-        //            .OfType<DataElementAttribute>().FirstOrDefault();
-        //        if (typeAttr != null)
-        //        {
-        //            typeInfo.AddAttribute(new DisplayNameAttribute(typeAttr.Name.FirstCharToUpper()));
-        //        }
+        //        //var typeAttr = typeInfo.Type.GetCustomAttributes(typeof(DataElementAttribute), false)
+        //        //    .OfType<DataElementAttribute>().FirstOrDefault();
+        //        //if (typeAttr != null)
+        //        //{
+        //        //    typeInfo.AddAttribute(new DisplayNameAttribute(typeAttr.Name.FirstCharToUpper()));
+        //        //}
+        //        Console.WriteLine(">>>");
         //        foreach (var memberInfo in typeInfo.OwnMembers.Where(m => m.IsProperty))
         //        {
         //            var prop = typeInfo.Type.GetProperty(memberInfo.Name);
-        //            var memberAttr = prop.GetCustomAttributes(typeof(DataElementAttribute), false)
-        //                .OfType<DataElementAttribute>().FirstOrDefault();
-        //            if (memberAttr != null)
+        //            var compAttr = prop.GetCustomAttributes<CompositionAttribute>(false).FirstOrDefault();
+        //            if (compAttr != null)
         //            {
-        //                memberInfo.AddAttribute(new DisplayNameAttribute(memberAttr.Name.FirstCharToUpper()));
+        //                //memberInfo.AddAttribute(new AssociationAttribute());
+        //                memberInfo.AddAttribute(new AggregatedAttribute());
         //            }
+        //            Console.WriteLine(memberInfo.Name);
+        //            foreach (var a in memberInfo.Attributes)
+        //            {
+        //                Console.WriteLine(a);
+        //            }
+        //            //Console.WriteLine("!!!!!" + memberInfo.FindAttributes());
+        //            //Console.WriteLine("!!!!!" + memberInfo.FindAttribute<AggregatedAttribute>());
+        //            //Console.WriteLine("!!!!!" + prop.GetCustomAttributes<AggregatedAttribute>(false).FirstOrDefault());
         //        }
         //    }
         //}
@@ -91,8 +99,9 @@ namespace Apteka.Module
         public override void AddGeneratorUpdaters(ModelNodesGeneratorUpdaters updaters)
         {
             base.AddGeneratorUpdaters(updaters);
-            updaters.Add(new ModelClassCaptionUpdater());
-            updaters.Add(new ModelMemberCaptionUpdater());
+            updaters.Add(new ModelClassUpdater());
+            updaters.Add(new ModelMemberUpdater());
+            updaters.Add(new ModelViewsGeneratorUpdater());
         }
     }
 }

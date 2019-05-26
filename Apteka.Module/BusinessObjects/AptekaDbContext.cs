@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
@@ -7,6 +9,7 @@ using Apteka.Model.Entities;
 using Apteka.Module.Conventions;
 
 using DevExpress.ExpressApp.EF.Updating;
+using DevExpress.Persistent.Base;
 using DevExpress.Persistent.BaseImpl.EF;
 using DevExpress.Persistent.BaseImpl.EF.PermissionPolicy;
 
@@ -52,5 +55,29 @@ namespace Apteka.Module.BusinessObjects
         public DbSet<InvoiceItem> InvoiceItems { get; set; }
         public DbSet<Model.Entities.Country> Countries { get; set; }
         public DbSet<City> Cities { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
+    }
+
+    [DefaultClassOptions]
+    public class Contact
+    {
+        [Browsable(false)]
+        public Int32 ContactId { get; protected set; }
+        public String FirstName { get; set; }
+        public String LastName { get; set; }
+        public Contact()
+        {
+            NotesCollection = new List<Note>();
+        }
+        [DevExpress.ExpressApp.DC.Aggregated]
+        public virtual IList<Note> NotesCollection { get; set; }
+    }
+    [DefaultClassOptions]
+    public class Note
+    {
+        [Browsable(false)]
+        public Int32 NoteId { get; protected set; }
+        public String Text { get; set; }
+        public virtual Contact Contact { get; set; }
     }
 }

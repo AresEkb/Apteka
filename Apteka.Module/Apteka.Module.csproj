@@ -135,8 +135,25 @@
     <Compile Include="Migrations\201905261529083_Fixed_Rate_Types.Designer.cs">
       <DependentUpon>201905261529083_Fixed_Rate_Types.cs</DependentUpon>
     </Compile>
-    <Compile Include="ModelExtensions\ModelClassCaptionUpdater.cs" />
-    <Compile Include="ModelExtensions\ModelMemberCaptionUpdater.cs" />
+    <Compile Include="Migrations\201905261720473_Rename_Invoice_Fields.cs" />
+    <Compile Include="Migrations\201905261720473_Rename_Invoice_Fields.Designer.cs">
+      <DependentUpon>201905261720473_Rename_Invoice_Fields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905261736295_Misc2.cs" />
+    <Compile Include="Migrations\201905261736295_Misc2.Designer.cs">
+      <DependentUpon>201905261736295_Misc2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905261907148_Test1.cs" />
+    <Compile Include="Migrations\201905261907148_Test1.Designer.cs">
+      <DependentUpon>201905261907148_Test1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905261952251_ParentInvoiceRequired.cs" />
+    <Compile Include="Migrations\201905261952251_ParentInvoiceRequired.Designer.cs">
+      <DependentUpon>201905261952251_ParentInvoiceRequired.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ModelExtensions\ModelClassUpdater.cs" />
+    <Compile Include="ModelExtensions\ModelMemberUpdater.cs" />
+    <Compile Include="ModelExtensions\ModelViewsGeneratorUpdater.cs" />
     <Compile Include="ObjectSpaceEntityFactory.cs" />
     <Compile Include="Migrations\201905241005038_InitialCreate.cs" />
     <Compile Include="Migrations\201905241005038_InitialCreate.Designer.cs">
@@ -192,6 +209,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905261529083_Fixed_Rate_Types.resx">
       <DependentUpon>201905261529083_Fixed_Rate_Types.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905261720473_Rename_Invoice_Fields.resx">
+      <DependentUpon>201905261720473_Rename_Invoice_Fields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905261736295_Misc2.resx">
+      <DependentUpon>201905261736295_Misc2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905261907148_Test1.resx">
+      <DependentUpon>201905261907148_Test1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905261952251_ParentInvoiceRequired.resx">
+      <DependentUpon>201905261952251_ParentInvoiceRequired.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="Module.resx">

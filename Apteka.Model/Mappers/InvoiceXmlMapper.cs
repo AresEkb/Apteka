@@ -24,15 +24,15 @@ namespace Apteka.Model.Mapper
                 //dto.ZagolovokDokumenta.TipDok
                 entity.Code = dto.ZagolovokDokumenta.NomerDok;
                 entity.DocDateTime = dto.ZagolovokDokumenta.DataDok;
-                entity.ShippingDateTime = dto.ZagolovokDokumenta.DataOtgruzki;
+                entity.ShipmentDateTime = dto.ZagolovokDokumenta.DataOtgruzki;
                 //dto.ZagolovokDokumenta.Postavshhik
                 //dto.ZagolovokDokumenta.Poluchatel
                 //dto.ZagolovokDokumenta.Gruzopoluchatel
                 entity.PaymentConditions = dto.ZagolovokDokumenta.UslovijaOplaty;
                 entity.ProductGroup = dto.ZagolovokDokumenta.TovarnajaGruppa;
                 //dto.ZagolovokDokumenta.Pozicij
-                entity.ManufacturerPrice = dto.ZagolovokDokumenta.SummaOpt;
-                entity.ValueAddedTaxAmount = dto.ZagolovokDokumenta.SummaNDS;
+                //entity.SupplierPrice = dto.ZagolovokDokumenta.SummaOpt;
+                //entity.ValueAddedTaxAmount = dto.ZagolovokDokumenta.SummaNDS;
                 //invoice.TotalPrice = dto.ZagolovokDokumenta.SummaOptVklNDS;
                 entity.Note = dto.ZagolovokDokumenta.Primechanie;
                 //dto.ZagolovokDokumenta.RekvizityPostavshhika
@@ -52,14 +52,14 @@ namespace Apteka.Model.Mapper
             dto.ZagolovokDokumenta.TipDok = "ПРХ";
             dto.ZagolovokDokumenta.NomerDok = entity.Code;
             dto.ZagolovokDokumenta.DataDok = entity.DocDateTime;
-            dto.ZagolovokDokumenta.DataOtgruzki = entity.ShippingDateTime;
+            dto.ZagolovokDokumenta.DataOtgruzki = entity.ShipmentDateTime;
             //dto.ZagolovokDokumenta.Postavshhik
             //dto.ZagolovokDokumenta.Poluchatel
             //dto.ZagolovokDokumenta.Gruzopoluchatel
             dto.ZagolovokDokumenta.UslovijaOplaty = entity.PaymentConditions;
             dto.ZagolovokDokumenta.TovarnajaGruppa = entity.ProductGroup;
             dto.ZagolovokDokumenta.Pozicij = entity.ItemCount;
-            dto.ZagolovokDokumenta.SummaOpt = entity.ManufacturerPrice;
+            dto.ZagolovokDokumenta.SummaOpt = entity.SupplierPrice;
             dto.ZagolovokDokumenta.SummaNDS = entity.ValueAddedTaxAmount;
             dto.ZagolovokDokumenta.SummaOptVklNDS = entity.TotalPrice;
             dto.ZagolovokDokumenta.Primechanie = entity.Note;
