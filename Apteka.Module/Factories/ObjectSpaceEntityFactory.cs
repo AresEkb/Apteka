@@ -1,8 +1,8 @@
-﻿using Apteka.Model;
+﻿using Apteka.Model.Factories;
 
 using DevExpress.ExpressApp;
 
-namespace Apteka.Module.Mappers
+namespace Apteka.Module.Factories
 {
     public class ObjectSpaceEntityFactory : IEntityFactory
     {

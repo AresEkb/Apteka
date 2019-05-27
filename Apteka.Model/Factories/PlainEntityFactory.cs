@@ -1,4 +1,4 @@
-﻿namespace Apteka.Model
+﻿namespace Apteka.Model.Factories
 {
     public class PlainEntityFactory : IEntityFactory
     {

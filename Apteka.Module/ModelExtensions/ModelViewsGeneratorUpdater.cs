@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Reflection;
 
-using Apteka.Model;
+using Apteka.Model.Annotations;
 
 using DevExpress.ExpressApp.Editors;
 using DevExpress.ExpressApp.Model;

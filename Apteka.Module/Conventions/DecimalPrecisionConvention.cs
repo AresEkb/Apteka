@@ -2,7 +2,7 @@
 using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
-using Apteka.Model;
+using Apteka.Model.Annotations;
 
 namespace Apteka.Module.Conventions
 {

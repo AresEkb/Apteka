@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace Apteka.Model
+namespace Apteka.Model.Annotations
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
-    public class CompositionAttribute : Attribute
+    public class NonUnicodeAttribute : Attribute
     {
     }
 }

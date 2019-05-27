@@ -3,6 +3,7 @@ using System.Linq;
 
 using Apteka.Model.Dto;
 using Apteka.Model.Entities;
+using Apteka.Model.Factories;
 
 namespace Apteka.Model.Mapper
 {
@@ -47,7 +48,7 @@ namespace Apteka.Model.Mapper
         public InvoiceXml Map(Invoice entity)
         {
             var dto = new InvoiceXml();
-            dto.ZagolovokDokumenta = new ZagolovokDokumenta();
+            dto.ZagolovokDokumenta = new InvoiceXmlHeader();
             dto.Identifikator = entity.Guid;
             dto.ZagolovokDokumenta.TipDok = "ПРХ";
             dto.ZagolovokDokumenta.NomerDok = entity.Code;
@@ -64,11 +65,11 @@ namespace Apteka.Model.Mapper
             dto.ZagolovokDokumenta.SummaOptVklNDS = entity.TotalPrice;
             dto.ZagolovokDokumenta.Primechanie = entity.Note;
             //dto.ZagolovokDokumenta.RekvizityPostavshhika
-            dto.TovarnyePozicii = new List<TovarnajaPozicija>(entity.Items.Select(el => Map(el)));
+            dto.TovarnyePozicii = new List<InvoiceXmlItem>(entity.Items.Select(el => Map(el)));
             return dto;
         }
 
-        private InvoiceItem Map(TovarnajaPozicija dto)
+        private InvoiceItem Map(InvoiceXmlItem dto)
         {
             var entity = entityFactory.Create<InvoiceItem>();
             entity.ProductCode = dto.KodTovara;
@@ -102,9 +103,9 @@ namespace Apteka.Model.Mapper
             return org;
         }
 
-        private TovarnajaPozicija Map(InvoiceItem entity)
+        private InvoiceXmlItem Map(InvoiceItem entity)
         {
-            var dto = new TovarnajaPozicija();
+            var dto = new InvoiceXmlItem();
             dto.KodTovara = entity.ProductCode;
             dto.Tovar = entity.ProductName;
             //dto.Izgotovitel = entity.ManufacturerName;
@@ -120,11 +121,11 @@ namespace Apteka.Model.Mapper
             dto.SummaOptVklNDS = entity.TotalPrice;
             dto.EAN13 = entity.Ean13;
             dto.GTD = entity.CustomsDeclarationNumber;
-            dto.Serii = new List<Serija>(entity.Series.Select(el => Map(el)));
+            dto.Serii = new List<InvoiceXmlSeries>(entity.Series.Select(el => Map(el)));
             return dto;
         }
 
-        private ProductSeries Map(Serija dto)
+        private ProductSeries Map(InvoiceXmlSeries dto)
         {
             var entity = entityFactory.Create<ProductSeries>();
             entity.Code = dto.SerijaTovara;
@@ -140,9 +141,9 @@ namespace Apteka.Model.Mapper
             return entity;
         }
 
-        private Serija Map(ProductSeries entity)
+        private InvoiceXmlSeries Map(ProductSeries entity)
         {
-            var dto = new Serija();
+            var dto = new InvoiceXmlSeries();
             dto.SerijaTovara = entity.Code;
             dto.NomerSertif = entity.CertificateCode;
             //dto.OrganSertif;

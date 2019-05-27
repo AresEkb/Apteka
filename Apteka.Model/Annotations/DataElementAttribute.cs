@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Apteka.Model
+namespace Apteka.Model.Annotations
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property, AllowMultiple = true)]
     public class DataElementAttribute : Attribute

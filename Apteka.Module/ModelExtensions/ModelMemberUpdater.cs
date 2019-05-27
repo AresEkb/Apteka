@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 
-using Apteka.Model;
+using Apteka.Model.Annotations;
 using Apteka.Model.Extensions;
 
 using DevExpress.ExpressApp.Model;

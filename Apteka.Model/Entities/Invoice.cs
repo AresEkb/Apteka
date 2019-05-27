@@ -1,8 +1,10 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+
+using Apteka.Model.Annotations;
 
 namespace Apteka.Model.Entities
 {

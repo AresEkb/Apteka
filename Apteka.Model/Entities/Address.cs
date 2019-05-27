@@ -1,19 +1,18 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-using Apteka.Model.Annotations;
-
 namespace Apteka.Model.Entities
 {
-    public class Country
+    public class Address
     {
         [Browsable(false)]
         public int Id { get; protected set; }
 
-        [MinLength(2), MaxLength(2), NonUnicode]
-        public string Code { get; set; }
+        public Country Country { get; set; }
+
+        public City City { get; set; }
 
         [MaxLength(200)]
-        public string Name { get; set; }
+        public string Description { get; set; }
     }
 }

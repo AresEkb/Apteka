@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
+using Apteka.Model.Annotations;
+
 namespace Apteka.Model.Entities
 {
     public class City

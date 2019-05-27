@@ -25,17 +25,4 @@ namespace Apteka.Model.Entities
         [MaxLength(100)]
         public string Email { get; set; }
     }
-
-    public class Address
-    {
-        [Browsable(false)]
-        public int Id { get; protected set; }
-
-        public Country Country { get; set; }
-
-        public City City { get; set; }
-
-        [MaxLength(200)]
-        public string Description { get; set; }
-    }
 }

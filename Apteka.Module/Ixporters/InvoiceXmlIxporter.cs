@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 using Apteka.Model.Dto;
 using Apteka.Model.Entities;
 using Apteka.Model.Mapper;
-using Apteka.Module.Mappers;
+using Apteka.Module.Factories;
 
 using DevExpress.ExpressApp;
 
