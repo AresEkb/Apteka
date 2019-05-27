@@ -58,7 +58,7 @@ namespace Apteka.Module.BusinessObjects
         public DbSet<Contact> Contacts { get; set; }
     }
 
-    //[DefaultClassOptions]
+    [DevExpress.Persistent.Base.DefaultClassOptions]
     public class Contact
     {
         [Browsable(false)]

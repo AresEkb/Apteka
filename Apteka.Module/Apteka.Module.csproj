@@ -157,6 +157,14 @@
     <Compile Include="Migrations\201905270948170_AddAltKeys.Designer.cs">
       <DependentUpon>201905270948170_AddAltKeys.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905271145435_AddBankAccount.cs" />
+    <Compile Include="Migrations\201905271145435_AddBankAccount.Designer.cs">
+      <DependentUpon>201905271145435_AddBankAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905271151474_CountryCodeOptional.cs" />
+    <Compile Include="Migrations\201905271151474_CountryCodeOptional.Designer.cs">
+      <DependentUpon>201905271151474_CountryCodeOptional.cs</DependentUpon>
+    </Compile>
     <Compile Include="ModelExtensions\ModelClassUpdater.cs" />
     <Compile Include="ModelExtensions\ModelMemberUpdater.cs" />
     <Compile Include="ModelExtensions\ModelViewsGeneratorUpdater.cs" />
@@ -232,6 +240,12 @@
     <EmbeddedResource Include="Migrations\201905270948170_AddAltKeys.resx">
       <DependentUpon>201905270948170_AddAltKeys.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905271145435_AddBankAccount.resx">
+      <DependentUpon>201905271145435_AddBankAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905271151474_CountryCodeOptional.resx">
+      <DependentUpon>201905271151474_CountryCodeOptional.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="Module.resx">
       <SubType>Designer</SubType>
@@ -265,6 +279,10 @@
     <None Include="FunctionalTests\config.xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="UnusableNodes.xml">
+      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="Welcome.html" />
   </ItemGroup>
   <ItemGroup>

@@ -5,7 +5,6 @@
       <Item Id="Warehouse" Index="0" />
       <Item Id="CodeLists" Index="1" />
       <Item Id="Reports" Index="2" />
-      <Item Id="Default" Index="3" />
     </Items>
   </NavigationItems>
   <Options>
@@ -14,4 +13,11 @@
   <SchemaModules>
     <SchemaModule Name="SystemModule" Version="17.2.7.0" IsNewNode="True" />
   </SchemaModules>
+  <Views>
+    <DetailView Id="Invoice_DetailView">
+      <Items>
+        <PropertyEditor Id="SupplierBankAccount" DataSourceProperty="Supplier.BankAccounts" />
+      </Items>
+    </DetailView>
+  </Views>
 </Application>

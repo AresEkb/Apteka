@@ -33,13 +33,16 @@ namespace Apteka.Model.Entities
         public DateTime? ShipmentDateTime { get; set; }
 
         [DataElement("ru", "поставщик", "поставщик", "")]
-        public Organization Supplier { get; set; }
+        public virtual Organization Supplier { get; set; }
+
+        [DataElement("ru", "банковский счет поставщика", "счет поставщика", "")]
+        public virtual BankAccount SupplierBankAccount { get; set; }
 
         [DataElement("ru", "получатель", "получатель", "")]
-        public Organization Receiver { get; set; }
+        public virtual Organization Receiver { get; set; }
 
         [DataElement("ru", "грузополучатель", "грузополучатель", "")]
-        public Organization Consignee { get; set; }
+        public virtual Organization Consignee { get; set; }
 
         [DataElement("ru", "условия оплаты", "условия оплаты", "условия оплаты поставки")]
         public string PaymentConditions { get; set; }

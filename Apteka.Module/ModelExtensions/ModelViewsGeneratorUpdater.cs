@@ -49,13 +49,13 @@ namespace Apteka.Module.ModelExtensions
                 // Remove link and link buttons for compositions
                 // Actually they should be removed automatically after application
                 // of AggregatedAttribute to a property
-                var prop = mi.Owner.Type.GetProperty(mi.Name);
-                var compAttr = prop.GetCustomAttributes<CompositionAttribute>(false).FirstOrDefault();
-                if (compAttr != null)
-                {
-                    listViewModel.AllowLink = false;
-                    listViewModel.AllowUnlink = false;
-                }
+                //var prop = mi.Owner.Type.GetProperty(mi.Name);
+                //var compAttr = prop.GetCustomAttributes<CompositionAttribute>(false).FirstOrDefault();
+                //if (compAttr != null)
+                //{
+                //    listViewModel.AllowLink = false;
+                //    listViewModel.AllowUnlink = false;
+                //}
             }
         }
     }

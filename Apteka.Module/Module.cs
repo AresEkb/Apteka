@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-using Apteka.Model;
+using Apteka.Model.Annotations;
+using Apteka.Model.Entities;
 using Apteka.Module.ModelExtensions;
 
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.DC;
-using DevExpress.ExpressApp.Editors;
-using DevExpress.ExpressApp.Model;
 using DevExpress.ExpressApp.Model.Core;
-using DevExpress.ExpressApp.Model.NodeGenerators;
 using DevExpress.ExpressApp.Updating;
 
 namespace Apteka.Module
@@ -37,11 +35,10 @@ namespace Apteka.Module
             DevExpress.ExpressApp.Security.SecurityModule.UsedExportedTypes = DevExpress.Persistent.Base.UsedExportedTypes.Custom;
             AdditionalExportedTypes.Add(typeof(DevExpress.Persistent.BaseImpl.EF.Analysis));
 
-            //AdditionalExportedTypes.Add(typeof(Model.Entities.InvoiceItem));
-
+            // Register entites from another assembly
             AdditionalExportedTypes.AddRange(
                 ModuleHelper.CollectExportedTypesFromAssembly(
-                    typeof(Model.Entities.Invoice).Assembly,
+                    typeof(Invoice).Assembly,
                     type => type.Namespace.StartsWith("Apteka.Model.Entities")));
         }
 
@@ -57,44 +54,25 @@ namespace Apteka.Module
             // Manage various aspects of the application UI and behavior at the module level.
         }
 
-        //public override void CustomizeTypesInfo(ITypesInfo typesInfo)
-        //{
-        //    base.CustomizeTypesInfo(typesInfo);
-        //    foreach (var typeInfo in typesInfo.PersistentTypes)
-        //    {
-        //        // TODO: Remove in future
-        //        if (!typeInfo.AssemblyInfo.FullName.StartsWith("Apteka."))
-        //        {
-        //            continue;
-        //        }
-        //        //var typeAttr = typeInfo.Type.CustomAttributes.OfType<DataElementAttribute>().FirstOrDefault();
-        //        //var typeAttr = typeInfo.Type.GetCustomAttributes(typeof(DataElementAttribute), false)
-        //        //    .OfType<DataElementAttribute>().FirstOrDefault();
-        //        //if (typeAttr != null)
-        //        //{
-        //        //    typeInfo.AddAttribute(new DisplayNameAttribute(typeAttr.Name.FirstCharToUpper()));
-        //        //}
-        //        Console.WriteLine(">>>");
-        //        foreach (var memberInfo in typeInfo.OwnMembers.Where(m => m.IsProperty))
-        //        {
-        //            var prop = typeInfo.Type.GetProperty(memberInfo.Name);
-        //            var compAttr = prop.GetCustomAttributes<CompositionAttribute>(false).FirstOrDefault();
-        //            if (compAttr != null)
-        //            {
-        //                //memberInfo.AddAttribute(new AssociationAttribute());
-        //                memberInfo.AddAttribute(new AggregatedAttribute());
-        //            }
-        //            Console.WriteLine(memberInfo.Name);
-        //            foreach (var a in memberInfo.Attributes)
-        //            {
-        //                Console.WriteLine(a);
-        //            }
-        //            //Console.WriteLine("!!!!!" + memberInfo.FindAttributes());
-        //            //Console.WriteLine("!!!!!" + memberInfo.FindAttribute<AggregatedAttribute>());
-        //            //Console.WriteLine("!!!!!" + prop.GetCustomAttributes<AggregatedAttribute>(false).FirstOrDefault());
-        //        }
-        //    }
-        //}
+        public override void CustomizeTypesInfo(ITypesInfo typesInfo)
+        {
+            base.CustomizeTypesInfo(typesInfo);
+
+            // Add AggregatedAttribute to composition properties
+            foreach (var typeInfo in typesInfo.PersistentTypes)
+            {
+                foreach (var memberInfo in typeInfo.OwnMembers.Where(m => m.IsProperty))
+                {
+                    var prop = typeInfo.Type.GetProperty(memberInfo.Name);
+                    var compAttr = prop.GetCustomAttributes<CompositionAttribute>(false).FirstOrDefault();
+                    if (compAttr != null)
+                    {
+                        memberInfo.AddAttribute(new AggregatedAttribute(), true);
+                    }
+                }
+                typesInfo.RefreshInfo(typeInfo);
+            }
+        }
 
         public override void AddGeneratorUpdaters(ModelNodesGeneratorUpdaters updaters)
         {

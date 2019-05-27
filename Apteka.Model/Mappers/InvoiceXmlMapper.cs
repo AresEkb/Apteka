@@ -1,42 +1,64 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Apteka.Model.Dto;
 using Apteka.Model.Entities;
 using Apteka.Model.Factories;
 
-namespace Apteka.Model.Mapper
+namespace Apteka.Model.Mappers
 {
-    public class InvoiceXmlMapper
+    public class InvoiceXmlMapper : MapperBase
     {
-        private readonly IEntityFactory entityFactory;
-
-        public InvoiceXmlMapper(IEntityFactory entityFactory)
+        public InvoiceXmlMapper(IEntityFactory entityFactory) : base(entityFactory)
         {
-            this.entityFactory = entityFactory;
         }
 
         public Invoice Map(InvoiceXml dto)
         {
-            var entity = entityFactory.Create<Invoice>();
+            var entity = EntityFactory.Create<Invoice>();
             if (dto.ZagolovokDokumenta != null)
             {
+                var header = dto.ZagolovokDokumenta;
                 entity.Guid = dto.Identifikator;
-                //dto.ZagolovokDokumenta.TipDok
-                entity.Code = dto.ZagolovokDokumenta.NomerDok;
-                entity.DocDateTime = dto.ZagolovokDokumenta.DataDok;
-                entity.ShipmentDateTime = dto.ZagolovokDokumenta.DataOtgruzki;
-                //dto.ZagolovokDokumenta.Postavshhik
-                entity.Receiver = FindOrCreateOrganization(dto.ZagolovokDokumenta.Poluchatel);
-                entity.Consignee = FindOrCreateOrganization(dto.ZagolovokDokumenta.Gruzopoluchatel);
-                entity.PaymentConditions = dto.ZagolovokDokumenta.UslovijaOplaty;
-                entity.ProductGroup = dto.ZagolovokDokumenta.TovarnajaGruppa;
-                //dto.ZagolovokDokumenta.Pozicij
-                //entity.SupplierPrice = dto.ZagolovokDokumenta.SummaOpt;
-                //entity.ValueAddedTaxAmount = dto.ZagolovokDokumenta.SummaNDS;
-                //invoice.TotalPrice = dto.ZagolovokDokumenta.SummaOptVklNDS;
-                entity.Note = dto.ZagolovokDokumenta.Primechanie;
-                //dto.ZagolovokDokumenta.RekvizityPostavshhika
+                //header.TipDok
+                entity.Code = header.NomerDok;
+                entity.DocDateTime = header.DataDok;
+                entity.ShipmentDateTime = header.DataOtgruzki;
+                entity.Supplier = FindOrCreateOrganization(header.Postavshhik);
+                entity.Receiver = FindOrCreateOrganization(header.Poluchatel);
+                entity.Consignee = FindOrCreateOrganization(header.Gruzopoluchatel);
+                entity.PaymentConditions = header.UslovijaOplaty;
+                entity.ProductGroup = header.TovarnajaGruppa;
+                //header.Pozicij
+                //entity.SupplierPrice = header.SummaOpt;
+                //entity.ValueAddedTaxAmount = header.SummaNDS;
+                //invoice.TotalPrice = header.SummaOptVklNDS;
+                entity.Note = header.Primechanie;
+                if (entity.Supplier != null && header.RekvizityPostavshhika != null)
+                {
+                    var postavshik = header.RekvizityPostavshhika;
+                    var city = FindOrCreateCity(postavshik.Gorod);
+                    if (city != null)
+                    {
+                        entity.Supplier.Address = EntityFactory.Create<Address>();
+                        entity.Supplier.Address.City = city;
+                    }
+                    if (!String.IsNullOrWhiteSpace(postavshik.Adres))
+                    {
+                        if (entity.Supplier.Address == null)
+                        {
+                            entity.Supplier.Address = EntityFactory.Create<Address>();
+                        }
+                        entity.Supplier.Address.Description = postavshik.Adres;
+                    }
+                    entity.Supplier.TaxpayerCode = postavshik.INN;
+                    entity.Supplier.PhoneNumber = postavshik.Telefony;
+                    entity.Supplier.Email = postavshik.JelPochta;
+                    entity.SupplierBankAccount = FindOrCreateBankAccount(entity.Supplier,
+                        postavshik.BIK, postavshik.Bank, postavshik.OtdelenieBanka,
+                        postavshik.KorSchet, postavshik.RaschetnyjSchet);
+                }
             }
             if (dto.TovarnyePozicii != null)
             {
@@ -47,35 +69,54 @@ namespace Apteka.Model.Mapper
 
         public InvoiceXml Map(Invoice entity)
         {
-            var dto = new InvoiceXml();
-            dto.ZagolovokDokumenta = new InvoiceXmlHeader();
-            dto.Identifikator = entity.Guid;
-            dto.ZagolovokDokumenta.TipDok = "ПРХ";
-            dto.ZagolovokDokumenta.NomerDok = entity.Code;
-            dto.ZagolovokDokumenta.DataDok = entity.DocDateTime;
-            dto.ZagolovokDokumenta.DataOtgruzki = entity.ShipmentDateTime;
-            //dto.ZagolovokDokumenta.Postavshhik
-            dto.ZagolovokDokumenta.Poluchatel = entity.Receiver?.Name;
-            dto.ZagolovokDokumenta.Gruzopoluchatel = entity.Consignee?.Name;
-            dto.ZagolovokDokumenta.UslovijaOplaty = entity.PaymentConditions;
-            dto.ZagolovokDokumenta.TovarnajaGruppa = entity.ProductGroup;
-            dto.ZagolovokDokumenta.Pozicij = entity.ItemCount;
-            dto.ZagolovokDokumenta.SummaOpt = entity.SupplierPrice;
-            dto.ZagolovokDokumenta.SummaNDS = entity.ValueAddedTaxAmount;
-            dto.ZagolovokDokumenta.SummaOptVklNDS = entity.TotalPrice;
-            dto.ZagolovokDokumenta.Primechanie = entity.Note;
-            //dto.ZagolovokDokumenta.RekvizityPostavshhika
+            var dto = new InvoiceXml
+            {
+                Identifikator = entity.Guid,
+                ZagolovokDokumenta = new InvoiceXmlHeader
+                {
+                    TipDok = "ПРХ",
+                    NomerDok = entity.Code,
+                    DataDok = entity.DocDateTime,
+                    DataOtgruzki = entity.ShipmentDateTime,
+                    Postavshhik = entity.Supplier?.Name,
+                    Poluchatel = entity.Receiver?.Name,
+                    Gruzopoluchatel = entity.Consignee?.Name,
+                    UslovijaOplaty = entity.PaymentConditions,
+                    TovarnajaGruppa = entity.ProductGroup,
+                    Pozicij = entity.ItemCount,
+                    SummaOpt = entity.SupplierPrice,
+                    SummaNDS = entity.ValueAddedTaxAmount,
+                    SummaOptVklNDS = entity.TotalPrice,
+                    Primechanie = entity.Note
+                }
+            };
+            if (entity.Supplier != null)
+            {
+                dto.ZagolovokDokumenta.RekvizityPostavshhika = new InvoiceXmlSupplier()
+                {
+                    Adres = entity.Supplier.Address?.Description,
+                    INN = entity.Supplier.TaxpayerCode,
+                    Telefony = entity.Supplier.PhoneNumber,
+                    RaschetnyjSchet = entity.SupplierBankAccount?.CheckingAccount,
+                    Gorod = entity.Supplier.Address?.City?.Name,
+                    Bank = entity.SupplierBankAccount?.BankName,
+                    OtdelenieBanka = entity.SupplierBankAccount?.BankBranchName,
+                    BIK = entity.SupplierBankAccount?.BankCode,
+                    KorSchet = entity.SupplierBankAccount?.CorrespondentAccount,
+                    JelPochta = entity.Supplier.Email,
+                };
+            }
             dto.TovarnyePozicii = new List<InvoiceXmlItem>(entity.Items.Select(el => Map(el)));
             return dto;
         }
 
         private InvoiceItem Map(InvoiceXmlItem dto)
         {
-            var entity = entityFactory.Create<InvoiceItem>();
+            var entity = EntityFactory.Create<InvoiceItem>();
             entity.ProductCode = dto.KodTovara;
             entity.ProductName = dto.Tovar;
-            //item.Manufacturer = dto.Izgotovitel;
-            //item.ManufacturerCountry = dto.StranaIzgotovitelja;
+            entity.Manufacturer = FindOrCreateOrganization(dto.Izgotovitel);
+            entity.ManufacturerCountry = FindOrCreateCountry(dto.StranaIzgotovitelja);
             entity.Quantity = dto.Kolichestvo;
             entity.ManufacturerPrice = dto.CenaIzg;
             entity.StateRegistryPrice = dto.CenaGR;
@@ -91,74 +132,60 @@ namespace Apteka.Model.Mapper
             return entity;
         }
 
-        private readonly IList<Organization> localOrganizations = new List<Organization>();
-
-        private Organization FindOrCreateOrganization(string name)
-        {
-            Organization org = localOrganizations.FirstOrDefault(o => o.Name == name);
-            if (org != null) { return org; }
-
-            org = entityFactory.Query<Organization>().FirstOrDefault(o => o.Name == name);
-            if (org != null) { return org; }
-
-            org = entityFactory.Create<Organization>();
-            org.Name = name;
-            localOrganizations.Add(org);
-            return org;
-        }
-
         private InvoiceXmlItem Map(InvoiceItem entity)
         {
-            var dto = new InvoiceXmlItem();
-            dto.KodTovara = entity.ProductCode;
-            dto.Tovar = entity.ProductName;
-            //dto.Izgotovitel = entity.ManufacturerName;
-            //dto.StranaIzgotovitelja = entity.ManufacturerCountry;
-            dto.Kolichestvo = entity.Quantity;
-            dto.CenaIzg = entity.ManufacturerPrice;
-            dto.CenaGR = entity.StateRegistryPrice;
-            dto.NacenOpt = entity.SupplierMarkupRate * 100;
-            dto.CenaOpt = entity.SupplierPrice;
-            dto.SummaOpt = entity.TotalSupplierPrice;
-            dto.StavkaNDS = entity.ValueAddedTaxRate * 100;
-            dto.SummaNDS = entity.ValueAddedTaxAmount;
-            dto.SummaOptVklNDS = entity.TotalPrice;
-            dto.EAN13 = entity.Ean13;
-            dto.GTD = entity.CustomsDeclarationNumber;
-            dto.Serii = new List<InvoiceXmlSeries>(entity.Series.Select(el => Map(el)));
-            return dto;
+            return new InvoiceXmlItem
+            {
+                KodTovara = entity.ProductCode,
+                Tovar = entity.ProductName,
+                Izgotovitel = entity.Manufacturer?.Name,
+                StranaIzgotovitelja = entity.ManufacturerCountry?.Name,
+                Kolichestvo = entity.Quantity,
+                CenaIzg = entity.ManufacturerPrice,
+                CenaGR = entity.StateRegistryPrice,
+                NacenOpt = entity.SupplierMarkupRate * 100,
+                CenaOpt = entity.SupplierPrice,
+                SummaOpt = entity.TotalSupplierPrice,
+                StavkaNDS = entity.ValueAddedTaxRate * 100,
+                SummaNDS = entity.ValueAddedTaxAmount,
+                SummaOptVklNDS = entity.TotalPrice,
+                EAN13 = entity.Ean13,
+                GTD = entity.CustomsDeclarationNumber,
+                Serii = new List<InvoiceXmlSeries>(entity.Series.Select(el => Map(el)))
+            };
         }
 
         private ProductSeries Map(InvoiceXmlSeries dto)
         {
-            var entity = entityFactory.Create<ProductSeries>();
+            var entity = EntityFactory.Create<ProductSeries>();
             entity.Code = dto.SerijaTovara;
             entity.CertificateCode = dto.NomerSertif;
-            //dto.OrganSertif;
+            entity.CertificateAuthority = dto.OrganSertif;
             entity.CertificateIssueDate = dto.DataVydachiSertif;
             entity.CertificateExpireDate = dto.SrokDejstvijaSertif;
             entity.ShelfLifeDate = dto.SrokGodnostiTovara;
             //dto.RegNomer
             entity.RegionalCertificateCode = dto.RegNomerSertif;
             entity.RegionalCertificateIssueDate = dto.RegDataSertif;
-            //dto.RegOrganSertif;
+            entity.RegionalCertificateAuthority = dto.RegOrganSertif;
             return entity;
         }
 
         private InvoiceXmlSeries Map(ProductSeries entity)
         {
-            var dto = new InvoiceXmlSeries();
-            dto.SerijaTovara = entity.Code;
-            dto.NomerSertif = entity.CertificateCode;
-            //dto.OrganSertif;
-            dto.DataVydachiSertif = entity.CertificateIssueDate;
-            dto.SrokDejstvijaSertif = entity.CertificateExpireDate;
-            dto.SrokGodnostiTovara = entity.ShelfLifeDate;
-            dto.RegNomer = "_";
-            dto.RegNomerSertif = entity.RegionalCertificateCode;
-            dto.RegDataSertif = entity.RegionalCertificateIssueDate;
-            //dto.RegOrganSertif;
-            return dto;
+            return new InvoiceXmlSeries
+            {
+                SerijaTovara = entity.Code,
+                NomerSertif = entity.CertificateCode,
+                OrganSertif = entity.RegionalCertificateAuthority,
+                DataVydachiSertif = entity.CertificateIssueDate,
+                SrokDejstvijaSertif = entity.CertificateExpireDate,
+                SrokGodnostiTovara = entity.ShelfLifeDate,
+                RegNomer = "_",
+                RegNomerSertif = entity.RegionalCertificateCode,
+                RegDataSertif = entity.RegionalCertificateIssueDate,
+                RegOrganSertif = entity.RegionalCertificateAuthority
+            };
         }
     }
 }

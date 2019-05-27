@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 using Apteka.Model.Annotations;
@@ -6,9 +7,14 @@ using Apteka.Model.Annotations;
 namespace Apteka.Model.Entities
 {
     [DataElement("ru", "организация", "организация", "организации", "")]
-    [Category("CodeLists/Orgs")]
+    [Category("CodeLists")]
     public class Organization
     {
+        public Organization()
+        {
+            BankAccounts = new List<BankAccount>();
+        }
+
         [Browsable(false)]
         public int Id { get; protected set; }
 
@@ -37,5 +43,9 @@ namespace Apteka.Model.Entities
         [MaxLength(100)]
         [EmailAddress]
         public string Email { get; set; }
+
+        [DataElement("ru", "банковские счета", "счета", "")]
+        [Composition]
+        public virtual List<BankAccount> BankAccounts { get; set; }
     }
 }
