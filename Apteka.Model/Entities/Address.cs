@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Linq;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Apteka.Model.Entities
@@ -14,5 +16,9 @@ namespace Apteka.Model.Entities
 
         [MaxLength(200)]
         public string Description { get; set; }
+
+        public string Name { get => String.Join(", ", new string[]
+            { Country?.Name, City?.Name, Description }
+            .Where(s => !String.IsNullOrWhiteSpace(s))); }
     }
 }

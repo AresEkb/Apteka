@@ -177,7 +177,7 @@ namespace Apteka.Model.Mappers
             {
                 SerijaTovara = entity.Code,
                 NomerSertif = entity.CertificateCode,
-                OrganSertif = entity.RegionalCertificateAuthority,
+                OrganSertif = entity.CertificateAuthority,
                 DataVydachiSertif = entity.CertificateIssueDate,
                 SrokDejstvijaSertif = entity.CertificateExpireDate,
                 SrokGodnostiTovara = entity.ShelfLifeDate,
