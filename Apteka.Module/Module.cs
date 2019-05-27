@@ -102,6 +102,7 @@ namespace Apteka.Module
             updaters.Add(new ModelClassUpdater());
             updaters.Add(new ModelMemberUpdater());
             updaters.Add(new ModelViewsGeneratorUpdater());
+            updaters.Add(new NavigationItemGeneratorUpdater());
         }
     }
 }

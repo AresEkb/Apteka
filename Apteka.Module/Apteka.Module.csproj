@@ -130,6 +130,8 @@
     <Compile Include="Conventions\DecimalPrecisionConvention.cs" />
     <Compile Include="Conventions\NonUnicodeAttributeConvention.cs" />
     <Compile Include="DatabaseUpdate\Updater.cs" />
+    <Compile Include="Extensions\IModelListViewExtensions.cs" />
+    <Compile Include="Factories\ObjectSpaceQueryFactory.cs" />
     <Compile Include="Ixporters\InvoiceXmlIxporter.cs" />
     <Compile Include="Migrations\201905261529083_Fixed_Rate_Types.cs" />
     <Compile Include="Migrations\201905261529083_Fixed_Rate_Types.Designer.cs">
@@ -180,6 +182,7 @@
       <DependentUpon>201905251502099_Add_Address.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="ModelExtensions\NavigationItemGeneratorUpdater.cs" />
     <Compile Include="Module.cs">
       <SubType>Component</SubType>
     </Compile>

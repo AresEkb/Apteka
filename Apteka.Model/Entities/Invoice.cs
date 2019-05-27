@@ -9,7 +9,8 @@ using Apteka.Model.Annotations;
 namespace Apteka.Model.Entities
 {
     [DataElement("ru", "накладная", "накладная", "накладные", "электронная товарная накладная")]
-    public partial class Invoice
+    [Category("Warehouse")]
+    public class Invoice
     {
         public Invoice()
         {
@@ -40,7 +41,7 @@ namespace Apteka.Model.Entities
         [DataElement("ru", "грузополучатель", "грузополучатель", "")]
         public Organization Consignee { get; set; }
 
-        [DataElement("ru", "грузополучатель", "грузополучатель", "")]
+        [DataElement("ru", "условия оплаты", "условия оплаты", "условия оплаты поставки")]
         public string PaymentConditions { get; set; }
 
         [DataElement("ru", "товарная группа", "товарная группа", "наименование товарной группы")]

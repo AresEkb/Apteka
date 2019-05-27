@@ -3,6 +3,7 @@
   <NavigationItems>
     <Items>
       <Item Id="Warehouse" Caption="Склад" />
+      <Item Id="CodeLists" Caption="Справочники" />
     </Items>
   </NavigationItems>
 </Application>

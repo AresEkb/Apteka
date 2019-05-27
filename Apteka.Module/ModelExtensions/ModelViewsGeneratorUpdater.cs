@@ -2,6 +2,7 @@
 using System.Reflection;
 
 using Apteka.Model.Annotations;
+using Apteka.Module.Extensions;
 
 using DevExpress.ExpressApp.Editors;
 using DevExpress.ExpressApp.Model;
@@ -41,9 +42,16 @@ namespace Apteka.Module.ModelExtensions
             if (propertyEditor.View is IModelListView listViewModel)
             {
                 var mi = propertyEditor.ModelMember.MemberInfo;
+
+                // Update list view column captions
+                listViewModel.UpdateColumnCaptions();
+
+                // Remove link and link buttons for compositions
+                // Actually they should be removed automatically after application
+                // of AggregatedAttribute to a property
                 var prop = mi.Owner.Type.GetProperty(mi.Name);
-                var attr = prop.GetCustomAttributes<CompositionAttribute>(false).FirstOrDefault();
-                if (attr != null)
+                var compAttr = prop.GetCustomAttributes<CompositionAttribute>(false).FirstOrDefault();
+                if (compAttr != null)
                 {
                     listViewModel.AllowLink = false;
                     listViewModel.AllowUnlink = false;

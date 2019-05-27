@@ -3,6 +3,7 @@ using System.Reflection;
 
 using Apteka.Model.Annotations;
 using Apteka.Model.Extensions;
+using Apteka.Module.Extensions;
 
 using DevExpress.ExpressApp.Model;
 using DevExpress.ExpressApp.Model.Core;
@@ -33,22 +34,10 @@ namespace Apteka.Module.ModelExtensions
                         {
                             // Update class caption
                             cls.Caption = attr.Name.FirstCharToUpper();
-
                             // Update list view caption
                             cls.DefaultListView.Caption = attr.PluralName.FirstCharToUpper();
-
                             // Update list view column captions
-                            foreach (var col in cls.DefaultListView.Columns)
-                            {
-                                var mi = col.ModelMember.MemberInfo;
-                                var prop = mi.Owner.Type.GetProperty(mi.Name);
-                                var memberAttr = prop.GetCustomAttributes(typeof(DataElementAttribute), false)
-                                    .OfType<DataElementAttribute>().FirstOrDefault();
-                                if (memberAttr != null)
-                                {
-                                    col.Caption = memberAttr.BriefName.FirstCharToUpper();
-                                }
-                            }
+                            cls.DefaultListView.UpdateColumnCaptions();
                         }
                     }
                 }

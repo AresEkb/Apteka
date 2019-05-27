@@ -5,6 +5,8 @@ using Apteka.Model.Annotations;
 
 namespace Apteka.Model.Entities
 {
+    [DataElement("ru", "город", "город", "города", "")]
+    [Category("CodeLists")]
     public class City
     {
         [Browsable(false)]

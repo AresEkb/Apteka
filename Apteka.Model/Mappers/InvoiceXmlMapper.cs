@@ -10,10 +10,12 @@ namespace Apteka.Model.Mapper
     public class InvoiceXmlMapper
     {
         private readonly IEntityFactory entityFactory;
+        private readonly IQueryFactory queryFactory;
 
-        public InvoiceXmlMapper(IEntityFactory entityFactory)
+        public InvoiceXmlMapper(IEntityFactory entityFactory, IQueryFactory queryFactory)
         {
             this.entityFactory = entityFactory;
+            this.queryFactory = queryFactory;
         }
 
         public Invoice Map(InvoiceXml dto)
@@ -27,8 +29,8 @@ namespace Apteka.Model.Mapper
                 entity.DocDateTime = dto.ZagolovokDokumenta.DataDok;
                 entity.ShipmentDateTime = dto.ZagolovokDokumenta.DataOtgruzki;
                 //dto.ZagolovokDokumenta.Postavshhik
-                //dto.ZagolovokDokumenta.Poluchatel
-                //dto.ZagolovokDokumenta.Gruzopoluchatel
+                entity.Receiver = FindOrCreateOrganization(dto.ZagolovokDokumenta.Poluchatel);
+                entity.Consignee = FindOrCreateOrganization(dto.ZagolovokDokumenta.Gruzopoluchatel);
                 entity.PaymentConditions = dto.ZagolovokDokumenta.UslovijaOplaty;
                 entity.ProductGroup = dto.ZagolovokDokumenta.TovarnajaGruppa;
                 //dto.ZagolovokDokumenta.Pozicij
@@ -55,8 +57,8 @@ namespace Apteka.Model.Mapper
             dto.ZagolovokDokumenta.DataDok = entity.DocDateTime;
             dto.ZagolovokDokumenta.DataOtgruzki = entity.ShipmentDateTime;
             //dto.ZagolovokDokumenta.Postavshhik
-            //dto.ZagolovokDokumenta.Poluchatel
-            //dto.ZagolovokDokumenta.Gruzopoluchatel
+            dto.ZagolovokDokumenta.Poluchatel = entity.Receiver?.Name;
+            dto.ZagolovokDokumenta.Gruzopoluchatel = entity.Consignee?.Name;
             dto.ZagolovokDokumenta.UslovijaOplaty = entity.PaymentConditions;
             dto.ZagolovokDokumenta.TovarnajaGruppa = entity.ProductGroup;
             dto.ZagolovokDokumenta.Pozicij = entity.ItemCount;
@@ -91,15 +93,19 @@ namespace Apteka.Model.Mapper
             return entity;
         }
 
+        private readonly IList<Organization> localOrganizations = new List<Organization>();
+
         private Organization FindOrCreateOrganization(string name)
         {
-            IQueryable<Organization> organizations = null;
-            Organization org = organizations.FirstOrDefault(o => o.Name == name);
-            if (org == null)
-            {
-                org = entityFactory.Create<Organization>();
-                org.Name = name;
-            }
+            Organization org = localOrganizations.FirstOrDefault(o => o.Name == name);
+            if (org != null) { return org; }
+
+            org = queryFactory.Create<Organization>().FirstOrDefault(o => o.Name == name);
+            if (org != null) { return org; }
+
+            org = entityFactory.Create<Organization>();
+            org.Name = name;
+            localOrganizations.Add(org);
             return org;
         }
 

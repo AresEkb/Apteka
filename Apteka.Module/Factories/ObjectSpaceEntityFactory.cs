@@ -13,9 +13,6 @@ namespace Apteka.Module.Factories
             this.os = os;
         }
 
-        public T Create<T>() where T : new()
-        {
-            return os.CreateObject<T>();
-        }
+        public T Create<T>() where T : new() => os.CreateObject<T>();
     }
 }

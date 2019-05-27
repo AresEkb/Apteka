@@ -1,13 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application Title="Apteka">
-  <NavigationItems>
+  <NavigationItems DefaultChildItemsDisplayStyle="List" NavigationStyle="NavBar">
     <Items>
-      <Item Id="Warehouse" Index="0" IsNewNode="True">
-        <Items IsNewNode="True">
-          <Item Id="Invoices" ViewId="Invoice_ListView" IsNewNode="True" />
-        </Items>
-      </Item>
-      <Item Id="Reports" Index="1" />
+      <Item Id="Warehouse" Index="0" />
+      <Item Id="CodeLists" Index="1" />
+      <Item Id="Reports" Index="2" />
+      <Item Id="Default" Index="3" />
     </Items>
   </NavigationItems>
   <Options>

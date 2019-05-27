@@ -27,6 +27,5 @@ namespace Apteka.Model.Annotations
         public string BriefName { get; set; }
         public string PluralName { get; set; }
         public string Definition { get; set; }
-        public string Format { get; set; }
     }
 }
