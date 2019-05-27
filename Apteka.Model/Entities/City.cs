@@ -13,6 +13,7 @@ namespace Apteka.Model.Entities
         public int Id { get; protected set; }
 
         [MaxLength(10), NonUnicode]
+        [AlternateKey]
         public string Code { get; set; }
 
         [MaxLength(200)]

@@ -9,7 +9,6 @@ using Apteka.Model.Entities;
 using Apteka.Module.Conventions;
 
 using DevExpress.ExpressApp.EF.Updating;
-using DevExpress.Persistent.Base;
 using DevExpress.Persistent.BaseImpl.EF;
 using DevExpress.Persistent.BaseImpl.EF.PermissionPolicy;
 
@@ -33,6 +32,7 @@ namespace Apteka.Module.BusinessObjects
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
+            modelBuilder.Conventions.Add<AlternateKeyAttributeConvention>();
             modelBuilder.Conventions.Add<DecimalPrecisionConvention>();
             modelBuilder.Conventions.Add<NonUnicodeAttributeConvention>();
 
@@ -58,7 +58,7 @@ namespace Apteka.Module.BusinessObjects
         public DbSet<Contact> Contacts { get; set; }
     }
 
-    [DefaultClassOptions]
+    //[DefaultClassOptions]
     public class Contact
     {
         [Browsable(false)]
@@ -72,7 +72,8 @@ namespace Apteka.Module.BusinessObjects
         [DevExpress.ExpressApp.DC.Aggregated]
         public virtual IList<Note> NotesCollection { get; set; }
     }
-    [DefaultClassOptions]
+
+    //[DefaultClassOptions]
     public class Note
     {
         [Browsable(false)]

@@ -10,12 +10,10 @@ namespace Apteka.Model.Mapper
     public class InvoiceXmlMapper
     {
         private readonly IEntityFactory entityFactory;
-        private readonly IQueryFactory queryFactory;
 
-        public InvoiceXmlMapper(IEntityFactory entityFactory, IQueryFactory queryFactory)
+        public InvoiceXmlMapper(IEntityFactory entityFactory)
         {
             this.entityFactory = entityFactory;
-            this.queryFactory = queryFactory;
         }
 
         public Invoice Map(InvoiceXml dto)
@@ -100,7 +98,7 @@ namespace Apteka.Model.Mapper
             Organization org = localOrganizations.FirstOrDefault(o => o.Name == name);
             if (org != null) { return org; }
 
-            org = queryFactory.Create<Organization>().FirstOrDefault(o => o.Name == name);
+            org = entityFactory.Query<Organization>().FirstOrDefault(o => o.Name == name);
             if (org != null) { return org; }
 
             org = entityFactory.Create<Organization>();

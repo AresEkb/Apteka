@@ -1,4 +1,6 @@
-﻿using Apteka.Model.Factories;
+﻿using System.Linq;
+
+using Apteka.Model.Factories;
 
 using DevExpress.ExpressApp;
 
@@ -14,5 +16,7 @@ namespace Apteka.Module.Factories
         }
 
         public T Create<T>() where T : new() => os.CreateObject<T>();
+
+        public IQueryable<T> Query<T>() => os.GetObjectsQuery<T>(true);
     }
 }

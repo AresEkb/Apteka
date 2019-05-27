@@ -126,12 +126,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessObjects\AptekaDbContext.cs" />
+    <Compile Include="Conventions\AlternateKeyAttributeConvention.cs" />
     <Compile Include="Conventions\CustomMaxLengthAttributeConvention.cs" />
     <Compile Include="Conventions\DecimalPrecisionConvention.cs" />
     <Compile Include="Conventions\NonUnicodeAttributeConvention.cs" />
     <Compile Include="DatabaseUpdate\Updater.cs" />
     <Compile Include="Extensions\IModelListViewExtensions.cs" />
-    <Compile Include="Factories\ObjectSpaceQueryFactory.cs" />
     <Compile Include="Ixporters\InvoiceXmlIxporter.cs" />
     <Compile Include="Migrations\201905261529083_Fixed_Rate_Types.cs" />
     <Compile Include="Migrations\201905261529083_Fixed_Rate_Types.Designer.cs">
@@ -152,6 +152,10 @@
     <Compile Include="Migrations\201905261952251_ParentInvoiceRequired.cs" />
     <Compile Include="Migrations\201905261952251_ParentInvoiceRequired.Designer.cs">
       <DependentUpon>201905261952251_ParentInvoiceRequired.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905270948170_AddAltKeys.cs" />
+    <Compile Include="Migrations\201905270948170_AddAltKeys.Designer.cs">
+      <DependentUpon>201905270948170_AddAltKeys.cs</DependentUpon>
     </Compile>
     <Compile Include="ModelExtensions\ModelClassUpdater.cs" />
     <Compile Include="ModelExtensions\ModelMemberUpdater.cs" />
@@ -224,6 +228,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905261952251_ParentInvoiceRequired.resx">
       <DependentUpon>201905261952251_ParentInvoiceRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905270948170_AddAltKeys.resx">
+      <DependentUpon>201905270948170_AddAltKeys.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="Module.resx">

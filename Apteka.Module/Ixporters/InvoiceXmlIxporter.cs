@@ -17,7 +17,7 @@ namespace Apteka.Module.Ixporters
         {
             var serializer = new XmlSerializer(typeof(InvoiceXml));
             var invoiceXml = (InvoiceXml)serializer.Deserialize(xml);
-            var mapper = new InvoiceXmlMapper(new ObjectSpaceEntityFactory(os), new ObjectSpaceQueryFactory(os));
+            var mapper = new InvoiceXmlMapper(new ObjectSpaceEntityFactory(os));
             var invoice = mapper.Map(invoiceXml);
             os.CommitChanges();
             collection.Add(invoice);
@@ -30,7 +30,7 @@ namespace Apteka.Module.Ixporters
                 var serializer = new XmlSerializer(typeof(InvoiceXml));
                 var ns = new XmlSerializerNamespaces();
                 ns.Add("", "");
-                var mapper = new InvoiceXmlMapper(new ObjectSpaceEntityFactory(os), new ObjectSpaceQueryFactory(os));
+                var mapper = new InvoiceXmlMapper(new ObjectSpaceEntityFactory(os));
                 var invoiceXml = mapper.Map(invoice);
                 serializer.Serialize(writer, invoiceXml, ns);
             }
