@@ -51,6 +51,8 @@ namespace Apteka.Module.BusinessObjects
 		public DbSet<ModelDifference> ModelDifferences { get; set; }
 		public DbSet<ModelDifferenceAspect> ModelDifferenceAspects { get; set; }
 
+        public DbSet<ReportDataV2> ReportData { get; set; }
+
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<InvoiceItem> InvoiceItems { get; set; }
         public DbSet<Model.Entities.Country> Countries { get; set; }

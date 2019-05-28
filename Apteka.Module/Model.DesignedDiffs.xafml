@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application Title="Apteka">
+  <BOModel>
+    <Class Name="Apteka.Model.Entities.Invoice" IsVisibleInReports="True" IsVisibleInDashboards="True" />
+  </BOModel>
   <NavigationItems DefaultChildItemsDisplayStyle="List" NavigationStyle="NavBar">
     <Items>
       <Item Id="Warehouse" Index="0" />
