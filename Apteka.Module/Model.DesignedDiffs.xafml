@@ -2,6 +2,7 @@
 <Application Title="Apteka">
   <BOModel>
     <Class Name="Apteka.Model.Entities.Invoice" IsVisibleInReports="True" IsVisibleInDashboards="True" />
+    <Class Name="Apteka.Model.Entities.InvoiceItem" IsVisibleInDashboards="True" IsVisibleInReports="True" />
   </BOModel>
   <NavigationItems DefaultChildItemsDisplayStyle="List" NavigationStyle="NavBar">
     <Items>

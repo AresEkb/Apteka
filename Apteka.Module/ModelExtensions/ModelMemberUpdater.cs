@@ -17,49 +17,47 @@ namespace Apteka.Module.ModelExtensions
     {
         public override void UpdateNode(ModelNode node)
         {
-            if (node.Application is ModelApplicationBase application &&
-                node is IModelBOModelClassMembers members)
+            var members = (IModelBOModelClassMembers)node;
+            var application = (ModelApplicationBase)node.Application;
+            string currentAspect = application.GetAspect(application.GetCurrentAspectIndex());
+            try
             {
-                string currentAspect = application.GetAspect(application.GetCurrentAspectIndex());
-                try
+                application.SetCurrentAspect("ru");
+                foreach (var m in members)
                 {
-                    application.SetCurrentAspect("ru");
-                    foreach (var m in members)
+                    var prop = m.MemberInfo.Owner.Type.GetProperty(m.MemberInfo.Name);
+
+                    // Update caption
+                    var attr = prop.GetCustomAttributes<DataElementAttribute>(false).FirstOrDefault();
+                    if (attr != null)
                     {
-                        var prop = m.MemberInfo.Owner.Type.GetProperty(m.MemberInfo.Name);
+                        m.Caption = attr.Name.FirstCharToUpper();
+                    }
 
-                        // Update caption
-                        var attr = prop.GetCustomAttributes<DataElementAttribute>(false).FirstOrDefault();
-                        if (attr != null)
+                    // Update display format and edit mask
+                    var formatAttr = prop.GetCustomAttributes<DisplayFormatAttribute>(false).FirstOrDefault();
+                    if (formatAttr != null && !String.IsNullOrWhiteSpace(formatAttr.DataFormatString))
+                    {
+                        m.DisplayFormat = formatAttr.DataFormatString;
+                        if (formatAttr.ApplyFormatInEditMode)
                         {
-                            m.Caption = attr.Name.FirstCharToUpper();
-                        }
-
-                        // Update display format and edit mask
-                        var formatAttr = prop.GetCustomAttributes<DisplayFormatAttribute>(false).FirstOrDefault();
-                        if (formatAttr != null && !String.IsNullOrWhiteSpace(formatAttr.DataFormatString))
-                        {
-                            m.DisplayFormat = formatAttr.DataFormatString;
-                            if (formatAttr.ApplyFormatInEditMode)
-                            {
-                                m.EditMask = formatAttr.DataFormatString
-                                    .Substring(3, formatAttr.DataFormatString.Length - 4);
-                            }
-                        }
-
-                        // Add range rule
-                        var rangeAttr = prop.GetCustomAttributes<RangeAttribute>(false).FirstOrDefault();
-                        if (rangeAttr != null)
-                        {
-                            m.MemberInfo.AddAttribute(
-                                new RuleRangeAttribute(rangeAttr.Minimum, rangeAttr.Maximum));
+                            m.EditMask = formatAttr.DataFormatString
+                                .Substring(3, formatAttr.DataFormatString.Length - 4);
                         }
                     }
+
+                    // Add range rule
+                    var rangeAttr = prop.GetCustomAttributes<RangeAttribute>(false).FirstOrDefault();
+                    if (rangeAttr != null)
+                    {
+                        m.MemberInfo.AddAttribute(
+                            new RuleRangeAttribute(rangeAttr.Minimum, rangeAttr.Maximum));
+                    }
                 }
-                finally
-                {
-                    application.SetCurrentAspect(currentAspect);
-                }
+            }
+            finally
+            {
+                application.SetCurrentAspect(currentAspect);
             }
         }
     }

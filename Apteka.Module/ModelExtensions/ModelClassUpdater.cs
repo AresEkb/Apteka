@@ -18,33 +18,31 @@ namespace Apteka.Module.ModelExtensions
     {
         public override void UpdateNode(ModelNode node)
         {
-            if (node.Application is ModelApplicationBase application &&
-                node is IModelBOModel classes)
+            var classes = (IModelBOModel)node;
+            var application = (ModelApplicationBase)node.Application;
+            string currentAspect = application.GetAspect(application.GetCurrentAspectIndex());
+            try
             {
-                string currentAspect = application.GetAspect(application.GetCurrentAspectIndex());
-                try
+                application.SetCurrentAspect("ru");
+                foreach (var cls in classes)
                 {
-                    application.SetCurrentAspect("ru");
-                    foreach (var cls in classes)
+                    var attr = cls.TypeInfo.Type
+                        .GetCustomAttributes<DataElementAttribute>(false)
+                        .FirstOrDefault();
+                    if (attr != null)
                     {
-                        var attr = cls.TypeInfo.Type
-                            .GetCustomAttributes<DataElementAttribute>(false)
-                            .FirstOrDefault();
-                        if (attr != null)
-                        {
-                            // Update class caption
-                            cls.Caption = attr.Name.FirstCharToUpper();
-                            // Update list view caption
-                            cls.DefaultListView.Caption = attr.PluralName.FirstCharToUpper();
-                            // Update list view column captions
-                            cls.DefaultListView.UpdateColumnCaptions();
-                        }
+                        // Update class caption
+                        cls.Caption = attr.Name.FirstCharToUpper();
+                        // Update list view caption
+                        cls.DefaultListView.Caption = attr.PluralName.FirstCharToUpper();
+                        // Update list view column captions
+                        cls.DefaultListView.UpdateColumnCaptions();
                     }
                 }
-                finally
-                {
-                    application.SetCurrentAspect(currentAspect);
-                }
+            }
+            finally
+            {
+                application.SetCurrentAspect(currentAspect);
             }
         }
     }

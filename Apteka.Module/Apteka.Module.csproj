@@ -152,8 +152,13 @@
     <Compile Include="Migrations\201905291036172_AddSeriesInvoiceItem.Designer.cs">
       <DependentUpon>201905291036172_AddSeriesInvoiceItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905291123317_InvoiceGuidUnique.cs" />
+    <Compile Include="Migrations\201905291123317_InvoiceGuidUnique.Designer.cs">
+      <DependentUpon>201905291123317_InvoiceGuidUnique.cs</DependentUpon>
+    </Compile>
     <Compile Include="ModelExtensions\ModelClassUpdater.cs" />
     <Compile Include="ModelExtensions\ModelMemberUpdater.cs" />
+    <Compile Include="ModelExtensions\DetailViewLayoutGeneratorUpdater.cs" />
     <Compile Include="ModelExtensions\ModelViewsGeneratorUpdater.cs" />
     <Compile Include="Factories\ObjectSpaceEntityFactory.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -172,6 +177,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905291036172_AddSeriesInvoiceItem.resx">
       <DependentUpon>201905291036172_AddSeriesInvoiceItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905291123317_InvoiceGuidUnique.resx">
+      <DependentUpon>201905291123317_InvoiceGuidUnique.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="Module.resx">
@@ -206,10 +214,6 @@
     <None Include="FunctionalTests\config.xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="UnusableNodes.xml">
-      <DependentUpon>Model.DesignedDiffs.xafml</DependentUpon>
-      <SubType>Designer</SubType>
-    </None>
     <Content Include="Welcome.html" />
   </ItemGroup>
   <ItemGroup>

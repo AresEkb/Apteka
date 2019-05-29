@@ -20,6 +20,7 @@ namespace Apteka.Model.Entities
         [Browsable(false)]
         public int Id { get; protected set; }
 
+        [UniqueIndex]
         public Guid Guid { get; set; }
 
         [DataElement("ru", "номер документа", "номерДок", "номер электронной накладной, обычно совпадает с номером счёт-фактуры")]

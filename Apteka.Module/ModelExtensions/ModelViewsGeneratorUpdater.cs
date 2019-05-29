@@ -1,8 +1,4 @@
-﻿using System.Linq;
-using System.Reflection;
-
-using Apteka.Model.Annotations;
-using Apteka.Module.Extensions;
+﻿using Apteka.Module.Extensions;
 
 using DevExpress.ExpressApp.Editors;
 using DevExpress.ExpressApp.Model;
@@ -18,19 +14,17 @@ namespace Apteka.Module.ModelExtensions
     {
         public override void UpdateNode(ModelNode node)
         {
-            if (node is IModelViews views)
+            var views = (IModelViews)node;
+            foreach (IModelView viewModel in views)
             {
-                foreach (IModelView viewModel in views)
+                if (viewModel is IModelDetailView detailView)
                 {
-                    if (viewModel is IModelDetailView detailView)
+                    foreach (IModelViewItem viewItem in detailView.Items)
                     {
-                        foreach (IModelViewItem viewItem in detailView.Items)
+                        if (viewItem is IModelPropertyEditor propertyEditor &&
+                            propertyEditor.PropertyEditorType == typeof(ListPropertyEditor))
                         {
-                            if (viewItem is IModelPropertyEditor propertyEditor &&
-                                propertyEditor.PropertyEditorType == typeof(ListPropertyEditor))
-                            {
-                                CustomizeListPropertyEditor(propertyEditor);
-                            }
+                            CustomizeListPropertyEditor(propertyEditor);
                         }
                     }
                 }
