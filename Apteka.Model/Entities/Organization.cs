@@ -8,7 +8,7 @@ namespace Apteka.Model.Entities
 {
     [DataElement("ru", "организация", "организация", "организации", "")]
     [Category("CodeLists")]
-    public class Organization
+    public class Organization : IEntity
     {
         public Organization()
         {

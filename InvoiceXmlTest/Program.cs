@@ -33,8 +33,8 @@ namespace InvoiceXmlTest
                 Console.WriteLine(invoice);
             }
 
-            Console.WriteLine("Press any key...");
-            Console.ReadKey();
+            //Console.WriteLine("Press any key...");
+            //Console.ReadKey();
         }
     }
 

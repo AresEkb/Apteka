@@ -10,7 +10,7 @@ namespace Apteka.Model.Entities
 {
     [DataElement("ru", "накладная", "накладная", "накладные", "электронная товарная накладная")]
     [Category("Warehouse")]
-    public class Invoice
+    public class Invoice : IEntity
     {
         public Invoice()
         {

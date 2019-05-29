@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <ActionDesign>
+    <Actions>
+      <Action Id="ExportInvoice" Caption="Экспорт в XML" />
+      <Action Id="ImportInvoice" Caption="Импорт из XML" />
+    </Actions>
+  </ActionDesign>
+</Application>

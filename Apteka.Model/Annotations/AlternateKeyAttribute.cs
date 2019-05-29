@@ -2,6 +2,7 @@
 
 namespace Apteka.Model.Annotations
 {
+    // TODO: Rename to index, because alternate keys should be read-only
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
     public class AlternateKeyAttribute : Attribute
     {

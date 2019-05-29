@@ -5,12 +5,9 @@ namespace Apteka.Model.Factories
 {
     public class PlainEntityFactory : IEntityFactory
     {
-        public T Create<T>() where T : new()
-        {
-            return new T();
-        }
+        public T Create<T>() where T : new() => new T();
 
-        public IQueryable<T> Query<T>()
+        public IQueryable<T> Query<T>() where T : class
         {
             throw new NotImplementedException();
         }

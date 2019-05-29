@@ -67,7 +67,9 @@
     <Reference Include="DevExpress.ExpressApp.PivotGrid.v17.2, Version=17.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.ExpressApp.ReportsV2.v17.2, Version=17.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.ExpressApp.ReportsV2.v17.2, Version=17.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="DevExpress.ExpressApp.Security.EF.v17.2, Version=17.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -101,8 +103,12 @@
     <Reference Include="DevExpress.XtraCharts.v17.2, Version=17.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="DevExpress.XtraReports.v17.2, Version=17.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.XtraReports.v17.2.Extensions, Version=17.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraReports.v17.2, Version=17.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v17.2.Extensions, Version=17.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -132,6 +138,7 @@
     <Compile Include="Conventions\AlternateKeyAttributeConvention.cs" />
     <Compile Include="Conventions\CustomMaxLengthAttributeConvention.cs" />
     <Compile Include="Conventions\DecimalPrecisionConvention.cs" />
+    <Compile Include="Conventions\ForeignKeyNamingConvention.cs" />
     <Compile Include="Conventions\NonUnicodeAttributeConvention.cs" />
     <Compile Include="DatabaseUpdate\Updater.cs" />
     <Compile Include="Extensions\IModelListViewExtensions.cs" />
@@ -171,6 +178,10 @@
     <Compile Include="Migrations\201905271450066_AddReports.cs" />
     <Compile Include="Migrations\201905271450066_AddReports.Designer.cs">
       <DependentUpon>201905271450066_AddReports.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905281205452_FixForeignKeyNames.cs" />
+    <Compile Include="Migrations\201905281205452_FixForeignKeyNames.Designer.cs">
+      <DependentUpon>201905281205452_FixForeignKeyNames.cs</DependentUpon>
     </Compile>
     <Compile Include="ModelExtensions\ModelClassUpdater.cs" />
     <Compile Include="ModelExtensions\ModelMemberUpdater.cs" />
@@ -256,11 +267,15 @@
     <EmbeddedResource Include="Migrations\201905271450066_AddReports.resx">
       <DependentUpon>201905271450066_AddReports.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905281205452_FixForeignKeyNames.resx">
+      <DependentUpon>201905281205452_FixForeignKeyNames.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="Module.resx">
       <SubType>Designer</SubType>
       <DependentUpon>Module.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DatabaseUpdate\ReadMe.txt" />

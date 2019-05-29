@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceXmlTest", "InvoiceXm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apteka.Model", "Apteka.Model\Apteka.Model.csproj", "{ACE95346-CC88-4E83-BE41-1107CD823C54}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apteka.Api", "Apteka.Api\Apteka.Api.csproj", "{C95B2119-976C-4546-A983-5EEA03967CFA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,6 +68,12 @@ Global
 		{ACE95346-CC88-4E83-BE41-1107CD823C54}.EasyTest|Any CPU.Build.0 = Debug|Any CPU
 		{ACE95346-CC88-4E83-BE41-1107CD823C54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACE95346-CC88-4E83-BE41-1107CD823C54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C95B2119-976C-4546-A983-5EEA03967CFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C95B2119-976C-4546-A983-5EEA03967CFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C95B2119-976C-4546-A983-5EEA03967CFA}.EasyTest|Any CPU.ActiveCfg = Debug|Any CPU
+		{C95B2119-976C-4546-A983-5EEA03967CFA}.EasyTest|Any CPU.Build.0 = Debug|Any CPU
+		{C95B2119-976C-4546-A983-5EEA03967CFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C95B2119-976C-4546-A983-5EEA03967CFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

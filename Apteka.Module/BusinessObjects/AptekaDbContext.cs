@@ -31,6 +31,7 @@ namespace Apteka.Module.BusinessObjects
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            modelBuilder.Conventions.Add<ForeignKeyNamingConvention>();
 
             modelBuilder.Conventions.Add<AlternateKeyAttributeConvention>();
             modelBuilder.Conventions.Add<DecimalPrecisionConvention>();

@@ -5,6 +5,6 @@ namespace Apteka.Model.Factories
     public interface IEntityFactory
     {
         T Create<T>() where T : new();
-        IQueryable<T> Query<T>();
+        IQueryable<T> Query<T>() where T : class;
     }
 }

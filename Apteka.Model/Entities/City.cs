@@ -7,7 +7,7 @@ namespace Apteka.Model.Entities
 {
     [DataElement("ru", "город", "город", "города", "")]
     [Category("CodeLists")]
-    public class City
+    public class City : IEntity
     {
         [Browsable(false)]
         public int Id { get; protected set; }

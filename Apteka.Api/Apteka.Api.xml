@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Apteka.Api</name>
+    </assembly>
+    <members>
+        <member name="M:Apteka.Api.Controllers.Base.EntityController`2.GetAll">
+            <summary>
+            Запрос всех записей справочника
+            </summary>
+            <response code="200">Все записи справочника</response>
+            <response code="500">Произошла серверная ошибка</response>
+        </member>
+        <member name="M:Apteka.Api.Controllers.Base.EntityController`2.GetById(System.Int32)">
+            <summary>
+            Запрос одной записи справочника по идентификатору
+            </summary>
+            <response code="200">Запись найдена</response>
+            <response code="404">Запись с указанным идентификатором не найдена</response>
+            <response code="500">Произошла серверная ошибка</response>
+        </member>
+        <member name="M:Apteka.Api.Controllers.InvoicesController.GetByGuid(System.Guid)">
+            <summary>
+            Запрос одной записи по идентификатору
+            </summary>
+            <response code="200">Запись найдена</response>
+            <response code="404">Запись с указанным идентификатором не найдена</response>
+            <response code="500">Произошла серверная ошибка</response>
+        </member>
+        <member name="M:Apteka.Api.Controllers.InvoicesController.Create(Apteka.Model.Dto.InvoiceXml)">
+            <summary>
+            Добавление новой записи
+            </summary>
+            <response code="201">Запись успешно добавлена</response>
+            <response code="400">Запись не может быть добавлена, т.к. предоставлены не корректные данные</response>
+            <response code="500">Произошла серверная ошибка</response>
+        </member>
+    </members>
+</doc>

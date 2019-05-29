@@ -7,7 +7,7 @@ namespace Apteka.Model.Entities
 {
     [DataElement("ru", "страна", "страна", "страны", "")]
     [Category("CodeLists")]
-    public class Country
+    public class Country : IEntity
     {
         [Browsable(false)]
         public int Id { get; protected set; }
