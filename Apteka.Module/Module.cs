@@ -12,6 +12,7 @@ using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model.Core;
 using DevExpress.ExpressApp.Updating;
+using DevExpress.Persistent.Validation;
 
 namespace Apteka.Module
 {
@@ -59,9 +60,9 @@ namespace Apteka.Module
         {
             base.CustomizeTypesInfo(typesInfo);
 
-            // Add AggregatedAttribute to composition properties
             foreach (var typeInfo in typesInfo.PersistentTypes)
             {
+                // Add AggregatedAttribute to composition properties
                 foreach (var memberInfo in typeInfo.OwnMembers.Where(m => m.IsProperty))
                 {
                     var prop = typeInfo.Type.GetProperty(memberInfo.Name);
@@ -74,13 +75,27 @@ namespace Apteka.Module
                             memberInfo.AddAttribute(new AggregatedAttribute(), true);
                         }
                     }
-
-                    //var compAttr = prop.GetCustomAttributes<CompositionAttribute>(false).FirstOrDefault();
-                    //if (compAttr != null)
-                    //{
-                    //    memberInfo.AddAttribute(new AggregatedAttribute(), true);
-                    //}
                 }
+
+                // Add uniqueness checks
+                var propAttrs = from prop in typeInfo.OwnMembers
+                                select new { prop, attr = prop.Owner.Type.GetProperty(prop.Name).GetCustomAttribute<UniqueIndexAttribute>() };
+                var keys = from pa in propAttrs
+                           where pa.attr != null
+                           group pa by pa.attr.Name;
+                foreach (var key in keys)
+                {
+                    if (key.Count() == 1)
+                    {
+                        key.First().prop.AddAttribute(new RuleUniqueValueAttribute(), true);
+                    }
+                    else
+                    {
+                        typeInfo.AddAttribute(new RuleCombinationOfPropertiesIsUniqueAttribute(
+                            String.Join(", ", key.OrderBy(k => k.attr.Order).Select(k => k.prop.Name))));
+                    }
+                }
+
                 typesInfo.RefreshInfo(typeInfo);
             }
         }
