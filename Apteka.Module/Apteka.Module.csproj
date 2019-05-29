@@ -135,82 +135,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessObjects\AptekaDbContext.cs" />
-    <Compile Include="Conventions\AlternateKeyAttributeConvention.cs" />
+    <Compile Include="Conventions\UniqueIndexAttributeConvention.cs" />
     <Compile Include="Conventions\CustomMaxLengthAttributeConvention.cs" />
+    <Compile Include="Conventions\CompositionAttributeConvention.cs" />
     <Compile Include="Conventions\DecimalPrecisionConvention.cs" />
     <Compile Include="Conventions\ForeignKeyNamingConvention.cs" />
     <Compile Include="Conventions\NonUnicodeAttributeConvention.cs" />
     <Compile Include="DatabaseUpdate\Updater.cs" />
     <Compile Include="Extensions\IModelListViewExtensions.cs" />
     <Compile Include="Ixporters\InvoiceXmlIxporter.cs" />
-    <Compile Include="Migrations\201905261529083_Fixed_Rate_Types.cs" />
-    <Compile Include="Migrations\201905261529083_Fixed_Rate_Types.Designer.cs">
-      <DependentUpon>201905261529083_Fixed_Rate_Types.cs</DependentUpon>
+    <Compile Include="Migrations\201905291026319_Init.cs" />
+    <Compile Include="Migrations\201905291026319_Init.Designer.cs">
+      <DependentUpon>201905291026319_Init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201905261720473_Rename_Invoice_Fields.cs" />
-    <Compile Include="Migrations\201905261720473_Rename_Invoice_Fields.Designer.cs">
-      <DependentUpon>201905261720473_Rename_Invoice_Fields.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201905261736295_Misc2.cs" />
-    <Compile Include="Migrations\201905261736295_Misc2.Designer.cs">
-      <DependentUpon>201905261736295_Misc2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201905261907148_Test1.cs" />
-    <Compile Include="Migrations\201905261907148_Test1.Designer.cs">
-      <DependentUpon>201905261907148_Test1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201905261952251_ParentInvoiceRequired.cs" />
-    <Compile Include="Migrations\201905261952251_ParentInvoiceRequired.Designer.cs">
-      <DependentUpon>201905261952251_ParentInvoiceRequired.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201905270948170_AddAltKeys.cs" />
-    <Compile Include="Migrations\201905270948170_AddAltKeys.Designer.cs">
-      <DependentUpon>201905270948170_AddAltKeys.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201905271145435_AddBankAccount.cs" />
-    <Compile Include="Migrations\201905271145435_AddBankAccount.Designer.cs">
-      <DependentUpon>201905271145435_AddBankAccount.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201905271151474_CountryCodeOptional.cs" />
-    <Compile Include="Migrations\201905271151474_CountryCodeOptional.Designer.cs">
-      <DependentUpon>201905271151474_CountryCodeOptional.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201905271450066_AddReports.cs" />
-    <Compile Include="Migrations\201905271450066_AddReports.Designer.cs">
-      <DependentUpon>201905271450066_AddReports.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201905281205452_FixForeignKeyNames.cs" />
-    <Compile Include="Migrations\201905281205452_FixForeignKeyNames.Designer.cs">
-      <DependentUpon>201905281205452_FixForeignKeyNames.cs</DependentUpon>
+    <Compile Include="Migrations\201905291036172_AddSeriesInvoiceItem.cs" />
+    <Compile Include="Migrations\201905291036172_AddSeriesInvoiceItem.Designer.cs">
+      <DependentUpon>201905291036172_AddSeriesInvoiceItem.cs</DependentUpon>
     </Compile>
     <Compile Include="ModelExtensions\ModelClassUpdater.cs" />
     <Compile Include="ModelExtensions\ModelMemberUpdater.cs" />
     <Compile Include="ModelExtensions\ModelViewsGeneratorUpdater.cs" />
     <Compile Include="Factories\ObjectSpaceEntityFactory.cs" />
-    <Compile Include="Migrations\201905241005038_InitialCreate.cs" />
-    <Compile Include="Migrations\201905241005038_InitialCreate.Designer.cs">
-      <DependentUpon>201905241005038_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201905241051157_Misc.cs" />
-    <Compile Include="Migrations\201905241051157_Misc.Designer.cs">
-      <DependentUpon>201905241051157_Misc.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201905241233502_Misc1.cs" />
-    <Compile Include="Migrations\201905241233502_Misc1.Designer.cs">
-      <DependentUpon>201905241233502_Misc1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201905241843038_Rename_ValueAddedTax.cs" />
-    <Compile Include="Migrations\201905241843038_Rename_ValueAddedTax.Designer.cs">
-      <DependentUpon>201905241843038_Rename_ValueAddedTax.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201905250724386_Add_Invoice_Guid.cs" />
-    <Compile Include="Migrations\201905250724386_Add_Invoice_Guid.Designer.cs">
-      <DependentUpon>201905250724386_Add_Invoice_Guid.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201905251502099_Add_Address.cs" />
-    <Compile Include="Migrations\201905251502099_Add_Address.Designer.cs">
-      <DependentUpon>201905251502099_Add_Address.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelExtensions\NavigationItemGeneratorUpdater.cs" />
     <Compile Include="Module.cs">
@@ -222,53 +167,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201905241005038_InitialCreate.resx">
-      <DependentUpon>201905241005038_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201905291026319_Init.resx">
+      <DependentUpon>201905291026319_Init.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905241051157_Misc.resx">
-      <DependentUpon>201905241051157_Misc.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905241233502_Misc1.resx">
-      <DependentUpon>201905241233502_Misc1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905241843038_Rename_ValueAddedTax.resx">
-      <DependentUpon>201905241843038_Rename_ValueAddedTax.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905250724386_Add_Invoice_Guid.resx">
-      <DependentUpon>201905250724386_Add_Invoice_Guid.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905251502099_Add_Address.resx">
-      <DependentUpon>201905251502099_Add_Address.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905261529083_Fixed_Rate_Types.resx">
-      <DependentUpon>201905261529083_Fixed_Rate_Types.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905261720473_Rename_Invoice_Fields.resx">
-      <DependentUpon>201905261720473_Rename_Invoice_Fields.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905261736295_Misc2.resx">
-      <DependentUpon>201905261736295_Misc2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905261907148_Test1.resx">
-      <DependentUpon>201905261907148_Test1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905261952251_ParentInvoiceRequired.resx">
-      <DependentUpon>201905261952251_ParentInvoiceRequired.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905270948170_AddAltKeys.resx">
-      <DependentUpon>201905270948170_AddAltKeys.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905271145435_AddBankAccount.resx">
-      <DependentUpon>201905271145435_AddBankAccount.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905271151474_CountryCodeOptional.resx">
-      <DependentUpon>201905271151474_CountryCodeOptional.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905271450066_AddReports.resx">
-      <DependentUpon>201905271450066_AddReports.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905281205452_FixForeignKeyNames.resx">
-      <DependentUpon>201905281205452_FixForeignKeyNames.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201905291036172_AddSeriesInvoiceItem.resx">
+      <DependentUpon>201905291036172_AddSeriesInvoiceItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="Module.resx">

@@ -7,13 +7,13 @@ namespace Apteka.Module.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class AddAltKeys : IMigrationMetadata
+    public sealed partial class AddSeriesInvoiceItem : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddAltKeys));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddSeriesInvoiceItem));
         
         string IMigrationMetadata.Id
         {
-            get { return "201905270948170_AddAltKeys"; }
+            get { return "201905291036172_AddSeriesInvoiceItem"; }
         }
         
         string IMigrationMetadata.Source

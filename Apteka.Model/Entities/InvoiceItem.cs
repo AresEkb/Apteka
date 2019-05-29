@@ -21,7 +21,6 @@ namespace Apteka.Model.Entities
         public int Id { get; protected set; }
 
         [Required]
-        [Browsable(false)]
         public virtual Invoice Invoice { get; set; }
 
         [DataElement("ru", "код товара", "код товара", "код товара в справочнике товаров")]
@@ -80,6 +79,6 @@ namespace Apteka.Model.Entities
         public string CustomsDeclarationNumber { get; set;}
 
         [DataElement("ru", "серии", "серии", "информация о сериях и сертификатах для товарной позиции")]
-        public virtual List<ProductSeries> Series { get; set; }
+        public virtual ICollection<ProductSeries> Series { get; set; }
     }
 }

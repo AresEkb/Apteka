@@ -35,7 +35,7 @@ namespace Apteka.Api
             foreach (var entity in modelBuilder.Model.GetEntityTypes())
             {
                 var propAttrs = from prop in entity.GetProperties()
-                                select new { prop, attr = prop.PropertyInfo?.GetCustomAttribute<AlternateKeyAttribute>() };
+                                select new { prop, attr = prop.PropertyInfo?.GetCustomAttribute<UniqueIndexAttribute>() };
                 var keys = from pa in propAttrs
                            where pa.attr != null
                            group pa by pa.attr.Name;

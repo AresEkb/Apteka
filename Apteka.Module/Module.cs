@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 
@@ -64,11 +65,21 @@ namespace Apteka.Module
                 foreach (var memberInfo in typeInfo.OwnMembers.Where(m => m.IsProperty))
                 {
                     var prop = typeInfo.Type.GetProperty(memberInfo.Name);
-                    var compAttr = prop.GetCustomAttributes<CompositionAttribute>(false).FirstOrDefault();
-                    if (compAttr != null)
+                    var oppInfo = memberInfo.AssociatedMemberInfo;
+                    if (oppInfo != null)
                     {
-                        memberInfo.AddAttribute(new AggregatedAttribute(), true);
+                        var opp = oppInfo.Owner.Type.GetProperty(oppInfo.Name);
+                        if (opp.GetCustomAttribute<RequiredAttribute>() != null)
+                        {
+                            memberInfo.AddAttribute(new AggregatedAttribute(), true);
+                        }
                     }
+
+                    //var compAttr = prop.GetCustomAttributes<CompositionAttribute>(false).FirstOrDefault();
+                    //if (compAttr != null)
+                    //{
+                    //    memberInfo.AddAttribute(new AggregatedAttribute(), true);
+                    //}
                 }
                 typesInfo.RefreshInfo(typeInfo);
             }

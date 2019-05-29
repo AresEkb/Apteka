@@ -9,6 +9,9 @@ namespace Apteka.Model.Entities
         [Browsable(false)]
         public int Id { get; protected set; }
 
+        [Required]
+        public virtual InvoiceItem InvoiceItem { get; set; }
+
         [MaxLength(20)]
         public string Code { get; set; }
 

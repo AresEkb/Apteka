@@ -17,6 +17,6 @@ namespace Apteka.Module.Factories
 
         public T Create<T>() where T : new() => os.CreateObject<T>();
 
-        public IQueryable<T> Query<T>() => os.GetObjectsQuery<T>(true);
+        public IQueryable<T> Query<T>() where T : class => os.GetObjectsQuery<T>(true);
     }
 }

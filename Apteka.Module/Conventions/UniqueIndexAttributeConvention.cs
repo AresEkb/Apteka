@@ -7,10 +7,10 @@ using Apteka.Model.Annotations;
 
 namespace Apteka.Module.Conventions
 {
-    public class AlternateKeyAttributeConvention :
-        PrimitivePropertyAttributeConfigurationConvention<AlternateKeyAttribute>
+    public class UniqueIndexAttributeConvention :
+        PrimitivePropertyAttributeConfigurationConvention<UniqueIndexAttribute>
     {
-        public override void Apply(ConventionPrimitivePropertyConfiguration configuration, AlternateKeyAttribute attribute)
+        public override void Apply(ConventionPrimitivePropertyConfiguration configuration, UniqueIndexAttribute attribute)
         {
             if (string.IsNullOrWhiteSpace(attribute.Name))
             {

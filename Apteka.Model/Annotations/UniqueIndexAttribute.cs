@@ -4,21 +4,21 @@ namespace Apteka.Model.Annotations
 {
     // TODO: Rename to index, because alternate keys should be read-only
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
-    public class AlternateKeyAttribute : Attribute
+    public class UniqueIndexAttribute : Attribute
     {
-        public AlternateKeyAttribute()
+        public UniqueIndexAttribute()
         {
             Name = null;
             Order = -1;
         }
 
-        public AlternateKeyAttribute(string name)
+        public UniqueIndexAttribute(string name)
         {
             Name = name;
             Order = -1;
         }
 
-        public AlternateKeyAttribute(string name, int order)
+        public UniqueIndexAttribute(string name, int order)
         {
             Name = name;
             Order = order;

@@ -64,8 +64,7 @@ namespace Apteka.Model.Entities
         public string Note { get; set; }
 
         [DataElement("ru", "товарные позиции", "товарные позиции", "содержимое электронной накладной")]
-        [Composition]
-        public virtual List<InvoiceItem> Items { get; set; }
+        public virtual ICollection<InvoiceItem> Items { get; set; }
 
         [DataElement("ru", "количество позиций", "позиций", "количество позиций, входящих в данную поставку")]
         public int ItemCount { get => Items.Count; }

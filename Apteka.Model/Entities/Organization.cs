@@ -45,7 +45,6 @@ namespace Apteka.Model.Entities
         public string Email { get; set; }
 
         [DataElement("ru", "банковские счета", "счета", "")]
-        [Composition]
-        public virtual List<BankAccount> BankAccounts { get; set; }
+        public virtual ICollection<BankAccount> BankAccounts { get; set; }
     }
 }
