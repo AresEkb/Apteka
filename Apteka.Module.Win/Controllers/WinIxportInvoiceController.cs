@@ -9,6 +9,7 @@ using DevExpress.ExpressApp.Actions;
 using DevExpress.ExpressApp.Win;
 using DevExpress.ExpressApp.Win.Editors;
 using DevExpress.Persistent.Base;
+using DevExpress.Persistent.Validation;
 
 namespace Apteka.Module.Controllers
 {
@@ -162,6 +163,10 @@ namespace Apteka.Module.Controllers
             try
             {
                 InvoiceXmlIxporter.Import(file, View.ObjectSpace, View.CollectionSource);
+            }
+            catch (ValidationException)
+            {
+                // User already saw an error message, so don't show a second one
             }
             catch (Exception ex)
             {
