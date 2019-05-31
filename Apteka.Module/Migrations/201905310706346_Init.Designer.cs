@@ -7,13 +7,13 @@ namespace Apteka.Module.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class InvoiceGuidUnique : IMigrationMetadata
+    public sealed partial class Init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InvoiceGuidUnique));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Init));
         
         string IMigrationMetadata.Id
         {
-            get { return "201905291123317_InvoiceGuidUnique"; }
+            get { return "201905310706346_Init"; }
         }
         
         string IMigrationMetadata.Source

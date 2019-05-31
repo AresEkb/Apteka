@@ -32,6 +32,7 @@ namespace Apteka.Model.Entities
         public string TaxRegistrationReasonCode { get; set; }
 
         [DataElement("ru", "адрес", "адрес", "")]
+        [Composition]
         public Address Address { get; set; }
 
         [DataElement("ru", "телефон", "телефон", "")]

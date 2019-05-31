@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
@@ -40,7 +38,12 @@ namespace Apteka.Module.BusinessObjects
             modelBuilder.Conventions.Remove<MaxLengthAttributeConvention>();
             modelBuilder.Conventions.Add<CustomMaxLengthAttributeConvention>();
 
+            // TODO: Implement as a convention
             //modelBuilder.Conventions.Add<CompositionAttributeConvention>();
+            modelBuilder.Entity<Model.Entities.Organization>()
+                .HasOptional(e => e.Address)
+                .WithOptionalPrincipal()
+                .WillCascadeOnDelete();
 
             base.OnModelCreating(modelBuilder);
         }

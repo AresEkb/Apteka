@@ -11,8 +11,10 @@
 //    {
 //        public override void Apply(ConventionPrimitivePropertyConfiguration configuration, CompositionAttribute attribute)
 //        {
-//            System.Data.Entity.ModelConfiguration.Conventions.OneToManyCascadeDeleteConvention
-//            configuration.will HasPrecision(attribute.Precision, attribute.Scale);
+//            modelBuilder.Entity<Model.Entities.Organization>()
+//                .HasOptional(e => e.Address)
+//                .WithOptionalPrincipal()
+//                .WillCascadeOnDelete();
 //        }
 //    }
 //}

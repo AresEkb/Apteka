@@ -102,6 +102,7 @@ namespace Apteka.Module.Migrations
                 .ForeignKey("dbo.Organization", t => t.ReceiverId)
                 .ForeignKey("dbo.Organization", t => t.SupplierId)
                 .ForeignKey("dbo.BankAccount", t => t.SupplierBankAccountId)
+                .Index(t => t.Guid, unique: true)
                 .Index(t => t.ConsigneeId, name: "IX_Consignee_Id")
                 .Index(t => t.ReceiverId, name: "IX_Receiver_Id")
                 .Index(t => t.SupplierId, name: "IX_Supplier_Id")
@@ -117,11 +118,8 @@ namespace Apteka.Module.Migrations
                         TaxRegistrationReasonCode = c.String(maxLength: 20),
                         PhoneNumber = c.String(maxLength: 20),
                         Email = c.String(maxLength: 100),
-                        AddressId = c.Int(),
                     })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Address", t => t.AddressId)
-                .Index(t => t.AddressId, name: "IX_Address_Id");
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.Address",
@@ -131,12 +129,15 @@ namespace Apteka.Module.Migrations
                         Description = c.String(maxLength: 200),
                         CityId = c.Int(),
                         CountryId = c.Int(),
+                        OrganizationId = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.City", t => t.CityId)
                 .ForeignKey("dbo.Country", t => t.CountryId)
+                .ForeignKey("dbo.Organization", t => t.OrganizationId, cascadeDelete: true)
                 .Index(t => t.CityId, name: "IX_City_Id")
-                .Index(t => t.CountryId, name: "IX_Country_Id");
+                .Index(t => t.CountryId, name: "IX_Country_Id")
+                .Index(t => t.OrganizationId, name: "IX_Organization_Id");
             
             CreateTable(
                 "dbo.BankAccount",
@@ -168,10 +169,10 @@ namespace Apteka.Module.Migrations
                         RegionalCertificateCode = c.String(maxLength: 50),
                         RegionalCertificateAuthority = c.String(maxLength: 100),
                         RegionalCertificateIssueDate = c.DateTime(),
-                        InvoiceItemId = c.Int(),
+                        InvoiceItemId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.InvoiceItem", t => t.InvoiceItemId)
+                .ForeignKey("dbo.InvoiceItem", t => t.InvoiceItemId, cascadeDelete: true)
                 .Index(t => t.InvoiceItemId, name: "IX_InvoiceItem_Id");
             
             CreateTable(
@@ -345,7 +346,7 @@ namespace Apteka.Module.Migrations
             DropForeignKey("dbo.Invoice", "ReceiverId", "dbo.Organization");
             DropForeignKey("dbo.Invoice", "ConsigneeId", "dbo.Organization");
             DropForeignKey("dbo.BankAccount", "OrganizationId", "dbo.Organization");
-            DropForeignKey("dbo.Organization", "AddressId", "dbo.Address");
+            DropForeignKey("dbo.Address", "OrganizationId", "dbo.Organization");
             DropForeignKey("dbo.Address", "CountryId", "dbo.Country");
             DropForeignKey("dbo.Address", "CityId", "dbo.City");
             DropIndex("dbo.PermissionPolicyUserPermissionPolicyRole", "IX_PermissionPolicyRole_ID");
@@ -357,13 +358,14 @@ namespace Apteka.Module.Migrations
             DropIndex("dbo.ModelDifferenceAspect", "IX_Owner_ID");
             DropIndex("dbo.ProductSeries", "IX_InvoiceItem_Id");
             DropIndex("dbo.BankAccount", "IX_Organization_Id");
+            DropIndex("dbo.Address", "IX_Organization_Id");
             DropIndex("dbo.Address", "IX_Country_Id");
             DropIndex("dbo.Address", "IX_City_Id");
-            DropIndex("dbo.Organization", "IX_Address_Id");
             DropIndex("dbo.Invoice", "IX_SupplierBankAccount_Id");
             DropIndex("dbo.Invoice", "IX_Supplier_Id");
             DropIndex("dbo.Invoice", "IX_Receiver_Id");
             DropIndex("dbo.Invoice", "IX_Consignee_Id");
+            DropIndex("dbo.Invoice", new[] { "Guid" });
             DropIndex("dbo.InvoiceItem", "IX_ManufacturerCountry_Id");
             DropIndex("dbo.InvoiceItem", "IX_Manufacturer_Id");
             DropIndex("dbo.InvoiceItem", "IX_Invoice_Id");

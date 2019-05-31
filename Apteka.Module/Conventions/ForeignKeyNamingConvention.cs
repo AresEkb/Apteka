@@ -7,7 +7,6 @@ namespace Apteka.Module.Conventions
     // https://stackoverflow.com/questions/15684555/how-do-i-remove-underscore-of-foreign-key-fields-in-code-first-by-convention
     public class ForeignKeyNamingConvention : IStoreModelConvention<AssociationType>
     {
-
         public void Apply(AssociationType association, DbModel model)
         {
             // Identify a ForeignKey properties (including IAs)
