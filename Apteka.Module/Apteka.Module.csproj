@@ -144,9 +144,9 @@
     <Compile Include="DatabaseUpdate\Updater.cs" />
     <Compile Include="Extensions\IModelListViewExtensions.cs" />
     <Compile Include="Ixporters\InvoiceXmlIxporter.cs" />
-    <Compile Include="Migrations\201905310706346_Init.cs" />
-    <Compile Include="Migrations\201905310706346_Init.Designer.cs">
-      <DependentUpon>201905310706346_Init.cs</DependentUpon>
+    <Compile Include="Migrations\201906011726576_Init.cs" />
+    <Compile Include="Migrations\201906011726576_Init.Designer.cs">
+      <DependentUpon>201906011726576_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="ModelExtensions\ModelClassUpdater.cs" />
     <Compile Include="ModelExtensions\ModelMemberUpdater.cs" />
@@ -164,8 +164,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201905310706346_Init.resx">
-      <DependentUpon>201905310706346_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201906011726576_Init.resx">
+      <DependentUpon>201906011726576_Init.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="Module.resx">

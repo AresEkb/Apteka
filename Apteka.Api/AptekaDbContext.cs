@@ -7,6 +7,7 @@ using Apteka.Model.Annotations;
 using Apteka.Model.Entities;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Apteka.Api
@@ -90,7 +91,26 @@ namespace Apteka.Api
                 }
             }
 
+            // TODO: Implement as a convention
+            //modelBuilder.Conventions.Add<CompositionAttributeConvention>();
+            //modelBuilder.Entity<Model.Entities.Organization>()
+            //    .HasOptional(e => e.Address)
+            //    .WithOptionalPrincipal()
+            //    .WillCascadeOnDelete(true);
+            // https://github.com/aspnet/EntityFrameworkCore/issues/5871
+            modelBuilder.Entity<Organization>()
+                .HasOne(e => e.Address)
+                .WithOne()
+                .HasForeignKey<Address>("OrganizationId")
+                .OnDelete(DeleteBehavior.Cascade);
+
             base.OnModelCreating(modelBuilder);
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.EnableSensitiveDataLogging();
+            base.OnConfiguring(optionsBuilder);
         }
 
         public DbSet<Invoice> Invoices { get; set; }

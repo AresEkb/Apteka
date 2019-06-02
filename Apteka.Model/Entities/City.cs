@@ -9,8 +9,8 @@ namespace Apteka.Model.Entities
     [Category("CodeLists")]
     public class City : IEntity
     {
-        [Browsable(false)]
-        public int Id { get; protected set; }
+        [Key, Browsable(false)]
+        public int Id { get; private set; }
 
         [MaxLength(10), NonUnicode]
         [UniqueIndex]

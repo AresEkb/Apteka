@@ -17,8 +17,8 @@ namespace Apteka.Model.Entities
             Series = new List<ProductSeries>();
         }
 
-        [Browsable(false)]
-        public int Id { get; protected set; }
+        [Key, Browsable(false)]
+        public int Id { get; private set; }
 
         [Required]
         public virtual Invoice Invoice { get; set; }

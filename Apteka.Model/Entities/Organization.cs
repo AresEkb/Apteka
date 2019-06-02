@@ -15,8 +15,8 @@ namespace Apteka.Model.Entities
             BankAccounts = new List<BankAccount>();
         }
 
-        [Browsable(false)]
-        public int Id { get; protected set; }
+        [Key, Browsable(false)]
+        public int Id { get; private set; }
 
         [DataElement("ru", "название", "название", "")]
         [Required]

@@ -1,14 +1,17 @@
 ﻿using System;
-using System.Linq;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Apteka.Model.Entities
 {
     public class Address
     {
-        [Browsable(false)]
-        public int Id { get; protected set; }
+        [Key, Browsable(false)]
+        public int Id { get; private set; }
+
+        //public int? OrganizationId { get; set; }
+        //public Organization Organization { get; set; }
 
         public Country Country { get; set; }
 

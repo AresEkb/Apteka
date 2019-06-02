@@ -9,8 +9,8 @@ namespace Apteka.Model.Entities
     [Category("CodeLists")]
     public class Country : IEntity
     {
-        [Browsable(false)]
-        public int Id { get; protected set; }
+        [Key, Browsable(false)]
+        public int Id { get; private set; }
 
         [DataElement("ru", "код", "код", "")]
         //[Required]

@@ -13,7 +13,7 @@ namespace Apteka.Module.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201905310706346_Init"; }
+            get { return "201906011726576_Init"; }
         }
         
         string IMigrationMetadata.Source

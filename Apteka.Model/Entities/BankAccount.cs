@@ -8,8 +8,8 @@ namespace Apteka.Model.Entities
     [DataElement("ru", "банковский счет", "счет", "счета", "банковский счет организации")]
     public class BankAccount
     {
-        [Browsable(false)]
-        public int Id { get; protected set; }
+        [Key, Browsable(false)]
+        public int Id { get; private set; }
 
         [Required]
         public virtual Organization Organization { get; set; }

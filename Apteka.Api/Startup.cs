@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+using Newtonsoft.Json;
+
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Apteka.Api
@@ -34,7 +36,8 @@ namespace Apteka.Api
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 // https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/989
-                .AddXmlSerializerFormatters();
+                .AddXmlSerializerFormatters()
+                .AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize);
 
             services.AddSwaggerGen(c =>
             {

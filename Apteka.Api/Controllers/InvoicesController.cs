@@ -50,6 +50,7 @@ namespace Apteka.Api.Controllers
         /// <response code="400">Запись не может быть добавлена, т.к. предоставлены не корректные данные</response>
         /// <response code="500">Произошла серверная ошибка</response>
         [HttpPost]
+        [Consumes("application/xml")]
         public IActionResult Create(InvoiceXml invoiceXml)
         {
             if (!ModelState.IsValid)
@@ -62,11 +63,12 @@ namespace Apteka.Api.Controllers
             OnCreating(entity);
             _context.Set<Invoice>().Add(entity);
             _context.SaveChanges();
-            return CreatedAtAction(nameof(GetByGuid), new { guid = entity.Guid }, entity);
+            //return CreatedAtAction(nameof(GetByGuid), new { guid = entity.Guid }, entity);
+            return Ok();
         }
 
         protected virtual IQueryable<Invoice> GetEntities() =>
-            _context.Set<Invoice>().Select(entity => OnRead(entity))
+            _context.Set<Invoice>()//.Select(entity => OnRead(entity))
                 .Include(entity => entity.Supplier)
                 .Include(entity => entity.SupplierBankAccount)
                 .Include(entity => entity.Receiver)
@@ -78,10 +80,10 @@ namespace Apteka.Api.Controllers
                 .Include(entity => entity.Items)
                     .ThenInclude(item => item.Series);
 
-        protected virtual Invoice OnRead(Invoice entity)
-        {
-            return entity;
-        }
+        //protected virtual Invoice OnRead(Invoice entity)
+        //{
+        //    return entity;
+        //}
 
         protected virtual void OnCreating(Invoice entity)
         {

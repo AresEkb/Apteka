@@ -7,8 +7,8 @@ namespace Apteka.Model.Entities
 {
     public class CountrySubdivision
     {
-        [Browsable(false)]
-        public int Id { get; protected set; }
+        [Key, Browsable(false)]
+        public int Id { get; private set; }
 
         [MaxLength(2), NonUnicode]
         public string Code { get; set; }

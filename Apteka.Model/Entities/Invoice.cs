@@ -15,10 +15,11 @@ namespace Apteka.Model.Entities
         public Invoice()
         {
             Items = new List<InvoiceItem>();
+            Guid = Guid.NewGuid();
         }
 
-        [Browsable(false)]
-        public int Id { get; protected set; }
+        [Key, Browsable(false)]
+        public int Id { get; private set; }
 
         [UniqueIndex]
         public Guid Guid { get; set; }
