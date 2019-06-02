@@ -64,7 +64,7 @@ namespace Apteka.Model.Mappers
             }
             if (dto.TovarnyePozicii != null)
             {
-                entity.Items.AddRange(dto.TovarnyePozicii.Select(el => Map(el)));
+                entity.Items.AddRange(dto.TovarnyePozicii.Select(Map));
             }
             return entity;
         }
@@ -108,7 +108,7 @@ namespace Apteka.Model.Mappers
                     JelPochta = entity.Supplier.Email,
                 };
             }
-            dto.TovarnyePozicii = new List<InvoiceXmlItem>(entity.Items.Select(el => Map(el)));
+            dto.TovarnyePozicii = new List<InvoiceXmlItem>(entity.Items.Select(Map));
             return dto;
         }
 
@@ -130,7 +130,7 @@ namespace Apteka.Model.Mappers
             //dto.SummaOptVklNDS
             entity.Ean13 = dto.EAN13;
             entity.CustomsDeclarationNumber = dto.GTD;
-            entity.Series.AddRange(dto.Serii.Select(el => Map(el)));
+            entity.Series.AddRange(dto.Serii.Select(Map));
             return entity;
         }
 
@@ -153,7 +153,7 @@ namespace Apteka.Model.Mappers
                 SummaOptVklNDS = entity.TotalPrice,
                 EAN13 = entity.Ean13,
                 GTD = entity.CustomsDeclarationNumber,
-                Serii = new List<InvoiceXmlSeries>(entity.Series.Select(el => Map(el)))
+                Serii = new List<InvoiceXmlSeries>(entity.Series.Select(Map))
             };
         }
 
