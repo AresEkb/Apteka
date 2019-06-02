@@ -2,8 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 
 using Apteka.Model.Annotations;
+using Apteka.Model.Entities.Base;
 
-namespace Apteka.Model.Entities
+namespace Apteka.Model.Entities.Place
 {
     [DataElement("ru", "страна", "страна", "страны", "")]
     [Category("CodeLists")]

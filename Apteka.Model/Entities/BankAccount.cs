@@ -14,6 +14,7 @@ namespace Apteka.Model.Entities
         [Required]
         public virtual Organization Organization { get; set; }
 
+        [DataElement("ru", "название", "название", "")]
         public string Name { get => CheckingAccount + " (" + BankName + ")"; }
 
         [DataElement("ru", "расчётный счёт", "счёт", "")]

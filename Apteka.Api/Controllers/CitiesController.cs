@@ -1,6 +1,6 @@
 ﻿using Apteka.Api.Annotations;
 using Apteka.Api.Controllers.Base;
-using Apteka.Model.Entities;
+using Apteka.Model.Entities.Place;
 
 namespace Apteka.Api.Controllers
 {

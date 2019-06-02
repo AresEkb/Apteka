@@ -3,6 +3,8 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 using Apteka.Model.Annotations;
+using Apteka.Model.Entities.Base;
+using Apteka.Model.Entities.Place;
 
 namespace Apteka.Model.Entities
 {

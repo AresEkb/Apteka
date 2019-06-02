@@ -4,6 +4,7 @@ using System.Linq;
 
 using Apteka.Model.Dto;
 using Apteka.Model.Entities;
+using Apteka.Model.Entities.Place;
 using Apteka.Model.Extensions;
 using Apteka.Model.Factories;
 

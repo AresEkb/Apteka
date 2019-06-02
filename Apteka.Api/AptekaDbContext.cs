@@ -5,9 +5,9 @@ using System.Reflection;
 
 using Apteka.Model.Annotations;
 using Apteka.Model.Entities;
+using Apteka.Model.Entities.Place;
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Apteka.Api

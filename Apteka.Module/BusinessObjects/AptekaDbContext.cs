@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
 using Apteka.Model.Entities;
+using Apteka.Model.Entities.Place;
 using Apteka.Module.Conventions;
 
 using DevExpress.ExpressApp.EF.Updating;
@@ -61,7 +62,7 @@ namespace Apteka.Module.BusinessObjects
 
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<InvoiceItem> InvoiceItems { get; set; }
-        public DbSet<Model.Entities.Country> Countries { get; set; }
+        public DbSet<Model.Entities.Place.Country> Countries { get; set; }
         public DbSet<City> Cities { get; set; }
     }
 }

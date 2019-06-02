@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 using Apteka.Model.Annotations;
+using Apteka.Model.Entities.Place;
 
 namespace Apteka.Model.Entities
 {
@@ -20,6 +21,7 @@ namespace Apteka.Model.Entities
         [Key, Browsable(false)]
         public int Id { get; private set; }
 
+        [DataElement("ru", "накладная", "накладная", "")]
         [Required]
         public virtual Invoice Invoice { get; set; }
 

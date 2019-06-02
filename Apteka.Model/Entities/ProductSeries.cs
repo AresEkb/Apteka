@@ -2,16 +2,21 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
+using Apteka.Model.Annotations;
+
 namespace Apteka.Model.Entities
 {
+    [DataElement("ru", "серия товаров", "серия товаров", "серии товаров", "")]
     public class ProductSeries
     {
         [Key, Browsable(false)]
         public int Id { get; private set; }
 
+        [DataElement("ru", "товарная позиция", "товарная позиция", "")]
         [Required]
         public virtual InvoiceItem InvoiceItem { get; set; }
 
+        [DataElement("ru", "код", "код", "")]
         [MaxLength(20)]
         public string Code { get; set; }
 

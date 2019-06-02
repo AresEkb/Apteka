@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Apteka.Model.Entities;
+using Apteka.Model.Entities.Place;
 using Apteka.Model.Factories;
 
 namespace Apteka.Model.Mappers
