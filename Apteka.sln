@@ -17,7 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceXmlTest", "InvoiceXm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apteka.Model", "Apteka.Model\Apteka.Model.csproj", "{ACE95346-CC88-4E83-BE41-1107CD823C54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apteka.Api", "Apteka.Api\Apteka.Api.csproj", "{C95B2119-976C-4546-A983-5EEA03967CFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apteka.Api", "Apteka.Api\Apteka.Api.csproj", "{C95B2119-976C-4546-A983-5EEA03967CFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImportStateMedicineRegistry", "ImportStateMedicineRegistry\ImportStateMedicineRegistry.csproj", "{ED352DF2-6EBD-44B3-AB2D-0845C1922C0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apteka.Model.EFCore", "Apteka.Model.EFCore\Apteka.Model.EFCore.csproj", "{17563159-09F1-4E50-8EA5-04C0F7B44045}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,6 +78,18 @@ Global
 		{C95B2119-976C-4546-A983-5EEA03967CFA}.EasyTest|Any CPU.Build.0 = Debug|Any CPU
 		{C95B2119-976C-4546-A983-5EEA03967CFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C95B2119-976C-4546-A983-5EEA03967CFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED352DF2-6EBD-44B3-AB2D-0845C1922C0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED352DF2-6EBD-44B3-AB2D-0845C1922C0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED352DF2-6EBD-44B3-AB2D-0845C1922C0C}.EasyTest|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED352DF2-6EBD-44B3-AB2D-0845C1922C0C}.EasyTest|Any CPU.Build.0 = Debug|Any CPU
+		{ED352DF2-6EBD-44B3-AB2D-0845C1922C0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED352DF2-6EBD-44B3-AB2D-0845C1922C0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17563159-09F1-4E50-8EA5-04C0F7B44045}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17563159-09F1-4E50-8EA5-04C0F7B44045}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17563159-09F1-4E50-8EA5-04C0F7B44045}.EasyTest|Any CPU.ActiveCfg = Debug|Any CPU
+		{17563159-09F1-4E50-8EA5-04C0F7B44045}.EasyTest|Any CPU.Build.0 = Debug|Any CPU
+		{17563159-09F1-4E50-8EA5-04C0F7B44045}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17563159-09F1-4E50-8EA5-04C0F7B44045}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

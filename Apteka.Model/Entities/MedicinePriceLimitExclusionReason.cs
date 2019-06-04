@@ -2,21 +2,15 @@
 using System.ComponentModel.DataAnnotations;
 
 using Apteka.Model.Annotations;
-using Apteka.Model.Entities.Base;
 
-namespace Apteka.Model.Entities.Place
+namespace Apteka.Model.Entities
 {
-    [DataElement("ru", "город", "города", "")]
+    [DataElement("ru", "причина исключения", "причины исключения", "")]
     [Category("CodeLists")]
-    public class City : IEntity
+    public class MedicinePriceLimitExclusionReason
     {
         [Key, Browsable(false)]
         public int Id { get; private set; }
-
-        [DataElement("ru", "код")]
-        [MaxLength(10), NonUnicode]
-        [UniqueIndex]
-        public string Code { get; set; }
 
         [DataElement("ru", "название")]
         [MaxLength(200)]

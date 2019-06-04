@@ -2,20 +2,20 @@
 using System.ComponentModel.DataAnnotations;
 
 using Apteka.Model.Annotations;
-using Apteka.Model.Entities.Base;
 
-namespace Apteka.Model.Entities.Place
+namespace Apteka.Model.Entities
 {
-    [DataElement("ru", "город", "города", "")]
+    [DataElement("ru", "анатомо-терапевтическо-химическая группа", "АТХ", "")]
     [Category("CodeLists")]
-    public class City : IEntity
+    public class AtcGroup
     {
         [Key, Browsable(false)]
         public int Id { get; private set; }
 
+        public AtcGroup Parent { get; set; }
+
         [DataElement("ru", "код")]
-        [MaxLength(10), NonUnicode]
-        [UniqueIndex]
+        [MaxLength(15)]
         public string Code { get; set; }
 
         [DataElement("ru", "название")]

@@ -3,6 +3,7 @@ using System.Linq;
 
 using Apteka.Api.Factories;
 using Apteka.Model.Dto;
+using Apteka.Model.EFCore;
 using Apteka.Model.Entities;
 using Apteka.Model.Factories;
 using Apteka.Model.Mappers;

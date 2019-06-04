@@ -6,20 +6,20 @@ using Apteka.Model.Entities.Base;
 
 namespace Apteka.Model.Entities.Place
 {
-    [DataElement("ru", "страна", "страна", "страны", "")]
+    [DataElement("ru", "страна", "страны", "")]
     [Category("CodeLists")]
     public class Country : IEntity
     {
         [Key, Browsable(false)]
         public int Id { get; private set; }
 
-        [DataElement("ru", "код", "код", "")]
+        [DataElement("ru", "код")]
         //[Required]
         //[AlternateKey]
         [MinLength(2), MaxLength(2), NonUnicode]
         public string Code { get; set; }
 
-        [DataElement("ru", "название", "название", "")]
+        [DataElement("ru", "название")]
         [Required]
         [UniqueIndex]
         [MaxLength(200)]

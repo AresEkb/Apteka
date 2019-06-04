@@ -5,7 +5,7 @@ using Apteka.Model.Annotations;
 
 namespace Apteka.Model.Entities
 {
-    [DataElement("ru", "банковский счет", "счет", "счета", "банковский счет организации")]
+    [DataElement("ru", "банковский счет", "счета", "банковский счет организации", BriefName = "счет")]
     public class BankAccount
     {
         [Key, Browsable(false)]
@@ -14,26 +14,26 @@ namespace Apteka.Model.Entities
         [Required]
         public virtual Organization Organization { get; set; }
 
-        [DataElement("ru", "название", "название", "")]
+        [DataElement("ru", "название")]
         public string Name { get => CheckingAccount + " (" + BankName + ")"; }
 
-        [DataElement("ru", "расчётный счёт", "счёт", "")]
+        [DataElement("ru", "расчётный счёт", BriefName = "счёт")]
         [MaxLength(50), NonUnicode]
         public string CheckingAccount { get; set; }
 
-        [DataElement("ru", "корреспондентский счёт", "кор. счёт", "")]
+        [DataElement("ru", "корреспондентский счёт", BriefName = "кор. счёт")]
         [MaxLength(50), NonUnicode]
         public string CorrespondentAccount { get; set; }
 
-        [DataElement("ru", "БИК", "БИК", "")]
+        [DataElement("ru", "БИК")]
         [MaxLength(20)]
         public string BankCode { get; set; }
 
-        [DataElement("ru", "банк", "банк", "")]
+        [DataElement("ru", "банк")]
         [MaxLength(200)]
         public string BankName { get; set; }
 
-        [DataElement("ru", "отделение банка", "отделение", "")]
+        [DataElement("ru", "отделение банка", BriefName = "отделение")]
         [MaxLength(200)]
         public string BankBranchName { get; set; }
     }

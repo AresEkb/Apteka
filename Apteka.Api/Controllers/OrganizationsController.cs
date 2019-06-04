@@ -1,5 +1,6 @@
 ﻿using Apteka.Api.Annotations;
 using Apteka.Api.Controllers.Base;
+using Apteka.Model.EFCore;
 using Apteka.Model.Entities;
 
 namespace Apteka.Api.Controllers

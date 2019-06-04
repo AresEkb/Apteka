@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Apteka.Model\Apteka.Model.csproj" />
+    <ProjectReference Include="..\Apteka.Model.EFCore\Apteka.Model.EFCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>

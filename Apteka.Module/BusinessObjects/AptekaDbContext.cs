@@ -64,5 +64,6 @@ namespace Apteka.Module.BusinessObjects
         public DbSet<InvoiceItem> InvoiceItems { get; set; }
         public DbSet<Model.Entities.Place.Country> Countries { get; set; }
         public DbSet<City> Cities { get; set; }
+        public DbSet<Medicine> Medicines { get; set; }
     }
 }

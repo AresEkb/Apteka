@@ -5,20 +5,24 @@ namespace Apteka.Model.Annotations
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property, AllowMultiple = true)]
     public class DataElementAttribute : Attribute
     {
-        public DataElementAttribute(string lang, string name, string briefName, string pluralName, string definition)
+        public DataElementAttribute(string lang, string name)
         {
             Lang = lang;
             Name = name;
-            BriefName = briefName;
-            PluralName = pluralName;
+        }
+
+        public DataElementAttribute(string lang, string name, string definition)
+        {
+            Lang = lang;
+            Name = name;
             Definition = definition;
         }
 
-        public DataElementAttribute(string lang, string name, string briefName, string definition)
+        public DataElementAttribute(string lang, string name, string pluralName, string definition)
         {
             Lang = lang;
             Name = name;
-            BriefName = briefName;
+            PluralName = pluralName;
             Definition = definition;
         }
 

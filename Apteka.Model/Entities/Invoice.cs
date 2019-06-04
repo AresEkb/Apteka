@@ -9,7 +9,7 @@ using Apteka.Model.Entities.Base;
 
 namespace Apteka.Model.Entities
 {
-    [DataElement("ru", "накладная", "накладная", "накладные", "электронная товарная накладная")]
+    [DataElement("ru", "накладная", "накладные", "электронная товарная накладная")]
     [Category("Warehouse")]
     public class Invoice : IEntity
     {
@@ -25,51 +25,51 @@ namespace Apteka.Model.Entities
         [UniqueIndex]
         public Guid Guid { get; set; }
 
-        [DataElement("ru", "номер документа", "номерДок", "номер электронной накладной, обычно совпадает с номером счёт-фактуры")]
+        [DataElement("ru", "номер документа", "номер электронной накладной, обычно совпадает с номером счёт-фактуры", BriefName = "номерДок")]
         [MaxLength(15)]
         public string Code { get; set; }
 
-        [DataElement("ru", "дата документа", "датаДок", "дата электронной накладной")]
+        [DataElement("ru", "дата документа", "дата электронной накладной", BriefName = "датаДок")]
         public DateTime? DocDateTime { get; set; }
 
-        [DataElement("ru", "дата отгрузки", "датаОтгрузки", "дата отгрузки товара")]
+        [DataElement("ru", "дата отгрузки", "дата отгрузки товара", BriefName = "датаОтгрузки")]
         public DateTime? ShipmentDateTime { get; set; }
 
-        [DataElement("ru", "поставщик", "поставщик", "")]
+        [DataElement("ru", "поставщик")]
         public virtual Organization Supplier { get; set; }
 
-        [DataElement("ru", "банковский счет поставщика", "счет поставщика", "")]
+        [DataElement("ru", "банковский счет поставщика", BriefName = "счет поставщика")]
         public virtual BankAccount SupplierBankAccount { get; set; }
 
-        [DataElement("ru", "получатель", "получатель", "")]
+        [DataElement("ru", "получатель")]
         public virtual Organization Receiver { get; set; }
 
-        [DataElement("ru", "грузополучатель", "грузополучатель", "")]
+        [DataElement("ru", "грузополучатель")]
         public virtual Organization Consignee { get; set; }
 
-        [DataElement("ru", "условия оплаты", "условия оплаты", "условия оплаты поставки")]
+        [DataElement("ru", "условия оплаты", "условия оплаты поставки")]
         public string PaymentConditions { get; set; }
 
-        [DataElement("ru", "товарная группа", "товарная группа", "наименование товарной группы")]
+        [DataElement("ru", "товарная группа", "наименование товарной группы")]
         public string ProductGroup { get; set; }
 
-        [DataElement("ru", "сумма оптовая", "cуммаОпт", "сумма предприятия поставщика без учета НДС")]
+        [DataElement("ru", "сумма оптовая", "сумма предприятия поставщика без учета НДС", BriefName = "cуммаОпт")]
         public decimal SupplierPrice { get => Items.Sum(item => item.TotalSupplierPrice); }
 
-        [DataElement("ru", "сумма НДС", "суммаНДС", "сумма НДС от цены предприятия поставщика")]
+        [DataElement("ru", "сумма НДС", "сумма НДС от цены предприятия поставщика", BriefName = "суммаНДС")]
         public decimal ValueAddedTaxAmount { get => Items.Sum(item => item.ValueAddedTaxAmount); }
 
-        [DataElement("ru", "сумма оптовая + НДС", "суммаОптВклНДС", "сумма предприятия поставщика с учётом НДС")]
+        [DataElement("ru", "сумма оптовая + НДС", "сумма предприятия поставщика с учётом НДС", BriefName = "суммаОптВклНДС")]
         public decimal TotalPrice { get => SupplierPrice + ValueAddedTaxAmount; }
 
-        [DataElement("ru", "примечание", "примечание", "примечание к документу")]
+        [DataElement("ru", "примечание", "примечание к документу")]
         [MaxLength(1000)]
         public string Note { get; set; }
 
-        [DataElement("ru", "товарные позиции", "товарные позиции", "содержимое электронной накладной")]
+        [DataElement("ru", "товарные позиции", "содержимое электронной накладной")]
         public virtual ICollection<InvoiceItem> Items { get; set; }
 
-        [DataElement("ru", "количество позиций", "позиций", "количество позиций, входящих в данную поставку")]
+        [DataElement("ru", "количество позиций", "количество позиций, входящих в данную поставку", BriefName = "позиций")]
         public int ItemCount { get => Items.Count; }
     }
 }

@@ -2,6 +2,7 @@
 using System.IO;
 
 using Apteka.Api.Extensions;
+using Apteka.Model.EFCore;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;

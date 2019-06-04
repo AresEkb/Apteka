@@ -7,23 +7,23 @@ using Apteka.Model.Annotations;
 
 namespace Apteka.Model.Entities.Place
 {
-    [DataElement("ru", "адрес", "адрес", "адреса", "")]
+    [DataElement("ru", "адрес", "адреса", "")]
     public class Address
     {
         [Key, Browsable(false)]
         public int Id { get; private set; }
 
-        [DataElement("ru", "страна", "страна", "")]
+        [DataElement("ru", "страна")]
         public Country Country { get; set; }
 
-        [DataElement("ru", "город", "город", "")]
+        [DataElement("ru", "город")]
         public City City { get; set; }
 
-        [DataElement("ru", "описание", "описание", "")]
+        [DataElement("ru", "описание")]
         [MaxLength(200)]
         public string Description { get; set; }
 
-        [DataElement("ru", "название", "название", "")]
+        [DataElement("ru", "название")]
         public string Name { get => String.Join(", ", new string[]
             { Country?.Name, City?.Name, Description }
             .Where(s => !String.IsNullOrWhiteSpace(s))); }

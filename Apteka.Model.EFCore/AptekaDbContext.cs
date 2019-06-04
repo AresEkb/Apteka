@@ -10,7 +10,7 @@ using Apteka.Model.Entities.Place;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace Apteka.Api
+namespace Apteka.Model.EFCore
 {
     public class AptekaDbContext : DbContext
     {
@@ -117,5 +117,6 @@ namespace Apteka.Api
         public DbSet<InvoiceItem> InvoiceItems { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<City> Cities { get; set; }
+        public DbSet<Medicine> Medicines { get; set; }
     }
 }
