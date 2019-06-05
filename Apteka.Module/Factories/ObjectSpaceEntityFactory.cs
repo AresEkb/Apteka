@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 using Apteka.Model.Factories;
 
@@ -15,7 +16,14 @@ namespace Apteka.Module.Factories
             this.os = os;
         }
 
+        public T Find<T>(Func<T, bool> pred) where T : class, new() =>
+            Query<T>().FirstOrDefault(pred);
+
         public T Create<T>() where T : new() => os.CreateObject<T>();
+
+        public void Attach<T>(T entity) where T : class
+        {
+        }
 
         public IQueryable<T> Query<T>() where T : class => os.GetObjectsQuery<T>(true);
     }

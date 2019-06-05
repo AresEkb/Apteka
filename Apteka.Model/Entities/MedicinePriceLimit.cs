@@ -12,7 +12,7 @@ namespace Apteka.Model.Entities
         public int Id { get; private set; }
 
         [Required]
-        public MedicineReleaseForm ReleaseForm { get; set; }
+        public MedicineDosageForm DosageForm { get; set; }
 
         [DataElement("ru", "предельная цена руб. без НДС")]
         public decimal PriceLimit { get; set; }

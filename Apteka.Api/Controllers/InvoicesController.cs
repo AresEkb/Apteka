@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-using Apteka.Api.Factories;
-using Apteka.Model.Dto;
+using Apteka.Model.Dtos;
 using Apteka.Model.EFCore;
 using Apteka.Model.Entities;
 using Apteka.Model.Factories;
@@ -58,7 +57,7 @@ namespace Apteka.Api.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var mapper = new InvoiceXmlMapper(new EntityFrameworkEntityFactory(_context));
+            var mapper = new InvoiceXmlMapper(new EntityFactory(_context));
             var entity = mapper.Map(invoiceXml);
 
             OnCreating(entity);

@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System.Xml.Serialization;
 
-using Apteka.Model.Dto;
+using Apteka.Model.Dtos;
 using Apteka.Model.Entities;
 using Apteka.Model.Mappers;
 using Apteka.Module.Factories;

@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace Apteka.Model.Dto
+namespace Apteka.Model.Dtos
 {
     // В схеме данных все поля называются нормально
     // Здесь же используется транслит потому что

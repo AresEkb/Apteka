@@ -10,7 +10,7 @@ namespace Apteka.Model.Entities
 {
     [DataElement("ru", "организация", "организации", "")]
     [Category("CodeLists")]
-    public class Organization : IEntity
+    public class Organization : INamedEntity
     {
         public Organization()
         {
@@ -22,7 +22,7 @@ namespace Apteka.Model.Entities
 
         [DataElement("ru", "название")]
         [Required]
-        [MaxLength(200)]
+        [MaxLength(300)]
         public string Name { get; set; }
 
         [DataElement("ru", "ИНН")]
@@ -49,5 +49,10 @@ namespace Apteka.Model.Entities
 
         [DataElement("ru", "банковские счета", BriefName = "счета")]
         public virtual ICollection<BankAccount> BankAccounts { get; set; }
+
+        public override string ToString()
+        {
+            return $"Организация ({Name})";
+        }
     }
 }

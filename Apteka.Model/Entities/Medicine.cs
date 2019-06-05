@@ -17,6 +17,7 @@ namespace Apteka.Model.Entities
         public int Id { get; private set; }
 
         [DataElement("ru", "торговое наименование")]
+        [UniqueIndex]
         [MaxLength(200)]
         public string TradeName { get; set; }
 
@@ -30,6 +31,6 @@ namespace Apteka.Model.Entities
         public AtcGroup AtcCode { get; set; }
 
         [DataElement("ru", "формы выпуска")]
-        public ICollection<MedicineReleaseForm> ReleaseForms { get; }
+        public virtual ICollection<MedicineDosageForm> DosageForms { get; set; }
     }
 }

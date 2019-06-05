@@ -33,6 +33,7 @@ namespace Apteka.Module.BusinessObjects
             modelBuilder.Conventions.Add<ForeignKeyNamingConvention>();
 
             modelBuilder.Conventions.Add<UniqueIndexAttributeConvention>();
+            modelBuilder.Conventions.Add<DataTypeAttributeConvention>();
             modelBuilder.Conventions.Add<DecimalPrecisionConvention>();
             modelBuilder.Conventions.Add<NonUnicodeAttributeConvention>();
 

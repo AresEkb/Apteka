@@ -135,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessObjects\AptekaDbContext.cs" />
+    <Compile Include="Conventions\DataTypeAttributeConvention.cs" />
     <Compile Include="Conventions\UniqueIndexAttributeConvention.cs" />
     <Compile Include="Conventions\CustomMaxLengthAttributeConvention.cs" />
     <Compile Include="Conventions\CompositionAttributeConvention.cs" />
@@ -155,6 +156,30 @@
     <Compile Include="Migrations\201906041842452_Medicine2.cs" />
     <Compile Include="Migrations\201906041842452_Medicine2.Designer.cs">
       <DependentUpon>201906041842452_Medicine2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906050850513_MedicinePackaging.cs" />
+    <Compile Include="Migrations\201906050850513_MedicinePackaging.Designer.cs">
+      <DependentUpon>201906050850513_MedicinePackaging.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906050855042_MedicinePackaging2.cs" />
+    <Compile Include="Migrations\201906050855042_MedicinePackaging2.Designer.cs">
+      <DependentUpon>201906050855042_MedicinePackaging2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906051010278_MedicineUniqueIndex.cs" />
+    <Compile Include="Migrations\201906051010278_MedicineUniqueIndex.Designer.cs">
+      <DependentUpon>201906051010278_MedicineUniqueIndex.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906051209486_OrgName300.cs" />
+    <Compile Include="Migrations\201906051209486_OrgName300.Designer.cs">
+      <DependentUpon>201906051209486_OrgName300.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906051306478_MedicineDate.cs" />
+    <Compile Include="Migrations\201906051306478_MedicineDate.Designer.cs">
+      <DependentUpon>201906051306478_MedicineDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906051312477_NormDoc300.cs" />
+    <Compile Include="Migrations\201906051312477_NormDoc300.Designer.cs">
+      <DependentUpon>201906051312477_NormDoc300.cs</DependentUpon>
     </Compile>
     <Compile Include="ModelExtensions\ModelClassUpdater.cs" />
     <Compile Include="ModelExtensions\ModelMemberUpdater.cs" />
@@ -180,6 +205,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906041842452_Medicine2.resx">
       <DependentUpon>201906041842452_Medicine2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906050850513_MedicinePackaging.resx">
+      <DependentUpon>201906050850513_MedicinePackaging.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906050855042_MedicinePackaging2.resx">
+      <DependentUpon>201906050855042_MedicinePackaging2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906051010278_MedicineUniqueIndex.resx">
+      <DependentUpon>201906051010278_MedicineUniqueIndex.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906051209486_OrgName300.resx">
+      <DependentUpon>201906051209486_OrgName300.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906051306478_MedicineDate.resx">
+      <DependentUpon>201906051306478_MedicineDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906051312477_NormDoc300.resx">
+      <DependentUpon>201906051312477_NormDoc300.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="Module.resx">

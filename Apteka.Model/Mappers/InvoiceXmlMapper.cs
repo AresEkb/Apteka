@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Apteka.Model.Dto;
+using Apteka.Model.Dtos;
 using Apteka.Model.Entities;
 using Apteka.Model.Entities.Place;
 using Apteka.Model.Extensions;
@@ -27,9 +27,9 @@ namespace Apteka.Model.Mappers
                 entity.Code = header.NomerDok;
                 entity.DocDateTime = header.DataDok;
                 entity.ShipmentDateTime = header.DataOtgruzki;
-                entity.Supplier = FindOrCreateOrganization(header.Postavshhik);
-                entity.Receiver = FindOrCreateOrganization(header.Poluchatel);
-                entity.Consignee = FindOrCreateOrganization(header.Gruzopoluchatel);
+                entity.Supplier = FindOrCreateNamedEntity<Organization>(header.Postavshhik);
+                entity.Receiver = FindOrCreateNamedEntity<Organization>(header.Poluchatel);
+                entity.Consignee = FindOrCreateNamedEntity<Organization>(header.Gruzopoluchatel);
                 entity.PaymentConditions = header.UslovijaOplaty;
                 entity.ProductGroup = header.TovarnajaGruppa;
                 //header.Pozicij
@@ -40,7 +40,7 @@ namespace Apteka.Model.Mappers
                 if (entity.Supplier != null && header.RekvizityPostavshhika != null)
                 {
                     var postavshik = header.RekvizityPostavshhika;
-                    var city = FindOrCreateCity(postavshik.Gorod);
+                    var city = FindOrCreateNamedEntity<City>(postavshik.Gorod);
                     if (city != null)
                     {
                         entity.Supplier.Address = EntityFactory.Create<Address>();
@@ -117,8 +117,8 @@ namespace Apteka.Model.Mappers
             var entity = EntityFactory.Create<InvoiceItem>();
             entity.ProductCode = dto.KodTovara;
             entity.ProductName = dto.Tovar;
-            entity.Manufacturer = FindOrCreateOrganization(dto.Izgotovitel);
-            entity.ManufacturerCountry = FindOrCreateCountry(dto.StranaIzgotovitelja);
+            entity.Manufacturer = FindOrCreateNamedEntity<Organization>(dto.Izgotovitel);
+            entity.ManufacturerCountry = FindOrCreateNamedEntity<Country>(dto.StranaIzgotovitelja);
             entity.Quantity = dto.Kolichestvo;
             entity.ManufacturerPrice = dto.CenaIzg;
             entity.StateRegistryPrice = dto.CenaGR;

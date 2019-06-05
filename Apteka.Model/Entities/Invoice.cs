@@ -54,13 +54,13 @@ namespace Apteka.Model.Entities
         public string ProductGroup { get; set; }
 
         [DataElement("ru", "сумма оптовая", "сумма предприятия поставщика без учета НДС", BriefName = "cуммаОпт")]
-        public decimal SupplierPrice { get => Items.Sum(item => item.TotalSupplierPrice); }
+        public decimal SupplierPrice => Items.Sum(item => item.TotalSupplierPrice);
 
         [DataElement("ru", "сумма НДС", "сумма НДС от цены предприятия поставщика", BriefName = "суммаНДС")]
-        public decimal ValueAddedTaxAmount { get => Items.Sum(item => item.ValueAddedTaxAmount); }
+        public decimal ValueAddedTaxAmount => Items.Sum(item => item.ValueAddedTaxAmount);
 
         [DataElement("ru", "сумма оптовая + НДС", "сумма предприятия поставщика с учётом НДС", BriefName = "суммаОптВклНДС")]
-        public decimal TotalPrice { get => SupplierPrice + ValueAddedTaxAmount; }
+        public decimal TotalPrice => SupplierPrice + ValueAddedTaxAmount;
 
         [DataElement("ru", "примечание", "примечание к документу")]
         [MaxLength(1000)]
@@ -70,6 +70,6 @@ namespace Apteka.Model.Entities
         public virtual ICollection<InvoiceItem> Items { get; set; }
 
         [DataElement("ru", "количество позиций", "количество позиций, входящих в данную поставку", BriefName = "позиций")]
-        public int ItemCount { get => Items.Count; }
+        public int ItemCount => Items.Count;
     }
 }

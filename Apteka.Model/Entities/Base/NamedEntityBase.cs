@@ -3,11 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 using Apteka.Model.Annotations;
 
-namespace Apteka.Model.Entities
+namespace Apteka.Model.Entities.Base
 {
-    [DataElement("ru", "причина исключения", "причины исключения", "")]
-    [Category(@"CodeLists\Medicines")]
-    public class MedicinePriceLimitExclusionReason
+    public abstract class NamedEntityBase : INamedEntity
     {
         [Key, Browsable(false)]
         public int Id { get; private set; }

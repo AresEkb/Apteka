@@ -8,7 +8,7 @@ namespace Apteka.Model.Entities.Place
 {
     [DataElement("ru", "город", "города", "")]
     [Category("CodeLists")]
-    public class City : IEntity
+    public class City : INamedEntity
     {
         [Key, Browsable(false)]
         public int Id { get; private set; }

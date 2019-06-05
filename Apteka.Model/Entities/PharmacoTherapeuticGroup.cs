@@ -2,12 +2,13 @@
 using System.ComponentModel.DataAnnotations;
 
 using Apteka.Model.Annotations;
+using Apteka.Model.Entities.Base;
 
 namespace Apteka.Model.Entities
 {
     [DataElement("ru", "фармакотерапевтическая группа", "фармакотерапевтические группы", "")]
     [Category("CodeLists")]
-    public class PharmacotherapeuticGroup
+    public class PharmacotherapeuticGroup : INamedEntity
     {
         [Key, Browsable(false)]
         public int Id { get; private set; }
