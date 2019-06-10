@@ -43,9 +43,11 @@ namespace Apteka.Model.Entities
         public int Quantity { get; set; }
 
         [DataElement("ru", "цена изготовителя", "отпускная цена предприятия изготовителя", BriefName = "ценаИзг")]
+        [DecimalPrecision(18, 2)]
         public decimal ManufacturerPrice { get; set; }
 
         [DataElement("ru", "цена по гос. реестру", "цена по государственному реестру", BriefName = "ценаГР")]
+        [DecimalPrecision(18, 2)]
         public decimal StateRegistryPrice { get; set; }
 
         [DataElement("ru", "оптовая наценка", "наценка предприятия поставщика по отношению к цене завода изготовителя, выраженная в процентах", BriefName = "наценОпт")]

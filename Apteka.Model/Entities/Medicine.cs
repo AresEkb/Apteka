@@ -22,7 +22,7 @@ namespace Apteka.Model.Entities
         public string TradeName { get; set; }
 
         [DataElement("ru", "МНН", "международное непатентованное наименование")]
-        [MaxLength(200)]
+        [MaxLength(300)]
         public string Inn { get; set; }
 
         public PharmacotherapeuticGroup PharmacotherapeuticGroup { get; set; }
@@ -32,5 +32,10 @@ namespace Apteka.Model.Entities
 
         [DataElement("ru", "формы выпуска")]
         public virtual ICollection<MedicineDosageForm> DosageForms { get; set; }
+
+        public override string ToString()
+        {
+            return $"Лекарственное средство ({Inn})";
+        }
     }
 }

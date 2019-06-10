@@ -15,6 +15,7 @@ namespace Apteka.Model.Entities
         public MedicineDosageForm DosageForm { get; set; }
 
         [DataElement("ru", "предельная цена руб. без НДС")]
+        [DecimalPrecision(18, 2)]
         public decimal PriceLimit { get; set; }
 
         [DataElement("ru", "цена указана для первич. упаковки")]

@@ -118,5 +118,6 @@ namespace Apteka.Model.EFCore
         public DbSet<Country> Countries { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Medicine> Medicines { get; set; }
+        public DbSet<MedicineDosageForm> MedicineDosageForms { get; set; }
     }
 }

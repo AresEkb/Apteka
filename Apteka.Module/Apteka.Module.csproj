@@ -181,6 +181,10 @@
     <Compile Include="Migrations\201906051312477_NormDoc300.Designer.cs">
       <DependentUpon>201906051312477_NormDoc300.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906101154285_PricePrecision.cs" />
+    <Compile Include="Migrations\201906101154285_PricePrecision.Designer.cs">
+      <DependentUpon>201906101154285_PricePrecision.cs</DependentUpon>
+    </Compile>
     <Compile Include="ModelExtensions\ModelClassUpdater.cs" />
     <Compile Include="ModelExtensions\ModelMemberUpdater.cs" />
     <Compile Include="ModelExtensions\DetailViewLayoutGeneratorUpdater.cs" />
@@ -223,6 +227,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906051312477_NormDoc300.resx">
       <DependentUpon>201906051312477_NormDoc300.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906101154285_PricePrecision.resx">
+      <DependentUpon>201906101154285_PricePrecision.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="Module.resx">

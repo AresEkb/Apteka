@@ -5,14 +5,17 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+using Apteka.Model.Dtos;
 using Apteka.Model.EFCore;
+using Apteka.Model.Entities;
+using Apteka.Model.Entities.Place;
+using Apteka.Model.Mappers;
 
 using CsvHelper;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Apteka.Model.Mappers;
-using Apteka.Model.Dtos;
+using Microsoft.Extensions.Logging;
 
 namespace ImportStateMedicineRegistry
 {
@@ -20,6 +23,8 @@ namespace ImportStateMedicineRegistry
     {
         static void Main(string[] args)
         {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
             // Config
             IConfiguration config = new ConfigurationBuilder()
                       .AddJsonFile("appsettings.json", true, true)
@@ -29,14 +34,35 @@ namespace ImportStateMedicineRegistry
             string connection = config.GetConnectionString("DefaultConnection");
             var context = new AptekaDbContext(
                 new DbContextOptionsBuilder()
+                    //.UseLoggerFactory(new LoggerFactory().AddConsole())
                     .UseSqlServer(connection)
                     .Options);
 
             // Mapper
-            var mapper = new StateMedicineRegistryItemMapper(new EntityFactory(context));
+            var entityFactory = new EntityFactory(context);
+            var start = DateTime.Now;
+            Console.WriteLine("{0} Caching data...", start);
+            entityFactory.CacheAll<MedicineDosageForm>();
+            entityFactory.CacheAll<Medicine>();
+            entityFactory.CacheAll<PharmacotherapeuticGroup>();
+            entityFactory.CacheAll<AtcGroup>();
+            entityFactory.CacheAll<Organization>();
+            entityFactory.CacheAll<Country>();
 
             // Import
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            // ЛП-000001
+            // ЛС-000001
+            // ЛСР-000001
+            // ЛСР-000001/10
+            // П N002845
+            // П N003014/01
+            // П N011506/01-1999
+            // Р N002321/01
+            // Р N002321/01-2003
+            // ФС-000001
+
+            Console.WriteLine("{0} Processing data...", DateTime.Now);
+            var mapper = new StateMedicineRegistryItemMapper(entityFactory);
             using (var reader = new StreamReader("grls2019-06-04-1.csv", Encoding.GetEncoding("windows-1251")))
             using (var csv = new CsvReader(reader))
             {
@@ -46,7 +72,7 @@ namespace ImportStateMedicineRegistry
                 var records = csv.GetRecords<StateMedicineRegistryItem>();
                 foreach (var entity in records
                     .Where(r => r.IsOk)
-                    .Select(r => mapper.Map(r, false))
+                    .Select(r => mapper.Map(r, false, true))
                     .Where(r => r != null)
                     .Take(100))
                 {
@@ -58,6 +84,7 @@ namespace ImportStateMedicineRegistry
             }
 
             // Validation
+            Console.WriteLine("{0} Validating data...", DateTime.Now);
             var hasErrors = false;
             foreach (var entity in context.ChangeTracker.Entries()
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified)
@@ -74,6 +101,7 @@ namespace ImportStateMedicineRegistry
             }
 
             // Update database
+            Console.WriteLine("{0} Updating database...", DateTime.Now);
             if (!hasErrors)
             {
                 try
@@ -85,9 +113,11 @@ namespace ImportStateMedicineRegistry
                     Console.WriteLine(ex);
                 }
             }
+            var end = DateTime.Now;
+            Console.WriteLine("{0} Done in {1}", end, end - start);
+
             Console.WriteLine("Press any key...");
             Console.ReadKey();
         }
-
     }
 }

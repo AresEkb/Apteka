@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Linq.Expressions;
 using Apteka.Model.Entities;
 using Apteka.Model.Entities.Base;
 using Apteka.Model.Factories;
@@ -17,23 +17,52 @@ namespace Apteka.Model.Mappers
 
         protected IEntityFactory EntityFactory { get; private set; }
 
-        private readonly IList<INamedEntity> localNamedEntities = new List<INamedEntity>();
-        protected T FindOrCreateNamedEntity<T>(string name)
+        protected T FindOrCreate<T>(Expression<Func<T, bool>> pred, bool returnExisting, EntitySource entitySource = EntitySource.Both)
+            where T : class, new()
+        {
+            var entity = EntityFactory.Find(pred, entitySource);
+            if (entity != null)
+            {
+                if (!returnExisting) { return null; }
+                EntityFactory.Attach(entity);
+                return entity;
+            }
+            else
+            {
+                return EntityFactory.Create<T>();
+            }
+        }
+
+        protected T FindOrCreate<T>(string name, EntitySource entitySource = EntitySource.Both)
             where T : class, INamedEntity, new()
         {
             if (String.IsNullOrWhiteSpace(name)) { return null; }
 
-            T entity = localNamedEntities.OfType<T>().FirstOrDefault(o => o.Name == name);
-            if (entity != null) { return entity; }
-
-            entity = EntityFactory.Query<T>().FirstOrDefault(o => o.Name == name);
+            var entity = EntityFactory.Find<T>(e => e.Name == name, entitySource);
             if (entity != null) { return entity; }
 
             entity = EntityFactory.Create<T>();
             entity.Name = name;
-            localNamedEntities.Add(entity);
             return entity;
         }
+
+        //private readonly IList<INamedEntity> localNamedEntities = new List<INamedEntity>();
+        //protected T FindOrCreate<T>(string name)
+        //    where T : class, INamedEntity, new()
+        //{
+        //    if (String.IsNullOrWhiteSpace(name)) { return null; }
+
+        //    T entity = localNamedEntities.OfType<T>().FirstOrDefault(o => o.Name == name);
+        //    if (entity != null) { return entity; }
+
+        //    entity = EntityFactory.Query<T>().FirstOrDefault(o => o.Name == name);
+        //    if (entity != null) { return entity; }
+
+        //    entity = EntityFactory.Create<T>();
+        //    entity.Name = name;
+        //    localNamedEntities.Add(entity);
+        //    return entity;
+        //}
 
         // TODO: Обобщить до FindOrCreateNamedEntity
         //private readonly IList<Country> localCountries = new List<Country>();

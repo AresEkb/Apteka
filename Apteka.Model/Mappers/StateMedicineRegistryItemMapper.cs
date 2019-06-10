@@ -13,30 +13,15 @@ namespace Apteka.Model.Mappers
         {
         }
 
-        public T FindOrCreate<T>(Func<T, bool> pred, bool returnExisting)
-            where T : class, new()
-        {
-            var entity = EntityFactory.Find(pred);
-            if (entity != null)
-            {
-                if (!returnExisting) { return null; }
-                EntityFactory.Attach(entity);
-                return entity;
-            }
-            else
-            {
-                return EntityFactory.Create<T>();
-            }
-        }
-
         //private readonly IList<MedicineDosageForm> localMedicineDosageForms = new List<MedicineDosageForm>();
-        public MedicineDosageForm Map(StateMedicineRegistryItem dto, bool updateExisting = false)
+        public MedicineDosageForm Map(StateMedicineRegistryItem dto, bool updateExisting = false, bool readOnlyFromCache = false)
         {
+            var entitySource = readOnlyFromCache ? EntitySource.Cache : EntitySource.Both;
             var ean13 = dto.Package.Substring(0, 13);
-            var entity = FindOrCreate<MedicineDosageForm>(e => e.Ean13 == ean13, updateExisting);
+            var entity = FindOrCreate<MedicineDosageForm>(e => e.Ean13 == ean13, updateExisting, entitySource);
             if (entity == null) { return null; }
 
-            entity.Medicine = FindOrCreateMedicine(dto.TradeName, dto.Inn, dto.PharmacotherapeuticGroup, "");
+            entity.Medicine = FindOrCreateMedicine(dto.TradeName, dto.Inn, dto.PharmacotherapeuticGroup, "", entitySource);
             //public DosageForm DosageForm { get; set; }
             //public decimal? DosageMeasure { get; set; }
             //public MeasurementUnit DosageMeasurementUnit { get; set; }
@@ -53,8 +38,8 @@ namespace Apteka.Model.Mappers
             entity.RegistrationCertificateIssueDate = dto.RegistrationCertificateIssueDate.Value;
             entity.RegistrationCertificateExpiryDate = dto.RegistrationCertificateExpiryDate;
             entity.RegistrationCertificateCancellationDate = dto.RegistrationCertificateCancellationDate;
-            entity.CertificateRecipient = FindOrCreateNamedEntity<Organization>(dto.CertificateRecipient);
-            entity.CertificateRecipientCountry = FindOrCreateNamedEntity<Country>(dto.CertificateRecipientCountry);
+            entity.CertificateRecipient = FindOrCreate<Organization>(dto.CertificateRecipient, entitySource);
+            entity.CertificateRecipientCountry = FindOrCreate<Country>(dto.CertificateRecipientCountry, entitySource);
             //public Organization Manufacturer { get; set; }
             entity.NormativeDocument = dto.NormativeDocument;
             entity.Ean13 = dto.Package.Substring(0, 13);
@@ -63,7 +48,7 @@ namespace Apteka.Model.Mappers
 
         //private readonly IList<Medicine> localMedicines = new List<Medicine>();
         protected Medicine FindOrCreateMedicine(string tradeName, string inn,
-            string pharmacotherapeuticGroup, string atcCode)
+            string pharmacotherapeuticGroup, string atcCode, EntitySource entitySource = EntitySource.Both)
         {
             if (String.IsNullOrWhiteSpace(tradeName)) { return null; }
 
@@ -73,7 +58,7 @@ namespace Apteka.Model.Mappers
             //entity = EntityFactory.Query<Medicine>().FirstOrDefault(o => o.TradeName == tradeName);
             //if (entity != null) { return entity; }
 
-            var entity = EntityFactory.Find<Medicine>(o => o.TradeName.ToUpper().Equals(tradeName.ToUpper(), StringComparison.OrdinalIgnoreCase));
+            var entity = EntityFactory.Find<Medicine>(o => o.TradeName.ToUpper().Equals(tradeName.ToUpper(), StringComparison.OrdinalIgnoreCase), entitySource);
             if (entity != null) { return entity; }
 
             entity = EntityFactory.Create<Medicine>();
@@ -82,8 +67,8 @@ namespace Apteka.Model.Mappers
             {
                 entity.Inn = inn;
             }
-            entity.PharmacotherapeuticGroup = FindOrCreateNamedEntity<PharmacotherapeuticGroup>(pharmacotherapeuticGroup);
-            entity.AtcCode = FindOrCreateNamedEntity<AtcGroup>(atcCode);
+            entity.PharmacotherapeuticGroup = FindOrCreate<PharmacotherapeuticGroup>(pharmacotherapeuticGroup, entitySource);
+            entity.AtcCode = FindOrCreate<AtcGroup>(atcCode, entitySource);
             //localMedicines.Add(entity);
             return entity;
         }

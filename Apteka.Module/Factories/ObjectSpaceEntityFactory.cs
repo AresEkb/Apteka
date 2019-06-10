@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Linq.Expressions;
 
 using Apteka.Model.Factories;
 
@@ -16,7 +17,7 @@ namespace Apteka.Module.Factories
             this.os = os;
         }
 
-        public T Find<T>(Func<T, bool> pred) where T : class, new() =>
+        public T Find<T>(Expression<Func<T, bool>> pred, EntitySource entitySource = EntitySource.Both) where T : class, new() =>
             Query<T>().FirstOrDefault(pred);
 
         public T Create<T>() where T : new() => os.CreateObject<T>();
@@ -26,5 +27,10 @@ namespace Apteka.Module.Factories
         }
 
         public IQueryable<T> Query<T>() where T : class => os.GetObjectsQuery<T>(true);
+
+        public void CacheAll<T>() where T : class
+        {
+            throw new NotImplementedException();
+        }
     }
 }
