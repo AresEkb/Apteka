@@ -7,7 +7,7 @@ using Apteka.Model.Entities.Base;
 namespace Apteka.Model.Entities
 {
     [DataElement("ru", "вторичная упаковка", "вторичные упаковки", "упаковка, которая объединяет несколько первичных упаковок")]
-    [Category(@"CodeLists\Medicines")]
+    [Category("CodeLists/Medicines")]
     public class SecondaryPackaging : INamedEntity
     {
         [Key, Browsable(false)]

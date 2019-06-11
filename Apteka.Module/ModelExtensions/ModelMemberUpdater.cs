@@ -45,6 +45,12 @@ namespace Apteka.Module.ModelExtensions
                                 .Substring(3, formatAttr.DataFormatString.Length - 4);
                         }
                     }
+                    else if (prop.PropertyType == typeof(decimal) ||
+                        Nullable.GetUnderlyingType(prop.PropertyType) == typeof(decimal))
+                    {
+                        m.DisplayFormat = "{0:N}";
+                        m.EditMask = "n";
+                    }
 
                     // Add range rule
                     var rangeAttr = prop.GetCustomAttributes<RangeAttribute>(false).FirstOrDefault();

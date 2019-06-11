@@ -4,15 +4,16 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 using Apteka.Model.Annotations;
-using Apteka.Model.Entities.Place;
 
 namespace Apteka.Model.Entities
 {
     [DataElement("ru", "форма выпуска", "формы выпуска", "")]
+    [Category("CodeLists/Medicines")]
     public class MedicineDosageForm
     {
         public MedicineDosageForm()
         {
+            Organizations = new List<MedicineDosageFormOrganization>();
             PriceLimits = new List<MedicinePriceLimit>();
         }
 
@@ -20,39 +21,39 @@ namespace Apteka.Model.Entities
         public int Id { get; private set; }
 
         [Required]
-        public Medicine Medicine { get; set; }
+        public virtual Medicine Medicine { get; set; }
 
         [DataElement("ru", "лекарственная форма")]
-        public DosageForm DosageForm { get; set; }
+        public virtual DosageForm DosageForm { get; set; }
 
         [DataElement("ru", "дозировка")]
         [DecimalPrecision(18, 6)]
         public decimal? DosageMeasure { get; set; }
 
         [DataElement("ru", "единица измерения дозировки")]
-        public MeasurementUnit DosageMeasurementUnit { get; set; }
+        public virtual MeasurementUnit DosageMeasurementUnit { get; set; }
 
         [DataElement("ru", "мера лекарственных форм")]
         [DecimalPrecision(18, 6)]
         public decimal? DosageFormMeasure { get; set; }
 
         [DataElement("ru", "единица измерения лекарственных форм")]
-        public MeasurementUnit DosageFormMeasurementUnit { get; set; }
+        public virtual MeasurementUnit DosageFormMeasurementUnit { get; set; }
 
         [DataElement("ru", "первичная упаковка")]
-        public PrimaryPackaging PrimaryPackaging { get; set; }
+        public virtual PrimaryPackaging PrimaryPackaging { get; set; }
 
         [DataElement("ru", "количество первичных упаковок")]
         public int? PrimaryPackagingCount { get; set; }
 
         [DataElement("ru", "вторичная упаковка")]
-        public SecondaryPackaging SecondaryPackaging { get; set; }
+        public virtual SecondaryPackaging SecondaryPackaging { get; set; }
 
         [DataElement("ru", "количество вторичных упаковок")]
         public int? SecondaryPackagingCount { get; set; }
 
         [DataElement("ru", "вторичная упаковка 2")]
-        public SecondaryPackaging SecondaryPackaging2 { get; set; }
+        public virtual SecondaryPackaging SecondaryPackaging2 { get; set; }
 
         [DataElement("ru", "количество вторичных упаковок 2")]
         public int? PrimaryPackaging2Count { get; set; }
@@ -77,13 +78,16 @@ namespace Apteka.Model.Entities
         public DateTime? RegistrationCertificateCancellationDate { get; set; }
 
         [DataElement("ru", "получатель сертификата", "юридическое лицо, на имя которого выдано регистрационное удостоверение")]
-        public Organization CertificateRecipient { get; set; }
+        public virtual Organization CertificateRecipient { get; set; }
 
-        [DataElement("ru", "страна получателя сертификата")]
-        public Country CertificateRecipientCountry { get; set; }
+        //[DataElement("ru", "страна получателя сертификата")]
+        //public Country CertificateRecipientCountry { get; set; }
 
-        [DataElement("ru", "производитель")]
-        public Organization Manufacturer { get; set; }
+        //[DataElement("ru", "производитель")]
+        //public Organization Manufacturer { get; set; }
+
+        [DataElement("ru", "участники цепочки поставок")]
+        public virtual ICollection<MedicineDosageFormOrganization> Organizations { get; set; }
 
         [DataElement("ru", "нормативная документация")]
         [MaxLength(300)]

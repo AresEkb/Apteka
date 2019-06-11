@@ -20,6 +20,7 @@ namespace Apteka.Model.Dtos
         public string PharmacotherapeuticGroup { get; set; }
 
         public bool IsOk =>
+            !String.IsNullOrWhiteSpace(RegistrationCertificateNumber) &&
             RegistrationCertificateIssueDate.HasValue &&
             Regex.IsMatch(Package, "^[0-9]{13}") &&
             !Regex.IsMatch(Package, "^0{13}");

@@ -12,6 +12,7 @@ namespace Apteka.Model.EFCore
     public class EntityFactory : IEntityFactory
     {
         private DbContext _context;
+        private readonly HashSet<Type> cached = new HashSet<Type>();
         private readonly List<object> _cache = new List<object>();
 
         public EntityFactory(DbContext context)
@@ -22,6 +23,11 @@ namespace Apteka.Model.EFCore
         public T Find<T>(Expression<Func<T, bool>> pred, EntitySource entitySource = EntitySource.Both) where T : class, new()
         {
             T entity = null;
+            if (entitySource == EntitySource.Cache && !cached.Contains(typeof(T)))
+            {
+                CacheAll<T>();
+                cached.Add(typeof(T));
+            }
             if (entitySource == EntitySource.Both || entitySource == EntitySource.Cache)
             {
                 entity = _cache.OfType<T>().AsQueryable().FirstOrDefault(pred);

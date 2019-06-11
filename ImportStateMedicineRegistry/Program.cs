@@ -41,27 +41,17 @@ namespace ImportStateMedicineRegistry
             // Mapper
             var entityFactory = new EntityFactory(context);
             var start = DateTime.Now;
-            Console.WriteLine("{0} Caching data...", start);
-            entityFactory.CacheAll<MedicineDosageForm>();
-            entityFactory.CacheAll<Medicine>();
-            entityFactory.CacheAll<PharmacotherapeuticGroup>();
-            entityFactory.CacheAll<AtcGroup>();
-            entityFactory.CacheAll<Organization>();
-            entityFactory.CacheAll<Country>();
+            //Console.WriteLine("{0} Caching data...", start);
+            //entityFactory.CacheAll<MedicineDosageForm>();
+            //entityFactory.CacheAll<Medicine>();
+            //entityFactory.CacheAll<PharmacotherapeuticGroup>();
+            //entityFactory.CacheAll<AtcGroup>();
+            //entityFactory.CacheAll<Organization>();
+            //entityFactory.CacheAll<OrganizationRole>();
+            //entityFactory.CacheAll<Country>();
 
             // Import
-            // ЛП-000001
-            // ЛС-000001
-            // ЛСР-000001
-            // ЛСР-000001/10
-            // П N002845
-            // П N003014/01
-            // П N011506/01-1999
-            // Р N002321/01
-            // Р N002321/01-2003
-            // ФС-000001
-
-            Console.WriteLine("{0} Processing data...", DateTime.Now);
+            Console.WriteLine("{0} Processing data...", start);
             var mapper = new StateMedicineRegistryItemMapper(entityFactory);
             using (var reader = new StreamReader("grls2019-06-04-1.csv", Encoding.GetEncoding("windows-1251")))
             using (var csv = new CsvReader(reader))
@@ -74,7 +64,7 @@ namespace ImportStateMedicineRegistry
                     .Where(r => r.IsOk)
                     .Select(r => mapper.Map(r, false, true))
                     .Where(r => r != null)
-                    .Take(100))
+                    .Take(1000))
                 {
                     if (entity.Id == 0)
                     {

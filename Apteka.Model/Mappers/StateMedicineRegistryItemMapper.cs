@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 using Apteka.Model.Dtos;
 using Apteka.Model.Entities;
@@ -22,25 +23,99 @@ namespace Apteka.Model.Mappers
             if (entity == null) { return null; }
 
             entity.Medicine = FindOrCreateMedicine(dto.TradeName, dto.Inn, dto.PharmacotherapeuticGroup, "", entitySource);
-            //public DosageForm DosageForm { get; set; }
-            //public decimal? DosageMeasure { get; set; }
-            //public MeasurementUnit DosageMeasurementUnit { get; set; }
-            //public decimal? DosageFormMeasure { get; set; }
-            //public MeasurementUnit DosageFormMeasurementUnit { get; set; }
-            //public PrimaryPackaging PrimaryPackaging { get; set; }
-            //public int? PrimaryPackagingCount { get; set; }
-            //public SecondaryPackaging SecondaryPackaging { get; set; }
-            //public int? SecondaryPackagingCount { get; set; }
-            //public SecondaryPackaging SecondaryPackaging2 { get; set; }
-            //public int? PrimaryPackaging2Count { get; set; }
-            //public int? TotalCount { get; set; }
+
+            if (!IsEmptyName(dto.DosageForms)) {
+                int comma = dto.DosageForms.LastIndexOf(',');
+                string dosage = dto.DosageForms.Substring(0, comma).Trim();
+                string packaging = dto.DosageForms.Substring(comma + 1);
+                int minus = packaging.LastIndexOf(" - ");
+                string packagingKind = packaging.Substring(0, minus).Trim();
+                string packagingCount = packaging.Substring(minus + 3).Trim();
+
+                if (dosage.EndsWith(" ~"))
+                {
+                    entity.DosageForm = FindOrCreate<DosageForm>(dosage.Substring(0, dosage.Length - 2), entitySource);
+                }
+                else
+                {
+                    var m = Regex.Match(dosage, @"^(.*?)\s+([0-9]+([.,][0-9]+)?)\s*([^0-9]{1,10})?$");
+                    if (m.Success)
+                    {
+                        entity.DosageForm = FindOrCreate<DosageForm>(m.Groups[1].Value, entitySource);
+                        if (entity.DosageForm != null)
+                        {
+                            if (decimal.TryParse(m.Groups[2].Value.Replace(',', '.'), out decimal measure))
+                            {
+                                entity.DosageMeasure = measure;
+                                entity.DosageMeasurementUnit = FindOrCreate<MeasurementUnit>(m.Groups[4].Value, entitySource);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        entity.DosageForm = FindOrCreate<DosageForm>(dosage, entitySource);
+                    }
+                }
+
+                entity.PrimaryPackaging = FindOrCreate<PrimaryPackaging>(packagingKind, entitySource);
+                if (entity.PrimaryPackaging != null)
+                {
+                    if (int.TryParse(packagingCount, out int count))
+                    {
+                        entity.PrimaryPackagingCount = count;
+                    }
+                }
+            }
+
+            if (!IsEmptyName(dto.ManufactureStages))
+            {
+                int comma = dto.ManufactureStages.LastIndexOf(',');
+                string stages = dto.ManufactureStages.Substring(0, comma).Trim();
+                string country = dto.ManufactureStages.Substring(comma + 1).Trim();
+                var m = Regex.Match(stages, "^(.*?[^ ]),([^ ].*?)$");
+                if (m.Success)
+                {
+                    string role = m.Groups[1].Value;
+                    string orgAddress = m.Groups[2].Value;
+                    string org;
+                    string address;
+                    if (orgAddress.EndsWith(",") || orgAddress.EndsWith("~"))
+                    {
+                        // Address not specified
+                        org = orgAddress.TrimEnd(',', '~', ' ');
+                        address = "";
+                    }
+                    else
+                    {
+                        int comma2 = orgAddress.IndexOf(',');
+                        org = orgAddress.Substring(0, comma2);
+                        address = orgAddress.Substring(comma2 + 1);
+                    }
+                    var organization = FindOrCreateOrganization(org, country, entitySource);
+                    if (organization != null)
+                    {
+                        if (!IsEmptyName(address))
+                        {
+                            if (organization.Address == null)
+                            {
+                                organization.Address = EntityFactory.Create<Address>();
+                            }
+                            organization.Address.Country = organization.Country;
+                            organization.Address.Description = address;
+                        }
+                        var party = EntityFactory.Create<MedicineDosageFormOrganization>();
+                        party.Organization = organization;
+                        party.Role = FindOrCreate<OrganizationRole>(role, entitySource);
+                        entity.Organizations.Add(party);
+                    }
+                }
+            }
+
             entity.RegistrationCertificateNumber = dto.RegistrationCertificateNumber;
             entity.RegistrationCertificateIssueDate = dto.RegistrationCertificateIssueDate.Value;
             entity.RegistrationCertificateExpiryDate = dto.RegistrationCertificateExpiryDate;
             entity.RegistrationCertificateCancellationDate = dto.RegistrationCertificateCancellationDate;
-            entity.CertificateRecipient = FindOrCreate<Organization>(dto.CertificateRecipient, entitySource);
-            entity.CertificateRecipientCountry = FindOrCreate<Country>(dto.CertificateRecipientCountry, entitySource);
-            //public Organization Manufacturer { get; set; }
+            entity.CertificateRecipient = FindOrCreateOrganization(dto.CertificateRecipient, dto.CertificateRecipientCountry, entitySource);
             entity.NormativeDocument = dto.NormativeDocument;
             entity.Ean13 = dto.Package.Substring(0, 13);
             return entity;
@@ -50,26 +125,24 @@ namespace Apteka.Model.Mappers
         protected Medicine FindOrCreateMedicine(string tradeName, string inn,
             string pharmacotherapeuticGroup, string atcCode, EntitySource entitySource = EntitySource.Both)
         {
-            if (String.IsNullOrWhiteSpace(tradeName)) { return null; }
+            if (IsEmptyName(tradeName))
+            {
+                return null;
+            }
 
-            //var entity = localMedicines.FirstOrDefault(e => e.TradeName == tradeName);
-            //if (entity != null) { return entity; }
-
-            //entity = EntityFactory.Query<Medicine>().FirstOrDefault(o => o.TradeName == tradeName);
-            //if (entity != null) { return entity; }
-
-            var entity = EntityFactory.Find<Medicine>(o => o.TradeName.ToUpper().Equals(tradeName.ToUpper(), StringComparison.OrdinalIgnoreCase), entitySource);
+            var entity = EntityFactory.Find<Medicine>(o =>
+                o.TradeName.ToUpper().Equals(tradeName.ToUpper(), StringComparison.OrdinalIgnoreCase),
+                entitySource);
             if (entity != null) { return entity; }
 
             entity = EntityFactory.Create<Medicine>();
             entity.TradeName = tradeName;
-            if (!"~".Equals(inn))
+            if (!IsEmptyName(inn))
             {
                 entity.Inn = inn;
             }
             entity.PharmacotherapeuticGroup = FindOrCreate<PharmacotherapeuticGroup>(pharmacotherapeuticGroup, entitySource);
             entity.AtcCode = FindOrCreate<AtcGroup>(atcCode, entitySource);
-            //localMedicines.Add(entity);
             return entity;
         }
     }

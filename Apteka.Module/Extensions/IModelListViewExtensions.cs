@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 using Apteka.Model.Annotations;
 using Apteka.Model.Extensions;
@@ -19,7 +20,14 @@ namespace Apteka.Module.Extensions
                     .OfType<DataElementAttribute>().FirstOrDefault();
                 if (memberAttr != null)
                 {
-                    col.Caption = memberAttr.BriefName.FirstCharToUpper();
+                    if (!String.IsNullOrWhiteSpace(memberAttr.BriefName))
+                    {
+                        col.Caption = memberAttr.BriefName.FirstCharToUpper();
+                    }
+                    else
+                    {
+                        col.Caption = memberAttr.Name.FirstCharToUpper();
+                    }
                 }
             }
         }

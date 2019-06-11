@@ -7,10 +7,12 @@ using Apteka.Model.Annotations;
 namespace Apteka.Model.Entities
 {
     [DataElement("ru", "лекарственное средство", "лекарственные средства", "")]
+    [Category("CodeLists/Medicines")]
     public class Medicine
     {
         public Medicine()
         {
+            DosageForms = new List<MedicineDosageForm>();
         }
 
         [Key, Browsable(false)]

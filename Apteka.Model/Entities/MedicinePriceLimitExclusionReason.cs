@@ -6,7 +6,7 @@ using Apteka.Model.Annotations;
 namespace Apteka.Model.Entities
 {
     [DataElement("ru", "причина исключения", "причины исключения", "")]
-    [Category(@"CodeLists\Medicines")]
+    [Category("CodeLists/Medicines")]
     public class MedicinePriceLimitExclusionReason
     {
         [Key, Browsable(false)]

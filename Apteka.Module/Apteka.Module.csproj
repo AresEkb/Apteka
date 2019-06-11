@@ -185,6 +185,14 @@
     <Compile Include="Migrations\201906101154285_PricePrecision.Designer.cs">
       <DependentUpon>201906101154285_PricePrecision.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906110609382_OrgCountry.cs" />
+    <Compile Include="Migrations\201906110609382_OrgCountry.Designer.cs">
+      <DependentUpon>201906110609382_OrgCountry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906110757283_MedDosageFormOrg.cs" />
+    <Compile Include="Migrations\201906110757283_MedDosageFormOrg.Designer.cs">
+      <DependentUpon>201906110757283_MedDosageFormOrg.cs</DependentUpon>
+    </Compile>
     <Compile Include="ModelExtensions\ModelClassUpdater.cs" />
     <Compile Include="ModelExtensions\ModelMemberUpdater.cs" />
     <Compile Include="ModelExtensions\DetailViewLayoutGeneratorUpdater.cs" />
@@ -230,6 +238,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906101154285_PricePrecision.resx">
       <DependentUpon>201906101154285_PricePrecision.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906110609382_OrgCountry.resx">
+      <DependentUpon>201906110609382_OrgCountry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906110757283_MedDosageFormOrg.resx">
+      <DependentUpon>201906110757283_MedDosageFormOrg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="Module.resx">

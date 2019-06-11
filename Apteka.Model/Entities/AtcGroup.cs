@@ -7,7 +7,7 @@ using Apteka.Model.Entities.Base;
 namespace Apteka.Model.Entities
 {
     [DataElement("ru", "анатомо-терапевтическо-химическая группа", "АТХ", "")]
-    [Category("CodeLists")]
+    [Category("CodeLists/Medicines")]
     public class AtcGroup : INamedEntity
     {
         [Key, Browsable(false)]

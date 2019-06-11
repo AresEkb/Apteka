@@ -25,6 +25,10 @@ namespace Apteka.Model.Entities
         [MaxLength(300)]
         public string Name { get; set; }
 
+        [DataElement("ru", "страна")]
+        [Required]
+        public virtual Country Country { get; set; }
+
         [DataElement("ru", "ИНН")]
         [MaxLength(20)]
         public string TaxpayerCode { get; set; }
@@ -35,7 +39,7 @@ namespace Apteka.Model.Entities
 
         [DataElement("ru", "адрес")]
         [Composition]
-        public Address Address { get; set; }
+        public virtual Address Address { get; set; }
 
         [DataElement("ru", "телефон")]
         [MaxLength(20)]

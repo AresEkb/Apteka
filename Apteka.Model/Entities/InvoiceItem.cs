@@ -36,18 +36,20 @@ namespace Apteka.Model.Entities
         [DataElement("ru", "изготовитель", "предприятие изготовитель")]
         public virtual Organization Manufacturer { get; set; }
 
-        [DataElement("ru", "страна изготовителя", "страна предприятия изготовителя")]
-        public virtual Country ManufacturerCountry { get; set; }
+        //[DataElement("ru", "страна изготовителя", "страна предприятия изготовителя")]
+        //public virtual Country ManufacturerCountry { get; set; }
 
         [DataElement("ru", "количество", "количество натуральных единиц поставляемой позиции", BriefName = "кол-во")]
         public int Quantity { get; set; }
 
         [DataElement("ru", "цена изготовителя", "отпускная цена предприятия изготовителя", BriefName = "ценаИзг")]
         [DecimalPrecision(18, 2)]
+        [DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true)]
         public decimal ManufacturerPrice { get; set; }
 
         [DataElement("ru", "цена по гос. реестру", "цена по государственному реестру", BriefName = "ценаГР")]
         [DecimalPrecision(18, 2)]
+        [DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true)]
         public decimal StateRegistryPrice { get; set; }
 
         [DataElement("ru", "оптовая наценка", "наценка предприятия поставщика по отношению к цене завода изготовителя, выраженная в процентах", BriefName = "наценОпт")]

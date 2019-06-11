@@ -12,7 +12,7 @@ namespace Apteka.Model.Entities
         public int Id { get; private set; }
 
         [Required]
-        public MedicineDosageForm DosageForm { get; set; }
+        public virtual MedicineDosageForm DosageForm { get; set; }
 
         [DataElement("ru", "предельная цена руб. без НДС")]
         [DecimalPrecision(18, 2)]
@@ -32,6 +32,6 @@ namespace Apteka.Model.Entities
         public DateTime? ExclusionDate { get; set; }
 
         [DataElement("ru", "причина исключения")]
-        public MedicinePriceLimitExclusionReason ExclusionReason { get; set; }
+        public virtual MedicinePriceLimitExclusionReason ExclusionReason { get; set; }
     }
 }

@@ -6,16 +6,12 @@ using Apteka.Model.Entities.Base;
 
 namespace Apteka.Model.Entities
 {
-    [DataElement("ru", "фармакотерапевтическая группа", "фармакотерапевтические группы", "")]
-    [Category("CodeLists/Medicines")]
-    public class PharmacotherapeuticGroup : INamedEntity
+    [DataElement("ru", "роль организации", "роли организаций", "")]
+    [Category(@"CodeLists")]
+    public class OrganizationRole : INamedEntity
     {
         [Key, Browsable(false)]
         public int Id { get; private set; }
-
-        [DataElement("ru", "код")]
-        [MaxLength(15)]
-        public string Code { get; set; }
 
         [DataElement("ru", "название")]
         [MaxLength(200)]

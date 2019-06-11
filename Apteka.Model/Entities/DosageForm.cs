@@ -7,7 +7,7 @@ using Apteka.Model.Entities.Base;
 namespace Apteka.Model.Entities
 {
     [DataElement("ru", "лекарственная форма", "лекарственные формы", "")]
-    [Category(@"CodeLists\Medicines")]
+    [Category("CodeLists/Medicines")]
     public class DosageForm : INamedEntity
     {
         [Key, Browsable(false)]

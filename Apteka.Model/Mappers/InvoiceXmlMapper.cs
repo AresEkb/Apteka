@@ -117,8 +117,7 @@ namespace Apteka.Model.Mappers
             var entity = EntityFactory.Create<InvoiceItem>();
             entity.ProductCode = dto.KodTovara;
             entity.ProductName = dto.Tovar;
-            entity.Manufacturer = FindOrCreate<Organization>(dto.Izgotovitel);
-            entity.ManufacturerCountry = FindOrCreate<Country>(dto.StranaIzgotovitelja);
+            entity.Manufacturer = FindOrCreateOrganization(dto.Izgotovitel, dto.StranaIzgotovitelja);
             entity.Quantity = dto.Kolichestvo;
             entity.ManufacturerPrice = dto.CenaIzg;
             entity.StateRegistryPrice = dto.CenaGR;
@@ -141,7 +140,7 @@ namespace Apteka.Model.Mappers
                 KodTovara = entity.ProductCode,
                 Tovar = entity.ProductName,
                 Izgotovitel = entity.Manufacturer?.Name,
-                StranaIzgotovitelja = entity.ManufacturerCountry?.Name,
+                StranaIzgotovitelja = entity.Manufacturer?.Country?.Name,
                 Kolichestvo = entity.Quantity,
                 CenaIzg = entity.ManufacturerPrice,
                 CenaGR = entity.StateRegistryPrice,

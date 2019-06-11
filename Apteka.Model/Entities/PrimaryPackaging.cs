@@ -7,7 +7,7 @@ using Apteka.Model.Entities.Base;
 namespace Apteka.Model.Entities
 {
     [DataElement("ru", "первичная упаковка", "первичные упаковка", "упаковка, которая соприкасается с продукцией (потребительская упаковка)")]
-    [Category(@"CodeLists\Medicines")]
+    [Category("CodeLists/Medicines")]
     public class PrimaryPackaging : INamedEntity
     {
         [Key, Browsable(false)]
