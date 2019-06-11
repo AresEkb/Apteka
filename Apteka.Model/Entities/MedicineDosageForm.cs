@@ -94,7 +94,7 @@ namespace Apteka.Model.Entities
         public string NormativeDocument { get; set; }
 
         [DataElement("ru", "EAN13")]
-        [UniqueIndex]
+        //[UniqueIndex]
         [MinLength(13), MaxLength(13), NonUnicode]
         public string Ean13 { get; set; }
 

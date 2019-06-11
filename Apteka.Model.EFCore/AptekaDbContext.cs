@@ -18,7 +18,7 @@ namespace Apteka.Model.EFCore
         {
 		}
 
-		public AptekaDbContext(DbContextOptions options) : base(options)
+		public AptekaDbContext(DbContextOptions<AptekaDbContext> options) : base(options)
         {
 		}
 
@@ -32,7 +32,7 @@ namespace Apteka.Model.EFCore
                 entity.Relational().TableName = entity.DisplayName();
             }
 
-            //modelBuilder.Conventions.Add<AlternateKeyAttributeConvention>();
+            //modelBuilder.Conventions.Add<UniqueIndexAttributeConvention>();
             foreach (var entity in modelBuilder.Model.GetEntityTypes())
             {
                 var propAttrs = from prop in entity.GetProperties()

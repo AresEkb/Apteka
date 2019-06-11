@@ -42,9 +42,12 @@ namespace Apteka.Model.Mappers
         protected T FindOrCreate<T>(string name, EntitySource entitySource = EntitySource.Both)
             where T : class, INamedEntity, new()
         {
+            name = name?.Trim();
             if (IsEmptyName(name)) { return null; }
 
-            var entity = EntityFactory.Find<T>(e => e.Name == name, entitySource);
+            var entity = EntityFactory.Find<T>(e =>
+                e.Name.ToUpper().Equals(name.ToUpper(), StringComparison.OrdinalIgnoreCase),
+                entitySource);
             if (entity != null) { return entity; }
 
             entity = EntityFactory.Create<T>();

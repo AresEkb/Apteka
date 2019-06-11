@@ -21,8 +21,8 @@ namespace Apteka.Model.Dtos
 
         public bool IsOk =>
             !String.IsNullOrWhiteSpace(RegistrationCertificateNumber) &&
-            RegistrationCertificateIssueDate.HasValue &&
+            RegistrationCertificateIssueDate.HasValue /*&&
             Regex.IsMatch(Package, "^[0-9]{13}") &&
-            !Regex.IsMatch(Package, "^0{13}");
+            !Regex.IsMatch(Package, "^0{13}")*/;
     }
 }

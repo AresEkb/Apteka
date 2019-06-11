@@ -75,8 +75,8 @@ namespace Apteka.Api.Controllers
                 .Include(entity => entity.Consignee)
                 .Include(entity => entity.Items)
                     .ThenInclude(item => item.Manufacturer)
-                .Include(entity => entity.Items)
-                    .ThenInclude(item => item.ManufacturerCountry)
+                //.Include(entity => entity.Items)
+                //    .ThenInclude(item => item.ManufacturerCountry)
                 .Include(entity => entity.Items)
                     .ThenInclude(item => item.Series);
 

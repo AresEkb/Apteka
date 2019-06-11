@@ -22,7 +22,7 @@ namespace Apteka.Model.Entities
 
         [DataElement("ru", "название")]
         [Required]
-        [MaxLength(300)]
+        [MaxLength(500)]
         public string Name { get; set; }
 
         [DataElement("ru", "страна")]

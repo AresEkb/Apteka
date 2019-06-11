@@ -193,6 +193,26 @@
     <Compile Include="Migrations\201906110757283_MedDosageFormOrg.Designer.cs">
       <DependentUpon>201906110757283_MedDosageFormOrg.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906111108429_Ean13NonUnique.cs" />
+    <Compile Include="Migrations\201906111108429_Ean13NonUnique.Designer.cs">
+      <DependentUpon>201906111108429_Ean13NonUnique.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906111122406_TradeName300.cs" />
+    <Compile Include="Migrations\201906111122406_TradeName300.Designer.cs">
+      <DependentUpon>201906111122406_TradeName300.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906111133314_OrgName500.cs" />
+    <Compile Include="Migrations\201906111133314_OrgName500.Designer.cs">
+      <DependentUpon>201906111133314_OrgName500.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906111136323_Address300.cs" />
+    <Compile Include="Migrations\201906111136323_Address300.Designer.cs">
+      <DependentUpon>201906111136323_Address300.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906111259400_Inn700.cs" />
+    <Compile Include="Migrations\201906111259400_Inn700.Designer.cs">
+      <DependentUpon>201906111259400_Inn700.cs</DependentUpon>
+    </Compile>
     <Compile Include="ModelExtensions\ModelClassUpdater.cs" />
     <Compile Include="ModelExtensions\ModelMemberUpdater.cs" />
     <Compile Include="ModelExtensions\DetailViewLayoutGeneratorUpdater.cs" />
@@ -244,6 +264,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906110757283_MedDosageFormOrg.resx">
       <DependentUpon>201906110757283_MedDosageFormOrg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906111108429_Ean13NonUnique.resx">
+      <DependentUpon>201906111108429_Ean13NonUnique.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906111122406_TradeName300.resx">
+      <DependentUpon>201906111122406_TradeName300.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906111133314_OrgName500.resx">
+      <DependentUpon>201906111133314_OrgName500.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906111136323_Address300.resx">
+      <DependentUpon>201906111136323_Address300.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906111259400_Inn700.resx">
+      <DependentUpon>201906111259400_Inn700.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="Module.resx">

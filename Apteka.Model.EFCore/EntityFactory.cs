@@ -11,26 +11,28 @@ namespace Apteka.Model.EFCore
 {
     public class EntityFactory : IEntityFactory
     {
-        private DbContext _context;
-        private readonly HashSet<Type> cached = new HashSet<Type>();
-        private readonly List<object> _cache = new List<object>();
+        private DbContext context;
+        private readonly Dictionary<Type, object> cache = new Dictionary<Type, object>();
 
         public EntityFactory(DbContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
         public T Find<T>(Expression<Func<T, bool>> pred, EntitySource entitySource = EntitySource.Both) where T : class, new()
         {
             T entity = null;
-            if (entitySource == EntitySource.Cache && !cached.Contains(typeof(T)))
+            if (entitySource == EntitySource.Cache && !cache.ContainsKey(typeof(T)))
             {
-                CacheAll<T>();
-                cached.Add(typeof(T));
+                if (!cache.ContainsKey(typeof(T)))
+                {
+                    cache[typeof(T)] = new List<T>();
+                }
+                ((List<T>)cache[typeof(T)]).AddRange(context.Set<T>());
             }
             if (entitySource == EntitySource.Both || entitySource == EntitySource.Cache)
             {
-                entity = _cache.OfType<T>().AsQueryable().FirstOrDefault(pred);
+                entity = ((List<T>)cache[typeof(T)]).AsQueryable().FirstOrDefault(pred);
                 if (entity != null) { return entity; }
             }
             if (entitySource == EntitySource.Both || entitySource == EntitySource.DataBase)
@@ -43,14 +45,16 @@ namespace Apteka.Model.EFCore
         public T Create<T>() where T : new()
         {
             var entity = new T();
-            _cache.Add(entity);
+            if (!cache.ContainsKey(typeof(T)))
+            {
+                cache[typeof(T)] = new List<T>();
+            }
+            ((List<T>)cache[typeof(T)]).Add(entity);
             return entity;
         }
 
-        public void Attach<T>(T entity) where T : class => _context.Update(entity);
+        public void Attach<T>(T entity) where T : class => context.Update(entity);
 
-        public IQueryable<T> Query<T>() where T : class => _context.Set<T>();
-
-        public void CacheAll<T>() where T : class => _cache.AddRange(_context.Set<T>());
+        public IQueryable<T> Query<T>() where T : class => context.Set<T>();
     }
 }

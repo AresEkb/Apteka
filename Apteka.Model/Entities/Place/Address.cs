@@ -20,7 +20,7 @@ namespace Apteka.Model.Entities.Place
         public City City { get; set; }
 
         [DataElement("ru", "описание")]
-        [MaxLength(200)]
+        [MaxLength(300)]
         public string Description { get; set; }
 
         [DataElement("ru", "название")]

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 using Apteka.Model.Dtos;
@@ -10,16 +12,44 @@ namespace Apteka.Model.Mappers
 {
     public class StateMedicineRegistryItemMapper : MapperBase
     {
-        public StateMedicineRegistryItemMapper(IEntityFactory entityFactory) : base(entityFactory)
+        private readonly bool updateExisting;
+        private readonly bool readOnlyFromCache;
+        private readonly EntitySource entitySource;
+        private readonly HashSet<string> numbers;
+
+        public StateMedicineRegistryItemMapper(IEntityFactory entityFactory,
+            bool updateExisting = false, bool readOnlyFromCache = false) : base(entityFactory)
         {
+            this.updateExisting = updateExisting;
+            this.readOnlyFromCache = readOnlyFromCache;
+
+            entitySource = readOnlyFromCache ? EntitySource.Cache : EntitySource.Both;
+
+            if (!updateExisting)
+            {
+                numbers = new HashSet<string>(
+                    EntityFactory.Query<MedicineDosageForm>()
+                        .Select(df => df.RegistrationCertificateNumber));
+            }
         }
 
-        //private readonly IList<MedicineDosageForm> localMedicineDosageForms = new List<MedicineDosageForm>();
-        public MedicineDosageForm Map(StateMedicineRegistryItem dto, bool updateExisting = false, bool readOnlyFromCache = false)
+        public MedicineDosageForm Map(StateMedicineRegistryItem dto)
         {
-            var entitySource = readOnlyFromCache ? EntitySource.Cache : EntitySource.Both;
-            var ean13 = dto.Package.Substring(0, 13);
-            var entity = FindOrCreate<MedicineDosageForm>(e => e.Ean13 == ean13, updateExisting, entitySource);
+            MedicineDosageForm entity = null;
+            // If we will update records then we have to load all columns
+            if (updateExisting)
+            {
+                entity = FindOrCreate<MedicineDosageForm>(e =>
+                    e.RegistrationCertificateNumber == dto.RegistrationCertificateNumber,
+                    updateExisting, entitySource);
+            }
+            // If we will not update records then it's much more effective to load keys only
+            else if (!numbers.Contains(dto.RegistrationCertificateNumber))
+            {
+                entity = EntityFactory.Create<MedicineDosageForm>();
+                entity.RegistrationCertificateNumber = dto.RegistrationCertificateNumber;
+            }
+
             if (entity == null) { return null; }
 
             entity.Medicine = FindOrCreateMedicine(dto.TradeName, dto.Inn, dto.PharmacotherapeuticGroup, "", entitySource);
@@ -38,7 +68,7 @@ namespace Apteka.Model.Mappers
                 }
                 else
                 {
-                    var m = Regex.Match(dosage, @"^(.*?)\s+([0-9]+([.,][0-9]+)?)\s*([^0-9]{1,10})?$");
+                    var m = Regex.Match(dosage, @"^(.*?[^+])\s+([0-9]+([.,][0-9]+)?)\s*([^0-9(),]{1,20})?$");
                     if (m.Success)
                     {
                         entity.DosageForm = FindOrCreate<DosageForm>(m.Groups[1].Value, entitySource);
@@ -111,13 +141,16 @@ namespace Apteka.Model.Mappers
                 }
             }
 
-            entity.RegistrationCertificateNumber = dto.RegistrationCertificateNumber;
             entity.RegistrationCertificateIssueDate = dto.RegistrationCertificateIssueDate.Value;
             entity.RegistrationCertificateExpiryDate = dto.RegistrationCertificateExpiryDate;
             entity.RegistrationCertificateCancellationDate = dto.RegistrationCertificateCancellationDate;
             entity.CertificateRecipient = FindOrCreateOrganization(dto.CertificateRecipient, dto.CertificateRecipientCountry, entitySource);
             entity.NormativeDocument = dto.NormativeDocument;
-            entity.Ean13 = dto.Package.Substring(0, 13);
+            if (Regex.IsMatch(dto.Package, "^[0-9]{13}") &&
+                !Regex.IsMatch(dto.Package, "^0{13}"))
+            {
+                entity.Ean13 = dto.Package.Substring(0, 13);
+            }
             return entity;
         }
 
@@ -125,10 +158,8 @@ namespace Apteka.Model.Mappers
         protected Medicine FindOrCreateMedicine(string tradeName, string inn,
             string pharmacotherapeuticGroup, string atcCode, EntitySource entitySource = EntitySource.Both)
         {
-            if (IsEmptyName(tradeName))
-            {
-                return null;
-            }
+            tradeName = tradeName?.Trim();
+            if (IsEmptyName(tradeName)) { return null; }
 
             var entity = EntityFactory.Find<Medicine>(o =>
                 o.TradeName.ToUpper().Equals(tradeName.ToUpper(), StringComparison.OrdinalIgnoreCase),

@@ -20,11 +20,11 @@ namespace Apteka.Model.Entities
 
         [DataElement("ru", "торговое наименование")]
         [UniqueIndex]
-        [MaxLength(200)]
+        [MaxLength(300)]
         public string TradeName { get; set; }
 
         [DataElement("ru", "МНН", "международное непатентованное наименование")]
-        [MaxLength(300)]
+        [MaxLength(700)]
         public string Inn { get; set; }
 
         public PharmacotherapeuticGroup PharmacotherapeuticGroup { get; set; }
