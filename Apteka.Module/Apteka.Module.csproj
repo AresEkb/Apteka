@@ -213,6 +213,14 @@
     <Compile Include="Migrations\201906111259400_Inn700.Designer.cs">
       <DependentUpon>201906111259400_Inn700.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906111538296_DosageFormHash.cs" />
+    <Compile Include="Migrations\201906111538296_DosageFormHash.Designer.cs">
+      <DependentUpon>201906111538296_DosageFormHash.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906111659459_DosageForm300.cs" />
+    <Compile Include="Migrations\201906111659459_DosageForm300.Designer.cs">
+      <DependentUpon>201906111659459_DosageForm300.cs</DependentUpon>
+    </Compile>
     <Compile Include="ModelExtensions\ModelClassUpdater.cs" />
     <Compile Include="ModelExtensions\ModelMemberUpdater.cs" />
     <Compile Include="ModelExtensions\DetailViewLayoutGeneratorUpdater.cs" />
@@ -279,6 +287,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906111259400_Inn700.resx">
       <DependentUpon>201906111259400_Inn700.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906111538296_DosageFormHash.resx">
+      <DependentUpon>201906111538296_DosageFormHash.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906111659459_DosageForm300.resx">
+      <DependentUpon>201906111659459_DosageForm300.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="Module.resx">

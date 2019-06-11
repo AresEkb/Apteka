@@ -44,7 +44,7 @@ namespace ImportStateMedicineRegistry
                     .Where(r => r.IsOk)
                     .Select(r => mapper.Map(r))
                     .Where(r => r != null)
-                    .Take(50000))
+                    .Take(30000))
                 {
                     if (entity.Id == 0)
                     {

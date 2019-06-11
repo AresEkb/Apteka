@@ -17,14 +17,17 @@ namespace Apteka.Module.BusinessObjects
     {
 		public AptekaDbContext(String connectionString) : base(connectionString)
         {
-		}
+            Database.Log = Console.WriteLine;
+        }
 
-		public AptekaDbContext(DbConnection connection) : base(connection, false)
+        public AptekaDbContext(DbConnection connection) : base(connection, false)
         {
-		}
+            Database.Log = Console.WriteLine;
+        }
 
-		public AptekaDbContext() : base("name=ConnectionString")
+        public AptekaDbContext() : base("name=ConnectionString")
         {
+            Database.Log = Console.WriteLine;
 		}
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

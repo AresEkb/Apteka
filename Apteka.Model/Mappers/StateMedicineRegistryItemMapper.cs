@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using Apteka.Model.Dtos;
 using Apteka.Model.Entities;
 using Apteka.Model.Entities.Place;
+using Apteka.Model.Extensions;
 using Apteka.Model.Factories;
 
 namespace Apteka.Model.Mappers
@@ -15,7 +16,7 @@ namespace Apteka.Model.Mappers
         private readonly bool updateExisting;
         private readonly bool readOnlyFromCache;
         private readonly EntitySource entitySource;
-        private readonly HashSet<string> numbers;
+        private readonly HashSet<long> keys;
 
         public StateMedicineRegistryItemMapper(IEntityFactory entityFactory,
             bool updateExisting = false, bool readOnlyFromCache = false) : base(entityFactory)
@@ -27,30 +28,36 @@ namespace Apteka.Model.Mappers
 
             if (!updateExisting)
             {
-                numbers = new HashSet<string>(
+                keys = new HashSet<long>(
                     EntityFactory.Query<MedicineDosageForm>()
-                        .Select(df => df.RegistrationCertificateNumber));
+                        .Where(df => df.StateRegistryHash.HasValue)
+                        .Select(df => df.StateRegistryHash.Value));
             }
         }
 
         public MedicineDosageForm Map(StateMedicineRegistryItem dto)
         {
+            long hash = dto.Hash;
+
             MedicineDosageForm entity = null;
             // If we will update records then we have to load all columns
             if (updateExisting)
             {
                 entity = FindOrCreate<MedicineDosageForm>(e =>
-                    e.RegistrationCertificateNumber == dto.RegistrationCertificateNumber,
+                    e.StateRegistryHash == hash,
                     updateExisting, entitySource);
             }
             // If we will not update records then it's much more effective to load keys only
-            else if (!numbers.Contains(dto.RegistrationCertificateNumber))
+            else if (!keys.Contains(hash))
             {
                 entity = EntityFactory.Create<MedicineDosageForm>();
-                entity.RegistrationCertificateNumber = dto.RegistrationCertificateNumber;
+                entity.StateRegistryHash = hash;
+                keys.Add(hash);
             }
 
             if (entity == null) { return null; }
+
+            entity.RegistrationCertificateNumber = dto.RegistrationCertificateNumber;
 
             entity.Medicine = FindOrCreateMedicine(dto.TradeName, dto.Inn, dto.PharmacotherapeuticGroup, "", entitySource);
 
@@ -135,7 +142,7 @@ namespace Apteka.Model.Mappers
                         }
                         var party = EntityFactory.Create<MedicineDosageFormOrganization>();
                         party.Organization = organization;
-                        party.Role = FindOrCreate<OrganizationRole>(role, entitySource);
+                        party.Role = FindOrCreate<OrganizationRole>(role.FirstCharToLower(), entitySource);
                         entity.Organizations.Add(party);
                     }
                 }

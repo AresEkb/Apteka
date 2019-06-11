@@ -14,7 +14,12 @@ namespace Apteka.Model.Entities
         public int Id { get; private set; }
 
         [DataElement("ru", "название")]
-        [MaxLength(200)]
+        [MaxLength(300)]
         public string Name { get; set; }
+
+        public override string ToString()
+        {
+            return $"Лекарственная форма ({Name})";
+        }
     }
 }

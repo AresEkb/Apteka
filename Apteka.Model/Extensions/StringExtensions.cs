@@ -11,5 +11,12 @@ namespace Apteka.Model.Extensions
                 ? input
                 : input.First().ToString().ToUpper() + input.Substring(1);
         }
+
+        public static string FirstCharToLower(this string input)
+        {
+            return String.IsNullOrWhiteSpace(input)
+                ? input
+                : input.First().ToString().ToLower() + input.Substring(1);
+        }
     }
 }

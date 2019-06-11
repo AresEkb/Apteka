@@ -23,6 +23,30 @@ namespace Apteka.Model.Entities
         [Required]
         public virtual Medicine Medicine { get; set; }
 
+        [DataElement("ru", "EAN13")]
+        //[UniqueIndex]
+        [MinLength(13), MaxLength(13), NonUnicode]
+        public string Ean13 { get; set; }
+
+        [DataElement("ru", "номер регистрационного удостоверения")]
+        [MaxLength(20)]
+        public string RegistrationCertificateNumber { get; set; }
+
+        [DataElement("ru", "дата регистрации")]
+        [DataType(DataType.Date)]
+        public DateTime RegistrationCertificateIssueDate { get; set; }
+
+        [DataElement("ru", "дата окончания действия регистрационного удостоверения")]
+        [DataType(DataType.Date)]
+        public DateTime? RegistrationCertificateExpiryDate { get; set; }
+
+        [DataElement("ru", "дата аннулирования регистрационного удостоверения")]
+        [DataType(DataType.Date)]
+        public DateTime? RegistrationCertificateCancellationDate { get; set; }
+
+        [DataElement("ru", "получатель сертификата", "юридическое лицо, на имя которого выдано регистрационное удостоверение")]
+        public virtual Organization CertificateRecipient { get; set; }
+
         [DataElement("ru", "лекарственная форма")]
         public virtual DosageForm DosageForm { get; set; }
 
@@ -61,31 +85,6 @@ namespace Apteka.Model.Entities
         [DataElement("ru", "количество в потреб. упаковке")]
         public int? TotalCount { get; set; }
 
-        [DataElement("ru", "номер регистрационного удостоверения")]
-        [MaxLength(20)]
-        public string RegistrationCertificateNumber { get; set; }
-
-        [DataElement("ru", "дата регистрации")]
-        [DataType(DataType.Date)]
-        public DateTime RegistrationCertificateIssueDate { get; set; }
-
-        [DataElement("ru", "дата окончания действия регистрационного удостоверения")]
-        [DataType(DataType.Date)]
-        public DateTime? RegistrationCertificateExpiryDate { get; set; }
-
-        [DataElement("ru", "дата аннулирования регистрационного удостоверения")]
-        [DataType(DataType.Date)]
-        public DateTime? RegistrationCertificateCancellationDate { get; set; }
-
-        [DataElement("ru", "получатель сертификата", "юридическое лицо, на имя которого выдано регистрационное удостоверение")]
-        public virtual Organization CertificateRecipient { get; set; }
-
-        //[DataElement("ru", "страна получателя сертификата")]
-        //public Country CertificateRecipientCountry { get; set; }
-
-        //[DataElement("ru", "производитель")]
-        //public Organization Manufacturer { get; set; }
-
         [DataElement("ru", "участники цепочки поставок")]
         public virtual ICollection<MedicineDosageFormOrganization> Organizations { get; set; }
 
@@ -93,12 +92,9 @@ namespace Apteka.Model.Entities
         [MaxLength(300)]
         public string NormativeDocument { get; set; }
 
-        [DataElement("ru", "EAN13")]
-        //[UniqueIndex]
-        [MinLength(13), MaxLength(13), NonUnicode]
-        public string Ean13 { get; set; }
-
         public virtual ICollection<MedicinePriceLimit> PriceLimits { get; }
+
+        public long? StateRegistryHash { get; set; }
 
         public override string ToString()
         {

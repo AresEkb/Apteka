@@ -23,5 +23,9 @@
         <PropertyEditor Id="SupplierBankAccount" DataSourceProperty="Supplier.BankAccounts" />
       </Items>
     </DetailView>
+    <ListView Id="Medicine_ListView" DataAccessMode="Server" />
+    <ListView Id="Medicine_LookupListView" DataAccessMode="Server" />
+    <ListView Id="MedicineDosageForm_ListView" DataAccessMode="Server" />
+    <ListView Id="MedicineDosageForm_LookupListView" DataAccessMode="Server" />
   </Views>
 </Application>
