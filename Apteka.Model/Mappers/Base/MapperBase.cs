@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -8,7 +7,7 @@ using Apteka.Model.Entities.Base;
 using Apteka.Model.Entities.Place;
 using Apteka.Model.Factories;
 
-namespace Apteka.Model.Mappers
+namespace Apteka.Model.Mappers.Base
 {
     public abstract class MapperBase
     {
@@ -101,6 +100,28 @@ namespace Apteka.Model.Mappers
             account.CorrespondentAccount = correspondentAccount;
             account.CheckingAccount = checkingAccount;
             return account;
+        }
+
+        protected Medicine FindOrCreateMedicine(string tradeName, string inn,
+            string pharmacotherapeuticGroup, string atcCode, EntitySource entitySource = EntitySource.Both)
+        {
+            tradeName = tradeName?.Trim();
+            if (IsEmptyName(tradeName)) { return null; }
+
+            var entity = EntityFactory.Find<Medicine>(o =>
+                o.TradeName.ToUpper().Equals(tradeName.ToUpper(), StringComparison.OrdinalIgnoreCase),
+                entitySource);
+            if (entity != null) { return entity; }
+
+            entity = EntityFactory.Create<Medicine>();
+            entity.TradeName = tradeName;
+            if (!IsEmptyName(inn))
+            {
+                entity.Inn = inn;
+            }
+            entity.PharmacotherapeuticGroup = FindOrCreate<PharmacotherapeuticGroup>(pharmacotherapeuticGroup, entitySource);
+            entity.AtcCode = FindOrCreate<AtcGroup>(atcCode, entitySource);
+            return entity;
         }
     }
 }

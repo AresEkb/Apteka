@@ -5,46 +5,53 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-using Apteka.Model.Dtos;
+using Apteka.Model.Dtos.Base;
 using Apteka.Model.EFCore;
-using Apteka.Model.Mappers;
+using Apteka.Model.Entities.Base;
+using Apteka.Model.Mappers.Base;
 
 using CsvHelper;
+using CsvHelper.Configuration;
 
 using Microsoft.EntityFrameworkCore;
 
 namespace ImportStateMedicineRegistry
 {
-    public class Startup
+    public abstract class CsvImporter<TRecord, TEntity, TCsvMap, TMapperFactory>
+        where TRecord : IRecord
+        where TEntity : class, IEntity
+        where TCsvMap : ClassMap
+        where TMapperFactory : IMapperFactory<TRecord, TEntity>, new()
     {
         private readonly DbContext context;
 
-        public Startup(DbContext context)
+        public CsvImporter(DbContext context)
         {
             this.context = context;
         }
 
-        public void Run()
+        public void Run(string fileName, Encoding encoding, int linesToSkip, int count)
         {
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-
             // Import
             var start = DateTime.Now;
             Console.WriteLine("{0} Processing data...", start);
-            var mapper = new StateMedicineRegistryItemMapper(new EntityFactory(context), false, true);
-            using (var reader = new StreamReader("grls2019-06-04-1.csv", Encoding.GetEncoding("windows-1251")))
+            var mapper = new TMapperFactory().Create(new EntityFactory(context), false, true);
+            using (var reader = new StreamReader(fileName, encoding))
             using (var csv = new CsvReader(reader))
             {
-                csv.Configuration.HasHeaderRecord = true;
-                csv.Configuration.RegisterClassMap<StateMedicineRegistryItemMap>();
-                csv.Read(); // Skip first line
-                var records = csv.GetRecords<StateMedicineRegistryItem>();
+                csv.Configuration.HasHeaderRecord = false;
+                csv.Configuration.RegisterClassMap<TCsvMap>();
+                for (int line = 0; line < linesToSkip; line++)
+                {
+                    csv.Read();
+                }
+                var records = csv.GetRecords<TRecord>();
                 int i = 0;
                 foreach (var entity in records
-                    .Where(r => r.IsOk)
+                    //.Where(r => r.IsOk)
                     .Select(r => mapper.Map(r))
                     .Where(r => r != null)
-                    .Take(30000))
+                    .Take(count))
                 {
                     if (entity.Id == 0)
                     {
@@ -84,7 +91,7 @@ namespace ImportStateMedicineRegistry
                 Console.WriteLine("{0} Updating database...", DateTime.Now);
                 try
                 {
-                    context.SaveChanges();
+                    //context.SaveChanges();
                 }
                 catch (Exception ex)
                 {

@@ -1,9 +1,12 @@
 ﻿using System;
-using System.Text.RegularExpressions;
+
+using Apteka.Model.Dtos.Base;
+using Apteka.Model.Entities.Base;
+using Apteka.Model.Extensions;
 
 namespace Apteka.Model.Dtos
 {
-    public class StateMedicineRegistryItem
+    public class StateMedicineRegistryItem : IRecord, IHashable<long>
     {
         public string RegistrationCertificateNumber { get; set; }
         public DateTime? RegistrationCertificateIssueDate { get; set; }
@@ -21,9 +24,7 @@ namespace Apteka.Model.Dtos
 
         public bool IsOk =>
             !String.IsNullOrWhiteSpace(RegistrationCertificateNumber) &&
-            RegistrationCertificateIssueDate.HasValue /*&&
-            Regex.IsMatch(Package, "^[0-9]{13}") &&
-            !Regex.IsMatch(Package, "^0{13}")*/;
+            RegistrationCertificateIssueDate.HasValue;
 
         public long Hash
         {
@@ -33,15 +34,8 @@ namespace Apteka.Model.Dtos
                     CertificateRecipient + CertificateRecipientCountry +
                     TradeName + Inn + DosageForms + ManufactureStages +
                     Package + NormativeDocument;
-                // https://stackoverflow.com/a/9545731/632199
                 // Seems to be good enough. I didn't found any collisions
-                ulong hashedValue = 3074457345618258791ul;
-                for (int i = 0; i < str.Length; i++)
-                {
-                    hashedValue += str[i];
-                    hashedValue *= 3074457345618258799ul;
-                }
-                return unchecked((long)hashedValue + long.MinValue);
+                return str.KnuthHash();
             }
         }
     }

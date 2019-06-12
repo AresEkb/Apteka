@@ -4,17 +4,18 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 using Apteka.Model.Annotations;
+using Apteka.Model.Entities.Base;
 
 namespace Apteka.Model.Entities
 {
     [DataElement("ru", "форма выпуска", "формы выпуска", "")]
     [Category("CodeLists/Medicines")]
-    public class MedicineDosageForm
+    public class MedicineDosageForm : IEntity, IHashableEntity<long?>
     {
         public MedicineDosageForm()
         {
             Organizations = new List<MedicineDosageFormOrganization>();
-            PriceLimits = new List<MedicinePriceLimit>();
+            //PriceLimits = new List<MedicineDosageFormPriceLimit>();
         }
 
         [Key, Browsable(false)]
@@ -64,11 +65,24 @@ namespace Apteka.Model.Entities
         [DataElement("ru", "единица измерения лекарственных форм")]
         public virtual MeasurementUnit DosageFormMeasurementUnit { get; set; }
 
+        [DataElement("ru", "альтернативная мера лекарственных форм")]
+        [DecimalPrecision(18, 6)]
+        public decimal? AltDosageFormMeasure { get; set; }
+
+        [DataElement("ru", "альтернативная единица измерения лекарственных форм")]
+        public virtual MeasurementUnit AltDosageFormMeasurementUnit { get; set; }
+
         [DataElement("ru", "первичная упаковка")]
         public virtual PrimaryPackaging PrimaryPackaging { get; set; }
 
         [DataElement("ru", "количество первичных упаковок")]
         public int? PrimaryPackagingCount { get; set; }
+
+        [DataElement("ru", "промежуточная упаковка")]
+        public virtual IntermediatePackaging IntermediatePackaging { get; set; }
+
+        [DataElement("ru", "количество промежуточных упаковок")]
+        public int? IntermediatePackagingCount { get; set; }
 
         [DataElement("ru", "вторичная упаковка")]
         public virtual SecondaryPackaging SecondaryPackaging { get; set; }
@@ -76,25 +90,40 @@ namespace Apteka.Model.Entities
         [DataElement("ru", "количество вторичных упаковок")]
         public int? SecondaryPackagingCount { get; set; }
 
-        [DataElement("ru", "вторичная упаковка 2")]
-        public virtual SecondaryPackaging SecondaryPackaging2 { get; set; }
-
-        [DataElement("ru", "количество вторичных упаковок 2")]
-        public int? PrimaryPackaging2Count { get; set; }
-
         [DataElement("ru", "количество в потреб. упаковке")]
         public int? TotalCount { get; set; }
-
-        [DataElement("ru", "участники цепочки поставок")]
-        public virtual ICollection<MedicineDosageFormOrganization> Organizations { get; set; }
 
         [DataElement("ru", "нормативная документация")]
         [MaxLength(300)]
         public string NormativeDocument { get; set; }
 
-        public virtual ICollection<MedicinePriceLimit> PriceLimits { get; }
+        [DataElement("ru", "предельная цена руб. без НДС")]
+        [DecimalPrecision(18, 2)]
+        [DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true)]
+        public decimal? PriceLimit { get; set; }
+
+        [DataElement("ru", "цена указана для первич. упаковки")]
+        public bool IsPrimaryPackagingPrice { get; set; }
+
+        [DataElement("ru", "дата регистрации цены")]
+        public DateTime? PriceRegistrationDate { get; set; }
+
+        [DataElement("ru", "№ решения (цена)")]
+        [MaxLength(100)]
+        public string PriceRegistrationDocNumber { get; set; }
+
+        [DataElement("ru", "дата исключения цены")]
+        public DateTime? PriceExclusionDate { get; set; }
+
+        [DataElement("ru", "причина исключения цены")]
+        public virtual MedicinePriceLimitExclusionReason PriceExclusionReason { get; set; }
 
         public long? StateRegistryHash { get; set; }
+
+        [DataElement("ru", "участники цепочки поставок")]
+        public virtual ICollection<MedicineDosageFormOrganization> Organizations { get; set; }
+
+        long? IHashableEntity<long?>.Hash { get => StateRegistryHash; set => StateRegistryHash = value; }
 
         public override string ToString()
         {

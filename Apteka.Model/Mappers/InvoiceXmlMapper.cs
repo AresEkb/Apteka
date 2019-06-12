@@ -7,6 +7,7 @@ using Apteka.Model.Entities;
 using Apteka.Model.Entities.Place;
 using Apteka.Model.Extensions;
 using Apteka.Model.Factories;
+using Apteka.Model.Mappers.Base;
 
 namespace Apteka.Model.Mappers
 {

@@ -1,67 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 using Apteka.Model.Dtos;
 using Apteka.Model.Entities;
 using Apteka.Model.Entities.Place;
 using Apteka.Model.Extensions;
 using Apteka.Model.Factories;
+using Apteka.Model.Mappers.Base;
 
 namespace Apteka.Model.Mappers
 {
-    public class StateMedicineRegistryItemMapper : MapperBase
+    public class StateMedicineRegistryItemMapper : HashableObjectMapper<StateMedicineRegistryItem, MedicineDosageForm>
     {
-        private readonly bool updateExisting;
-        private readonly bool readOnlyFromCache;
-        private readonly EntitySource entitySource;
-        private readonly HashSet<long> keys;
-
-        public StateMedicineRegistryItemMapper(IEntityFactory entityFactory,
-            bool updateExisting = false, bool readOnlyFromCache = false) : base(entityFactory)
+        public class Factory : IMapperFactory<StateMedicineRegistryItem, MedicineDosageForm>
         {
-            this.updateExisting = updateExisting;
-            this.readOnlyFromCache = readOnlyFromCache;
-
-            entitySource = readOnlyFromCache ? EntitySource.Cache : EntitySource.Both;
-
-            if (!updateExisting)
+            IMapper<StateMedicineRegistryItem, MedicineDosageForm> IMapperFactory<StateMedicineRegistryItem, MedicineDosageForm>.Create(IEntityFactory entityFactory, bool updateExisting, bool readOnlyFromCache)
             {
-                keys = new HashSet<long>(
-                    EntityFactory.Query<MedicineDosageForm>()
-                        .Where(df => df.StateRegistryHash.HasValue)
-                        .Select(df => df.StateRegistryHash.Value));
+                return new StateMedicineRegistryItemMapper(entityFactory, updateExisting, readOnlyFromCache);
             }
         }
 
-        public MedicineDosageForm Map(StateMedicineRegistryItem dto)
+        private StateMedicineRegistryItemMapper(IEntityFactory entityFactory,
+            bool updateExisting = false, bool readOnlyFromCache = false) : base(entityFactory, updateExisting, readOnlyFromCache)
         {
-            long hash = dto.Hash;
+        }
 
-            MedicineDosageForm entity = null;
-            // If we will update records then we have to load all columns
-            if (updateExisting)
-            {
-                entity = FindOrCreate<MedicineDosageForm>(e =>
-                    e.StateRegistryHash == hash,
-                    updateExisting, entitySource);
-            }
-            // If we will not update records then it's much more effective to load keys only
-            else if (!keys.Contains(hash))
-            {
-                entity = EntityFactory.Create<MedicineDosageForm>();
-                entity.StateRegistryHash = hash;
-                keys.Add(hash);
-            }
-
-            if (entity == null) { return null; }
+        protected override void MapProperties(StateMedicineRegistryItem dto, MedicineDosageForm entity)
+        {
+            entity.Medicine = FindOrCreateMedicine(dto.TradeName, dto.Inn, dto.PharmacotherapeuticGroup, "", EntitySource);
 
             entity.RegistrationCertificateNumber = dto.RegistrationCertificateNumber;
+            entity.RegistrationCertificateIssueDate = dto.RegistrationCertificateIssueDate.Value;
+            entity.RegistrationCertificateExpiryDate = dto.RegistrationCertificateExpiryDate;
+            entity.RegistrationCertificateCancellationDate = dto.RegistrationCertificateCancellationDate;
+            entity.CertificateRecipient = FindOrCreateOrganization(dto.CertificateRecipient, dto.CertificateRecipientCountry, EntitySource);
 
-            entity.Medicine = FindOrCreateMedicine(dto.TradeName, dto.Inn, dto.PharmacotherapeuticGroup, "", entitySource);
-
-            if (!IsEmptyName(dto.DosageForms)) {
+            if (!IsEmptyName(dto.DosageForms))
+            {
                 int comma = dto.DosageForms.LastIndexOf(',');
                 string dosage = dto.DosageForms.Substring(0, comma).Trim();
                 string packaging = dto.DosageForms.Substring(comma + 1);
@@ -71,30 +45,30 @@ namespace Apteka.Model.Mappers
 
                 if (dosage.EndsWith(" ~"))
                 {
-                    entity.DosageForm = FindOrCreate<DosageForm>(dosage.Substring(0, dosage.Length - 2), entitySource);
+                    entity.DosageForm = FindOrCreate<DosageForm>(dosage.Substring(0, dosage.Length - 2), EntitySource);
                 }
                 else
                 {
                     var m = Regex.Match(dosage, @"^(.*?[^+])\s+([0-9]+([.,][0-9]+)?)\s*([^0-9(),]{1,20})?$");
                     if (m.Success)
                     {
-                        entity.DosageForm = FindOrCreate<DosageForm>(m.Groups[1].Value, entitySource);
+                        entity.DosageForm = FindOrCreate<DosageForm>(m.Groups[1].Value, EntitySource);
                         if (entity.DosageForm != null)
                         {
                             if (decimal.TryParse(m.Groups[2].Value.Replace(',', '.'), out decimal measure))
                             {
                                 entity.DosageMeasure = measure;
-                                entity.DosageMeasurementUnit = FindOrCreate<MeasurementUnit>(m.Groups[4].Value, entitySource);
+                                entity.DosageMeasurementUnit = FindOrCreate<MeasurementUnit>(m.Groups[4].Value, EntitySource);
                             }
                         }
                     }
                     else
                     {
-                        entity.DosageForm = FindOrCreate<DosageForm>(dosage, entitySource);
+                        entity.DosageForm = FindOrCreate<DosageForm>(dosage, EntitySource);
                     }
                 }
 
-                entity.PrimaryPackaging = FindOrCreate<PrimaryPackaging>(packagingKind, entitySource);
+                entity.PrimaryPackaging = FindOrCreate<PrimaryPackaging>(packagingKind, EntitySource);
                 if (entity.PrimaryPackaging != null)
                 {
                     if (int.TryParse(packagingCount, out int count))
@@ -128,7 +102,7 @@ namespace Apteka.Model.Mappers
                         org = orgAddress.Substring(0, comma2);
                         address = orgAddress.Substring(comma2 + 1);
                     }
-                    var organization = FindOrCreateOrganization(org, country, entitySource);
+                    var organization = FindOrCreateOrganization(org, country, EntitySource);
                     if (organization != null)
                     {
                         if (!IsEmptyName(address))
@@ -142,46 +116,18 @@ namespace Apteka.Model.Mappers
                         }
                         var party = EntityFactory.Create<MedicineDosageFormOrganization>();
                         party.Organization = organization;
-                        party.Role = FindOrCreate<OrganizationRole>(role.FirstCharToLower(), entitySource);
+                        party.Role = FindOrCreate<OrganizationRole>(role.FirstCharToLower(), EntitySource);
                         entity.Organizations.Add(party);
                     }
                 }
             }
 
-            entity.RegistrationCertificateIssueDate = dto.RegistrationCertificateIssueDate.Value;
-            entity.RegistrationCertificateExpiryDate = dto.RegistrationCertificateExpiryDate;
-            entity.RegistrationCertificateCancellationDate = dto.RegistrationCertificateCancellationDate;
-            entity.CertificateRecipient = FindOrCreateOrganization(dto.CertificateRecipient, dto.CertificateRecipientCountry, entitySource);
             entity.NormativeDocument = dto.NormativeDocument;
             if (Regex.IsMatch(dto.Package, "^[0-9]{13}") &&
                 !Regex.IsMatch(dto.Package, "^0{13}"))
             {
                 entity.Ean13 = dto.Package.Substring(0, 13);
             }
-            return entity;
-        }
-
-        //private readonly IList<Medicine> localMedicines = new List<Medicine>();
-        protected Medicine FindOrCreateMedicine(string tradeName, string inn,
-            string pharmacotherapeuticGroup, string atcCode, EntitySource entitySource = EntitySource.Both)
-        {
-            tradeName = tradeName?.Trim();
-            if (IsEmptyName(tradeName)) { return null; }
-
-            var entity = EntityFactory.Find<Medicine>(o =>
-                o.TradeName.ToUpper().Equals(tradeName.ToUpper(), StringComparison.OrdinalIgnoreCase),
-                entitySource);
-            if (entity != null) { return entity; }
-
-            entity = EntityFactory.Create<Medicine>();
-            entity.TradeName = tradeName;
-            if (!IsEmptyName(inn))
-            {
-                entity.Inn = inn;
-            }
-            entity.PharmacotherapeuticGroup = FindOrCreate<PharmacotherapeuticGroup>(pharmacotherapeuticGroup, entitySource);
-            entity.AtcCode = FindOrCreate<AtcGroup>(atcCode, entitySource);
-            return entity;
         }
     }
 }

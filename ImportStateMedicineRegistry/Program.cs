@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-
+using System.Text;
 using Apteka.Model.EFCore;
 
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +14,8 @@ namespace ImportStateMedicineRegistry
     {
         static void Main(string[] args)
         {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
             var config = new ConfigurationBuilder()
                 .SetBasePath(Path.Combine(AppContext.BaseDirectory))
                 .AddJsonFile("appsettings.json", optional: true)
@@ -28,7 +30,8 @@ namespace ImportStateMedicineRegistry
 
             var context = serviceProvider.GetRequiredService<AptekaDbContext>();
 
-            new Startup(context).Run();
+            //new StateMedicineRegistryImporter(context).Run("grls2019-06-04-1.csv", Encoding.GetEncoding("windows-1251"), 1, 1000);
+            new StateMedicinePriceRegistryImporter(context).Run("lp2019-06-04-1.csv", Encoding.GetEncoding("windows-1251"), 3, 100);
         }
     }
 }
