@@ -13,7 +13,7 @@ namespace Apteka.Model.Entities
         [Key, Browsable(false)]
         public int Id { get; private set; }
 
-        public AtcGroup Parent { get; set; }
+        public virtual AtcGroup Parent { get; set; }
 
         [DataElement("ru", "код")]
         [MaxLength(15)]

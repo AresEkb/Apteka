@@ -59,9 +59,11 @@ namespace Apteka.Model.Entities
         public decimal SupplierMarkupRate { get; set; }
 
         [DataElement("ru", "оптовая цена", "цена предприятия поставщика без учета НДС", BriefName = "ценаОпт")]
+        [DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true)]
         public decimal SupplierPrice => Math.Round(ManufacturerPrice * (1 + SupplierMarkupRate), 2);
 
         [DataElement("ru", "оптовая сумма", "сумма предприятия поставщика без учета НДС", BriefName = "суммаОпт")]
+        [DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true)]
         public decimal TotalSupplierPrice => SupplierPrice * Quantity;
 
         [DataElement("ru", "ставка НДС", "налоговая ставка НДС, выраженная в процентах", BriefName = "ставкаНДС")]
@@ -71,9 +73,11 @@ namespace Apteka.Model.Entities
         public decimal ValueAddedTaxRate { get; set; }
 
         [DataElement("ru", "сумма НДС", "сумма НДС от цены предприятия поставщика", BriefName = "суммаНДС")]
+        [DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true)]
         public decimal ValueAddedTaxAmount => Math.Round(TotalSupplierPrice * ValueAddedTaxRate, 2);
 
         [DataElement("ru", "оптовая сумма + НДС", "сумма предприятия поставщика с учётом НДС", BriefName = "суммаОптВклНДС")]
+        [DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true)]
         public decimal TotalPrice => TotalSupplierPrice + ValueAddedTaxAmount;
 
         [DataElement("ru", "EAN13", "внешний штрих-код формата EAN13")]

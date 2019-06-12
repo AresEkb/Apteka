@@ -16,6 +16,7 @@ namespace Apteka.Model.Entities
 
         [DataElement("ru", "предельная цена руб. без НДС")]
         [DecimalPrecision(18, 2)]
+        [DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true)]
         public decimal PriceLimit { get; set; }
 
         [DataElement("ru", "цена указана для первич. упаковки")]

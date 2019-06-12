@@ -39,6 +39,7 @@ namespace Apteka.Model.Entities
         public virtual Organization Supplier { get; set; }
 
         [DataElement("ru", "банковский счет поставщика", BriefName = "счет поставщика")]
+        // Use AttributeProvider?
         public virtual BankAccount SupplierBankAccount { get; set; }
 
         [DataElement("ru", "получатель")]
@@ -54,12 +55,15 @@ namespace Apteka.Model.Entities
         public string ProductGroup { get; set; }
 
         [DataElement("ru", "сумма оптовая", "сумма предприятия поставщика без учета НДС", BriefName = "cуммаОпт")]
+        [DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true)]
         public decimal SupplierPrice => Items.Sum(item => item.TotalSupplierPrice);
 
         [DataElement("ru", "сумма НДС", "сумма НДС от цены предприятия поставщика", BriefName = "суммаНДС")]
+        [DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true)]
         public decimal ValueAddedTaxAmount => Items.Sum(item => item.ValueAddedTaxAmount);
 
         [DataElement("ru", "сумма оптовая + НДС", "сумма предприятия поставщика с учётом НДС", BriefName = "суммаОптВклНДС")]
+        [DisplayFormat(DataFormatString = "{0:c}", ApplyFormatInEditMode = true)]
         public decimal TotalPrice => SupplierPrice + ValueAddedTaxAmount;
 
         [DataElement("ru", "примечание", "примечание к документу")]

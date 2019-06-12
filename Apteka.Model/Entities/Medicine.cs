@@ -27,10 +27,10 @@ namespace Apteka.Model.Entities
         [MaxLength(700)]
         public string Inn { get; set; }
 
-        public PharmacotherapeuticGroup PharmacotherapeuticGroup { get; set; }
+        public virtual PharmacotherapeuticGroup PharmacotherapeuticGroup { get; set; }
 
         [DataElement("ru", "код АТХ")]
-        public AtcGroup AtcCode { get; set; }
+        public virtual AtcGroup AtcCode { get; set; }
 
         [DataElement("ru", "формы выпуска")]
         public virtual ICollection<MedicineDosageForm> DosageForms { get; set; }

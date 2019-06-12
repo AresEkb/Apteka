@@ -14,6 +14,7 @@ namespace Apteka.Model.Entities
     {
         public Organization()
         {
+            //Address = new Address();
             BankAccounts = new List<BankAccount>();
         }
 

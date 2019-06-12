@@ -14,10 +14,10 @@ namespace Apteka.Model.Entities.Place
         public int Id { get; private set; }
 
         [DataElement("ru", "страна")]
-        public Country Country { get; set; }
+        public virtual Country Country { get; set; }
 
         [DataElement("ru", "город")]
-        public City City { get; set; }
+        public virtual City City { get; set; }
 
         [DataElement("ru", "описание")]
         [MaxLength(300)]

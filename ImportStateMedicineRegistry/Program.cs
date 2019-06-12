@@ -22,6 +22,7 @@ namespace ImportStateMedicineRegistry
             var serviceProvider = new ServiceCollection()
                 .AddDbContext<AptekaDbContext>(o =>
                     o//.UseLoggerFactory(new LoggerFactory().AddConsole())
+                     .UseLazyLoadingProxies()
                      .UseSqlServer(config.GetConnectionString("DefaultConnection")))
                 .BuildServiceProvider();
 
