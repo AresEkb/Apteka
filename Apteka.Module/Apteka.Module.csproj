@@ -233,6 +233,30 @@
     <Compile Include="Migrations\201906121721546_DosageAltMeasure.Designer.cs">
       <DependentUpon>201906121721546_DosageAltMeasure.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906130617338_RegCertificateRename.cs" />
+    <Compile Include="Migrations\201906130617338_RegCertificateRename.Designer.cs">
+      <DependentUpon>201906130617338_RegCertificateRename.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906131041025_MedicinePriceDate.cs" />
+    <Compile Include="Migrations\201906131041025_MedicinePriceDate.Designer.cs">
+      <DependentUpon>201906131041025_MedicinePriceDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906141010382_PackagingNote.cs" />
+    <Compile Include="Migrations\201906141010382_PackagingNote.Designer.cs">
+      <DependentUpon>201906141010382_PackagingNote.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906141049598_IntermPackaging2.cs" />
+    <Compile Include="Migrations\201906141049598_IntermPackaging2.Designer.cs">
+      <DependentUpon>201906141049598_IntermPackaging2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906141203060_UniqueName.cs" />
+    <Compile Include="Migrations\201906141203060_UniqueName.Designer.cs">
+      <DependentUpon>201906141203060_UniqueName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906141236171_RefactorPackaging.cs" />
+    <Compile Include="Migrations\201906141236171_RefactorPackaging.Designer.cs">
+      <DependentUpon>201906141236171_RefactorPackaging.cs</DependentUpon>
+    </Compile>
     <Compile Include="ModelExtensions\ModelClassUpdater.cs" />
     <Compile Include="ModelExtensions\ModelMemberUpdater.cs" />
     <Compile Include="ModelExtensions\DetailViewLayoutGeneratorUpdater.cs" />
@@ -314,6 +338,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906121721546_DosageAltMeasure.resx">
       <DependentUpon>201906121721546_DosageAltMeasure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906130617338_RegCertificateRename.resx">
+      <DependentUpon>201906130617338_RegCertificateRename.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906131041025_MedicinePriceDate.resx">
+      <DependentUpon>201906131041025_MedicinePriceDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906141010382_PackagingNote.resx">
+      <DependentUpon>201906141010382_PackagingNote.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906141049598_IntermPackaging2.resx">
+      <DependentUpon>201906141049598_IntermPackaging2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906141203060_UniqueName.resx">
+      <DependentUpon>201906141203060_UniqueName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906141236171_RefactorPackaging.resx">
+      <DependentUpon>201906141236171_RefactorPackaging.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="Module.resx">

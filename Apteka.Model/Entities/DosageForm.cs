@@ -8,18 +8,15 @@ namespace Apteka.Model.Entities
 {
     [DataElement("ru", "лекарственная форма", "лекарственные формы", "")]
     [Category("CodeLists/Medicines")]
-    public class DosageForm : INamedEntity
+    public class DosageForm : EntityBase, INamedEntity
     {
         [Key, Browsable(false)]
         public int Id { get; private set; }
 
         [DataElement("ru", "название")]
+        [Required]
+        [UniqueIndex]
         [MaxLength(300)]
         public string Name { get; set; }
-
-        public override string ToString()
-        {
-            return $"Лекарственная форма ({Name})";
-        }
     }
 }

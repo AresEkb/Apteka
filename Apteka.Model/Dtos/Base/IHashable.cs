@@ -1,7 +1,7 @@
 ﻿namespace Apteka.Model.Dtos.Base
 {
-    public interface IHashable<T>
+    public interface IHashable
     {
-        T Hash { get; }
+        long Hash { get; }
     }
 }

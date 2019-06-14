@@ -6,7 +6,7 @@ using Apteka.Model.Extensions;
 
 namespace Apteka.Model.Dtos
 {
-    public class StateMedicineRegistryItem : IRecord, IHashable<long>
+    public class StateMedicineRegistryItem : IRecord, IHashable
     {
         public string RegistrationCertificateNumber { get; set; }
         public DateTime? RegistrationCertificateIssueDate { get; set; }

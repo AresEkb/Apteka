@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -20,6 +21,19 @@ namespace Apteka.Model.Extensions
                 : input.First().ToString().ToLower() + input.Substring(1);
         }
 
+        public static int IndexOfAny(this string str, string[] anyOf)
+        {
+            int result = -1;
+            foreach (var search in anyOf) {
+                int index = str.IndexOf(search);
+                if (index >= 0 && index < result)
+                {
+                    result = index;
+                }
+            }
+            return result;
+        }
+
         // https://stackoverflow.com/a/9545731/632199
         public static long KnuthHash(this string str)
         {
@@ -31,6 +45,21 @@ namespace Apteka.Model.Extensions
             }
             return unchecked((long)hashedValue + long.MinValue);
         }
+
+        public static int? ParseInt(this string str) =>
+            str.TryParseInt(out int result) ? result : (int?)null;
+
+        public static bool TryParseInt(this string str, out int result) =>
+            int.TryParse(str.Replace(" ", "").Replace("\n", ""),
+                NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out result);
+
+        public static decimal? ParseDecimal(this string str) =>
+            str.TryParseDecimal(out decimal result) ? result : (decimal?)null;
+
+        public static bool TryParseDecimal(this string str, out decimal result) =>
+            decimal.TryParse(str.Replace(" ", "").Replace("\n", "").Replace(',', '.'),
+                NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign,
+                CultureInfo.InvariantCulture, out result);
 
         public static bool TryMatchMeasure(this string str, out string prefix, out decimal measure, out string unit)
         {

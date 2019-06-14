@@ -3,11 +3,12 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 using Apteka.Model.Annotations;
+using Apteka.Model.Entities.Base;
 
 namespace Apteka.Model.Entities
 {
     [DataElement("ru", "серия товаров", "серии товаров", "")]
-    public class ProductSeries
+    public class ProductSeries : EntityBase
     {
         [Key, Browsable(false)]
         public int Id { get; private set; }

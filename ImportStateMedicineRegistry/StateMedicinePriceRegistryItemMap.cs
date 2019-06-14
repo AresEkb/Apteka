@@ -13,7 +13,7 @@ namespace ImportStateMedicineRegistry
             Map(m => m.DosageForms).Index(2);
             Map(m => m.Organizations).Index(3);
             Map(m => m.AtcCode).Index(4);
-            Map(m => m.TotalCount).Index(5);
+            Map(m => m.TotalCountStr).Index(5);
             Map(m => m.PriceStr).Index(6);
             Map(m => m.PrimaryPackagingPrice).Index(7);
             Map(m => m.RegistrationCertificateNumber).Index(8);

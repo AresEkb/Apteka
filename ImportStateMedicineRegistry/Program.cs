@@ -31,7 +31,7 @@ namespace ImportStateMedicineRegistry
             var context = serviceProvider.GetRequiredService<AptekaDbContext>();
 
             //new StateMedicineRegistryImporter(context).Run("grls2019-06-04-1.csv", Encoding.GetEncoding("windows-1251"), 1, 1000);
-            new StateMedicinePriceRegistryImporter(context).Run("lp2019-06-04-1.csv", Encoding.GetEncoding("windows-1251"), 3, 100);
+            new StateMedicinePriceRegistryImporter(context).Run("lp2019-06-04-1.csv", Encoding.GetEncoding("windows-1251"), 3, 5000);
         }
     }
 }

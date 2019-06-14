@@ -2,11 +2,12 @@
 using System.ComponentModel.DataAnnotations;
 
 using Apteka.Model.Annotations;
+using Apteka.Model.Entities.Base;
 
 namespace Apteka.Model.Entities
 {
     [DataElement("ru", "банковский счет", "счета", "банковский счет организации", BriefName = "счет")]
-    public class BankAccount
+    public class BankAccount : EntityBase
     {
         [Key, Browsable(false)]
         public int Id { get; private set; }

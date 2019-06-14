@@ -38,6 +38,9 @@ namespace ImportStateMedicineRegistry
             var mapper = new TMapperFactory().Create(new EntityFactory(context), false, true);
             using (var reader = new StreamReader(fileName, encoding))
             using (var csv = new CsvReader(reader))
+            //using (var resultFile = File.OpenWrite("result.csv"))
+            //using (var writer = new StreamWriter(resultFile, encoding))
+            //using (var csv2 = new CsvWriter(writer))
             {
                 csv.Configuration.HasHeaderRecord = false;
                 csv.Configuration.RegisterClassMap<TCsvMap>();
@@ -48,11 +51,12 @@ namespace ImportStateMedicineRegistry
                 var records = csv.GetRecords<TRecord>();
                 int i = 0;
                 foreach (var entity in records
-                    //.Where(r => r.IsOk)
+                    .Where(r => r.IsOk)
                     .Select(r => mapper.Map(r))
                     .Where(r => r != null)
                     .Take(count))
                 {
+                    //csv2.WriteRecord
                     if (entity.Id == 0)
                     {
                         context.Add(entity);
@@ -91,7 +95,7 @@ namespace ImportStateMedicineRegistry
                 Console.WriteLine("{0} Updating database...", DateTime.Now);
                 try
                 {
-                    //context.SaveChanges();
+                    context.SaveChanges();
                 }
                 catch (Exception ex)
                 {

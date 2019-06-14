@@ -2,7 +2,6 @@
 
 using Apteka.Model.Dtos;
 using Apteka.Model.Entities;
-using Apteka.Model.Entities.Place;
 using Apteka.Model.Extensions;
 using Apteka.Model.Factories;
 using Apteka.Model.Mappers.Base;
@@ -26,13 +25,13 @@ namespace Apteka.Model.Mappers
 
         protected override void MapProperties(StateMedicineRegistryItem dto, MedicineDosageForm entity)
         {
-            entity.Medicine = FindOrCreateMedicine(dto.TradeName, dto.Inn, dto.PharmacotherapeuticGroup, "", EntitySource);
+            entity.Medicine = FindOrCreateMedicine(dto.TradeName, dto.Inn, dto.PharmacotherapeuticGroup, "");
 
-            entity.RegistrationCertificateNumber = dto.RegistrationCertificateNumber;
-            entity.RegistrationCertificateIssueDate = dto.RegistrationCertificateIssueDate.Value;
-            entity.RegistrationCertificateExpiryDate = dto.RegistrationCertificateExpiryDate;
-            entity.RegistrationCertificateCancellationDate = dto.RegistrationCertificateCancellationDate;
-            entity.CertificateRecipient = FindOrCreateOrganization(dto.CertificateRecipient, dto.CertificateRecipientCountry, EntitySource);
+            entity.RegCertificateNumber = dto.RegistrationCertificateNumber;
+            entity.RegCertificateIssueDate = dto.RegistrationCertificateIssueDate.Value;
+            entity.RegCertificateExpiryDate = dto.RegistrationCertificateExpiryDate;
+            entity.RegCertificateCancellationDate = dto.RegistrationCertificateCancellationDate;
+            entity.RegCertificateOwner = FindOrCreateOrganization(dto.CertificateRecipient, dto.CertificateRecipientCountry);
 
             if (!IsEmptyName(dto.DosageForms))
             {
@@ -45,37 +44,38 @@ namespace Apteka.Model.Mappers
 
                 if (dosage.EndsWith(" ~"))
                 {
-                    entity.DosageForm = FindOrCreate<DosageForm>(dosage.Substring(0, dosage.Length - 2), EntitySource);
+                    entity.DosageForm = FindOrCreate<DosageForm>(dosage.Substring(0, dosage.Length - 2));
                 }
                 else
                 {
                     var m = Regex.Match(dosage, @"^(.*?[^+])\s+([0-9]+([.,][0-9]+)?)\s*([^0-9(),]{1,20})?$");
                     if (m.Success)
                     {
-                        entity.DosageForm = FindOrCreate<DosageForm>(m.Groups[1].Value, EntitySource);
+                        entity.DosageForm = FindOrCreate<DosageForm>(m.Groups[1].Value);
                         if (entity.DosageForm != null)
                         {
                             if (decimal.TryParse(m.Groups[2].Value.Replace(',', '.'), out decimal measure))
                             {
                                 entity.DosageMeasure = measure;
-                                entity.DosageMeasurementUnit = FindOrCreate<MeasurementUnit>(m.Groups[4].Value, EntitySource);
+                                entity.DosageMeasurementUnit = FindOrCreate<MeasurementUnit>(m.Groups[4].Value);
                             }
                         }
                     }
                     else
                     {
-                        entity.DosageForm = FindOrCreate<DosageForm>(dosage, EntitySource);
+                        entity.DosageForm = FindOrCreate<DosageForm>(dosage);
                     }
                 }
 
-                entity.PrimaryPackaging = FindOrCreate<PrimaryPackaging>(packagingKind, EntitySource);
-                if (entity.PrimaryPackaging != null)
-                {
-                    if (int.TryParse(packagingCount, out int count))
-                    {
-                        entity.PrimaryPackagingCount = count;
-                    }
-                }
+                // TODO: !!!
+                //entity.PrimaryPackaging = FindOrCreate<PrimaryPackaging>(packagingKind);
+                //if (entity.PrimaryPackaging != null)
+                //{
+                //    if (int.TryParse(packagingCount, out int count))
+                //    {
+                //        entity.PrimaryPackagingCount = count;
+                //    }
+                //}
             }
 
             if (!IsEmptyName(dto.ManufactureStages))
@@ -102,21 +102,21 @@ namespace Apteka.Model.Mappers
                         org = orgAddress.Substring(0, comma2);
                         address = orgAddress.Substring(comma2 + 1);
                     }
-                    var organization = FindOrCreateOrganization(org, country, EntitySource);
+                    var organization = FindOrCreateOrganization(org, country);
                     if (organization != null)
                     {
                         if (!IsEmptyName(address))
                         {
-                            if (organization.Address == null)
-                            {
-                                organization.Address = EntityFactory.Create<Address>();
-                            }
-                            organization.Address.Country = organization.Country;
+                            //if (organization.Address == null)
+                            //{
+                            //    organization.Address = EntityFactory.Create<Address>();
+                            //}
+                            //organization.Address.Country = organization.Country;
                             organization.Address.Description = address;
                         }
                         var party = EntityFactory.Create<MedicineDosageFormOrganization>();
                         party.Organization = organization;
-                        party.Role = FindOrCreate<OrganizationRole>(role.FirstCharToLower(), EntitySource);
+                        party.Role = FindOrCreate<OrganizationRole>(role.FirstCharToLower());
                         entity.Organizations.Add(party);
                     }
                 }

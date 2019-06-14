@@ -2,17 +2,20 @@
 using System.ComponentModel.DataAnnotations;
 
 using Apteka.Model.Annotations;
+using Apteka.Model.Entities.Base;
 
 namespace Apteka.Model.Entities
 {
     [DataElement("ru", "причина исключения", "причины исключения", "")]
     [Category("CodeLists/Medicines")]
-    public class MedicinePriceLimitExclusionReason
+    public class MedicinePriceLimitExclusionReason : EntityBase
     {
         [Key, Browsable(false)]
         public int Id { get; private set; }
 
         [DataElement("ru", "название")]
+        [Required]
+        [UniqueIndex]
         [MaxLength(200)]
         public string Name { get; set; }
     }

@@ -1,7 +1,7 @@
 ﻿namespace Apteka.Model.Entities.Base
 {
-    public interface IHashableEntity<T>
+    public interface IHashableEntity
     {
-        T Hash { get; set; }
+        long? Hash { get; set; }
     }
 }

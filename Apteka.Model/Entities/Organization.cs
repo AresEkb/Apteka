@@ -10,7 +10,7 @@ namespace Apteka.Model.Entities
 {
     [DataElement("ru", "организация", "организации", "")]
     [Category("CodeLists")]
-    public class Organization : INamedEntity
+    public class Organization : EntityBase, INamedEntity
     {
         public Organization()
         {
@@ -26,9 +26,9 @@ namespace Apteka.Model.Entities
         [MaxLength(500)]
         public string Name { get; set; }
 
-        [DataElement("ru", "страна")]
-        [Required]
-        public virtual Country Country { get; set; }
+        //[DataElement("ru", "страна")]
+        //[Required]
+        //public virtual Country Country { get; set; }
 
         [DataElement("ru", "ИНН")]
         [MaxLength(20)]
@@ -54,10 +54,5 @@ namespace Apteka.Model.Entities
 
         [DataElement("ru", "банковские счета", BriefName = "счета")]
         public virtual ICollection<BankAccount> BankAccounts { get; set; }
-
-        public override string ToString()
-        {
-            return $"Организация ({Name})";
-        }
     }
 }

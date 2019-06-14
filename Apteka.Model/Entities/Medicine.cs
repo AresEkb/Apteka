@@ -3,12 +3,14 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 using Apteka.Model.Annotations;
+using Apteka.Model.Entities.Base;
 
 namespace Apteka.Model.Entities
 {
     [DataElement("ru", "лекарственное средство", "лекарственные средства", "")]
+    [DefaultProperty(nameof(TradeName))]
     [Category("CodeLists/Medicines")]
-    public class Medicine
+    public class Medicine : EntityBase
     {
         public Medicine()
         {
@@ -19,6 +21,7 @@ namespace Apteka.Model.Entities
         public int Id { get; private set; }
 
         [DataElement("ru", "торговое наименование")]
+        [Required]
         [UniqueIndex]
         [MaxLength(300)]
         public string TradeName { get; set; }
@@ -34,10 +37,5 @@ namespace Apteka.Model.Entities
 
         [DataElement("ru", "формы выпуска")]
         public virtual ICollection<MedicineDosageForm> DosageForms { get; set; }
-
-        public override string ToString()
-        {
-            return $"Лекарственное средство ({Inn})";
-        }
     }
 }

@@ -13,7 +13,8 @@ namespace Apteka.Model.Mappers
 {
     public class InvoiceXmlMapper : MapperBase
     {
-        public InvoiceXmlMapper(IEntityFactory entityFactory) : base(entityFactory)
+        public InvoiceXmlMapper(IEntityFactory entityFactory)
+            : base(entityFactory, EntitySource.DataBase)
         {
         }
 
@@ -141,7 +142,7 @@ namespace Apteka.Model.Mappers
                 KodTovara = entity.ProductCode,
                 Tovar = entity.ProductName,
                 Izgotovitel = entity.Manufacturer?.Name,
-                StranaIzgotovitelja = entity.Manufacturer?.Country?.Name,
+                StranaIzgotovitelja = entity.Manufacturer?.Address?.Country?.Name,
                 Kolichestvo = entity.Quantity,
                 CenaIzg = entity.ManufacturerPrice,
                 CenaGR = entity.StateRegistryPrice,

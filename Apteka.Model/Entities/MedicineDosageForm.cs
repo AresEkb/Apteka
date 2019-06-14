@@ -9,13 +9,14 @@ using Apteka.Model.Entities.Base;
 namespace Apteka.Model.Entities
 {
     [DataElement("ru", "форма выпуска", "формы выпуска", "")]
+    [DefaultProperty(nameof(Ean13))]
     [Category("CodeLists/Medicines")]
-    public class MedicineDosageForm : IEntity, IHashableEntity<long?>
+    public class MedicineDosageForm : EntityBase, IEntity, IHashableEntity
     {
         public MedicineDosageForm()
         {
+            Packagings = new List<MedicineDosageFormPackaging>();
             Organizations = new List<MedicineDosageFormOrganization>();
-            //PriceLimits = new List<MedicineDosageFormPriceLimit>();
         }
 
         [Key, Browsable(false)]
@@ -31,22 +32,22 @@ namespace Apteka.Model.Entities
 
         [DataElement("ru", "номер регистрационного удостоверения")]
         [MaxLength(20)]
-        public string RegistrationCertificateNumber { get; set; }
+        public string RegCertificateNumber { get; set; }
 
         [DataElement("ru", "дата регистрации")]
         [DataType(DataType.Date)]
-        public DateTime RegistrationCertificateIssueDate { get; set; }
+        public DateTime? RegCertificateIssueDate { get; set; }
 
         [DataElement("ru", "дата окончания действия регистрационного удостоверения")]
         [DataType(DataType.Date)]
-        public DateTime? RegistrationCertificateExpiryDate { get; set; }
+        public DateTime? RegCertificateExpiryDate { get; set; }
 
         [DataElement("ru", "дата аннулирования регистрационного удостоверения")]
         [DataType(DataType.Date)]
-        public DateTime? RegistrationCertificateCancellationDate { get; set; }
+        public DateTime? RegCertificateCancellationDate { get; set; }
 
-        [DataElement("ru", "получатель сертификата", "юридическое лицо, на имя которого выдано регистрационное удостоверение")]
-        public virtual Organization CertificateRecipient { get; set; }
+        [DataElement("ru", "владелец сертификата", "юридическое лицо, на имя которого выдано регистрационное удостоверение")]
+        public virtual Organization RegCertificateOwner { get; set; }
 
         [DataElement("ru", "лекарственная форма")]
         public virtual DosageForm DosageForm { get; set; }
@@ -72,23 +73,74 @@ namespace Apteka.Model.Entities
         [DataElement("ru", "альтернативная единица измерения лекарственных форм")]
         public virtual MeasurementUnit AltDosageFormMeasurementUnit { get; set; }
 
-        [DataElement("ru", "первичная упаковка")]
-        public virtual PrimaryPackaging PrimaryPackaging { get; set; }
 
-        [DataElement("ru", "количество первичных упаковок")]
-        public int? PrimaryPackagingCount { get; set; }
+        //[DataElement("ru", "первичная упаковка")]
+        //public virtual PrimaryPackaging PrimaryPackaging { get; set; }
 
-        [DataElement("ru", "промежуточная упаковка")]
-        public virtual IntermediatePackaging IntermediatePackaging { get; set; }
+        //[DataElement("ru", "мера первичной упаковки")]
+        //[DecimalPrecision(18, 6)]
+        //public decimal? PrimaryPackagingMeasure { get; set; }
 
-        [DataElement("ru", "количество промежуточных упаковок")]
-        public int? IntermediatePackagingCount { get; set; }
+        //[DataElement("ru", "единица измерения первичной упаковки")]
+        //public virtual MeasurementUnit PrimaryPackagingMeasurementUnit { get; set; }
 
-        [DataElement("ru", "вторичная упаковка")]
-        public virtual SecondaryPackaging SecondaryPackaging { get; set; }
+        //[DataElement("ru", "количество первичных упаковок")]
+        //public int? PrimaryPackagingCount { get; set; }
 
-        [DataElement("ru", "количество вторичных упаковок")]
-        public int? SecondaryPackagingCount { get; set; }
+        //[DataElement("ru", "примечание для первичной упаковки")]
+        //public string PrimaryPackagingNote { get; set; }
+
+
+        //[DataElement("ru", "промежуточная упаковка")]
+        //public virtual IntermediatePackaging IntermediatePackaging { get; set; }
+
+        //[DataElement("ru", "мера промежуточной упаковки")]
+        //[DecimalPrecision(18, 6)]
+        //public decimal? IntermediatePackagingMeasure { get; set; }
+
+        //[DataElement("ru", "единица измерения промежуточной упаковки")]
+        //public virtual MeasurementUnit IntermediatePackagingMeasurementUnit { get; set; }
+
+        //[DataElement("ru", "количество промежуточных упаковок")]
+        //public int? IntermediatePackagingCount { get; set; }
+
+        //[DataElement("ru", "примечание для промежуточной упаковки")]
+        //public string IntermediatePackagingNote { get; set; }
+
+
+        //[DataElement("ru", "промежуточная упаковка (2)")]
+        //public virtual IntermediatePackaging IntermediatePackaging2 { get; set; }
+
+        //[DataElement("ru", "мера промежуточной упаковки (2)")]
+        //[DecimalPrecision(18, 6)]
+        //public decimal? IntermediatePackaging2Measure { get; set; }
+
+        //[DataElement("ru", "единица измерения промежуточной упаковки (2)")]
+        //public virtual MeasurementUnit IntermediatePackaging2MeasurementUnit { get; set; }
+
+        //[DataElement("ru", "количество промежуточных упаковок (2)")]
+        //public int? IntermediatePackaging2Count { get; set; }
+
+        //[DataElement("ru", "примечание для промежуточной упаковки (2)")]
+        //public string IntermediatePackaging2Note { get; set; }
+
+
+        //[DataElement("ru", "вторичная упаковка")]
+        //public virtual SecondaryPackaging SecondaryPackaging { get; set; }
+
+        //[DataElement("ru", "мера вторичной упаковки")]
+        //[DecimalPrecision(18, 6)]
+        //public decimal? SecondaryPackagingMeasure { get; set; }
+
+        //[DataElement("ru", "единица измерения вторичной упаковки")]
+        //public virtual MeasurementUnit SecondaryPackagingMeasurementUnit { get; set; }
+
+        //[DataElement("ru", "количество вторичных упаковок")]
+        //public int? SecondaryPackagingCount { get; set; }
+
+        //[DataElement("ru", "примечание для вторичной упаковки")]
+        //public string SecondaryPackagingNote { get; set; }
+
 
         [DataElement("ru", "количество в потреб. упаковке")]
         public int? TotalCount { get; set; }
@@ -106,6 +158,7 @@ namespace Apteka.Model.Entities
         public bool IsPrimaryPackagingPrice { get; set; }
 
         [DataElement("ru", "дата регистрации цены")]
+        [DataType(DataType.Date)]
         public DateTime? PriceRegistrationDate { get; set; }
 
         [DataElement("ru", "№ решения (цена)")]
@@ -113,6 +166,7 @@ namespace Apteka.Model.Entities
         public string PriceRegistrationDocNumber { get; set; }
 
         [DataElement("ru", "дата исключения цены")]
+        [DataType(DataType.Date)]
         public DateTime? PriceExclusionDate { get; set; }
 
         [DataElement("ru", "причина исключения цены")]
@@ -120,14 +174,12 @@ namespace Apteka.Model.Entities
 
         public long? StateRegistryHash { get; set; }
 
+        [DataElement("ru", "упаковки")]
+        public virtual ICollection<MedicineDosageFormPackaging> Packagings { get; set; }
+
         [DataElement("ru", "участники цепочки поставок")]
         public virtual ICollection<MedicineDosageFormOrganization> Organizations { get; set; }
 
-        long? IHashableEntity<long?>.Hash { get => StateRegistryHash; set => StateRegistryHash = value; }
-
-        public override string ToString()
-        {
-            return $"Лекарственная форма препарата (EAN13={Ean13})";
-        }
+        long? IHashableEntity.Hash { get => StateRegistryHash; set => StateRegistryHash = value; }
     }
 }

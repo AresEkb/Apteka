@@ -11,21 +11,24 @@ namespace Apteka.Model.Mappers.Base
 {
     public abstract class MapperBase
     {
-        public MapperBase(IEntityFactory entityFactory)
+        public MapperBase(IEntityFactory entityFactory, EntitySource entitySource)
         {
             EntityFactory = entityFactory;
+            EntitySource = entitySource;
         }
 
         protected IEntityFactory EntityFactory { get; private set; }
+
+        protected EntitySource EntitySource { get; private set; }
 
         // Empty names and ~, -, ...
         protected bool IsEmptyName(string name) =>
             String.IsNullOrWhiteSpace(name) || name.Length <= 1;
 
-        protected T FindOrCreate<T>(Expression<Func<T, bool>> pred, bool returnExisting, EntitySource entitySource = EntitySource.Both)
+        protected T FindOrCreate<T>(Expression<Func<T, bool>> pred, bool returnExisting)
             where T : class, new()
         {
-            var entity = EntityFactory.Find(pred, entitySource);
+            var entity = EntityFactory.Find(pred, EntitySource);
             if (entity != null)
             {
                 if (!returnExisting) { return null; }
@@ -38,15 +41,15 @@ namespace Apteka.Model.Mappers.Base
             }
         }
 
-        protected T FindOrCreate<T>(string name, EntitySource entitySource = EntitySource.Both)
+        protected T FindOrCreate<T>(string name)
             where T : class, INamedEntity, new()
         {
-            name = name?.Trim();
             if (IsEmptyName(name)) { return null; }
+            name = name.Trim();
 
             var entity = EntityFactory.Find<T>(e =>
                 e.Name.ToUpper().Equals(name.ToUpper(), StringComparison.OrdinalIgnoreCase),
-                entitySource);
+                EntitySource);
             if (entity != null) { return entity; }
 
             entity = EntityFactory.Create<T>();
@@ -54,25 +57,28 @@ namespace Apteka.Model.Mappers.Base
             return entity;
         }
 
-        protected Organization FindOrCreateOrganization(string organizationName,
-            string countryName, EntitySource entitySource = EntitySource.Both)
+        protected Organization FindOrCreateOrganization(string organizationName, string countryName)
         {
             if (IsEmptyName(organizationName) ||
                 IsEmptyName(countryName))
             {
                 return null;
             }
+            organizationName = organizationName.Trim();
+            countryName = countryName.Trim();
 
             var entity = EntityFactory.Find<Organization>(e =>
                 e.Name == organizationName &&
-                e.Country != null &&
-                e.Country.Name == countryName,
-                entitySource);
+                e.Address != null &&
+                e.Address.Country != null &&
+                e.Address.Country.Name == countryName,
+                EntitySource);
             if (entity != null) { return entity; }
 
             entity = EntityFactory.Create<Organization>();
             entity.Name = organizationName;
-            entity.Country = FindOrCreate<Country>(countryName, entitySource);
+            entity.Address = EntityFactory.Create<Address>();
+            entity.Address.Country = FindOrCreate<Country>(countryName);
             return entity;
         }
 
@@ -103,24 +109,24 @@ namespace Apteka.Model.Mappers.Base
         }
 
         protected Medicine FindOrCreateMedicine(string tradeName, string inn,
-            string pharmacotherapeuticGroup, string atcCode, EntitySource entitySource = EntitySource.Both)
+            string pharmacotherapeuticGroup, string atcCode)
         {
-            tradeName = tradeName?.Trim();
             if (IsEmptyName(tradeName)) { return null; }
+            tradeName = tradeName.Trim();
 
             var entity = EntityFactory.Find<Medicine>(o =>
                 o.TradeName.ToUpper().Equals(tradeName.ToUpper(), StringComparison.OrdinalIgnoreCase),
-                entitySource);
+                EntitySource);
             if (entity != null) { return entity; }
 
             entity = EntityFactory.Create<Medicine>();
             entity.TradeName = tradeName;
             if (!IsEmptyName(inn))
             {
-                entity.Inn = inn;
+                entity.Inn = inn.Trim();
             }
-            entity.PharmacotherapeuticGroup = FindOrCreate<PharmacotherapeuticGroup>(pharmacotherapeuticGroup, entitySource);
-            entity.AtcCode = FindOrCreate<AtcGroup>(atcCode, entitySource);
+            entity.PharmacotherapeuticGroup = FindOrCreate<PharmacotherapeuticGroup>(pharmacotherapeuticGroup);
+            entity.AtcCode = FindOrCreate<AtcGroup>(atcCode);
             return entity;
         }
     }

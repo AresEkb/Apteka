@@ -4,11 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 using Apteka.Model.Annotations;
+using Apteka.Model.Entities.Base;
 
 namespace Apteka.Model.Entities.Place
 {
     [DataElement("ru", "адрес", "адреса", "")]
-    public class Address
+    public class Address : EntityBase
     {
         [Key, Browsable(false)]
         public int Id { get; private set; }

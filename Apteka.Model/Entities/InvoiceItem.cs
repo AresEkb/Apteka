@@ -4,14 +4,14 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 using Apteka.Model.Annotations;
-using Apteka.Model.Entities.Place;
+using Apteka.Model.Entities.Base;
 
 namespace Apteka.Model.Entities
 {
     [DataElement("ru", "товарная позиция", "товарные позиции",
         "детальная информация о товаре, такая как наименование, изготовитель, " +
         "цены, суммы, серии и прочая информация")]
-    public class InvoiceItem
+    public class InvoiceItem : EntityBase
     {
         public InvoiceItem()
         {

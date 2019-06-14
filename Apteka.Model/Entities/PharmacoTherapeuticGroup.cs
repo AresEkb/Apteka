@@ -8,7 +8,7 @@ namespace Apteka.Model.Entities
 {
     [DataElement("ru", "фармакотерапевтическая группа", "фармакотерапевтические группы", "")]
     [Category("CodeLists/Medicines")]
-    public class PharmacotherapeuticGroup : INamedEntity
+    public class PharmacotherapeuticGroup : EntityBase, INamedEntity
     {
         [Key, Browsable(false)]
         public int Id { get; private set; }
@@ -18,6 +18,8 @@ namespace Apteka.Model.Entities
         public string Code { get; set; }
 
         [DataElement("ru", "название")]
+        [Required]
+        [UniqueIndex]
         [MaxLength(200)]
         public string Name { get; set; }
     }

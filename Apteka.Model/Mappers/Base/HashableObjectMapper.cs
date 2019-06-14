@@ -8,20 +8,19 @@ using Apteka.Model.Factories;
 namespace Apteka.Model.Mappers.Base
 {
     public abstract class HashableObjectMapper<S, T> : MapperBase, IMapper<S, T>
-        where S : IHashable<long>
-        where T : class, IHashableEntity<long?>, IEntity, new()
+        where S : IHashable
+        where T : class, IHashableEntity, IEntity, new()
     {
         private readonly bool updateExisting;
         private readonly bool readOnlyFromCache;
         private readonly HashSet<long> keys;
 
         protected HashableObjectMapper(IEntityFactory entityFactory,
-            bool updateExisting = false, bool readOnlyFromCache = false) : base(entityFactory)
+            bool updateExisting = false, bool readOnlyFromCache = false)
+            : base(entityFactory, readOnlyFromCache ? EntitySource.Cache : EntitySource.Both)
         {
             this.updateExisting = updateExisting;
             this.readOnlyFromCache = readOnlyFromCache;
-
-            EntitySource = readOnlyFromCache ? EntitySource.Cache : EntitySource.Both;
 
             if (!updateExisting)
             {
@@ -32,8 +31,6 @@ namespace Apteka.Model.Mappers.Base
             }
         }
 
-        public EntitySource EntitySource { get; private set; }
-
         public T Map(S dto)
         {
             long hash = dto.Hash;
@@ -42,9 +39,7 @@ namespace Apteka.Model.Mappers.Base
             // If we will update records then we have to load all columns
             if (updateExisting)
             {
-                entity = FindOrCreate<T>(e =>
-                    e.Hash == hash,
-                    updateExisting, EntitySource);
+                entity = FindOrCreate<T>(e => e.Hash == hash, updateExisting);
             }
             // If we will not update records then it's much more effective to load keys only
             else if (!keys.Contains(hash))

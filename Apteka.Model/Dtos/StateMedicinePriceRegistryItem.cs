@@ -6,14 +6,14 @@ using Apteka.Model.Extensions;
 
 namespace Apteka.Model.Dtos
 {
-    public class StateMedicinePriceRegistryItem : IRecord, IHashable<long>
+    public class StateMedicinePriceRegistryItem : IRecord, IHashable
     {
         public string Inn { get; set; }
         public string TradeName { get; set; }
         public string DosageForms { get; set; }
         public string Organizations { get; set; }
         public string AtcCode { get; set; }
-        public int? TotalCount { get; set; }
+        public string TotalCountStr { get; set; }
         public string PriceStr { get; set; }
         public string PrimaryPackagingPrice { get; set; }
         public string RegistrationCertificateNumber { get; set; }
@@ -42,9 +42,9 @@ namespace Apteka.Model.Dtos
         public string PriceRegistrationNumber =>
             PriceRegistrationDateNumber.Substring(10).Trim(' ', '\n', '(', ')');
 
-        public decimal? Price =>
-            decimal.TryParse(PriceStr.Replace(" ", "").Replace("\n", "").Replace(',', '.'), out decimal result)
-                ? result : (decimal?)null;
+        public decimal? Price => PriceStr.ParseDecimal();
+
+        public int? TotalCount => TotalCountStr.ParseInt();
 
         public bool IsOk =>
             !String.IsNullOrWhiteSpace(TradeName) &&
